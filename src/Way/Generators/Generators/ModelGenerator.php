@@ -38,10 +38,10 @@ class ModelGenerator extends Generator {
         }
 
         $rules = array_map(function($field) {
-            return "'$field' => 'required',";
+            return "'$field' => 'required'";
         }, array_flip($fields));
 
-        return str_replace('{{rules}}', implode(PHP_EOL."\t\t", $rules), $this->template);
+        return str_replace('{{rules}}', PHP_EOL."\t\t".implode(','.PHP_EOL."\t\t", $rules) . PHP_EOL."\t", $this->template);
     }
 
 }

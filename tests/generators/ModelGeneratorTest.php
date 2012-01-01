@@ -16,18 +16,18 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
         m::close();
     }
 
-    public function testCanGenerateModelUsingTemplate()
-    {
-        $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
-        $cache = m::Mock('Way\Generators\Cache');
+    // public function testCanGenerateModelUsingTemplate()
+    // {
+    //     $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
+    //     $cache = m::Mock('Way\Generators\Cache');
 
-        $file->shouldReceive('put')
-             ->once()
-             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/model.txt'));
+    //     $file->shouldReceive('put')
+    //          ->once()
+    //          ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/model.txt'));
 
-        $generator = new ModelGenerator($file, $cache);
-        $generator->make('app/models/Foo.php', static::$templatesDir.'/model.txt');
-    }
+    //     $generator = new ModelGenerator($file, $cache);
+    //     $generator->make('app/models/Foo.php', static::$templatesDir.'/model.txt');
+    // }
 
     public function testCanGenerateModelUsingCustomTemplateAndNoFields()
     {
@@ -36,7 +36,24 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $cache->shouldReceive('getFields')
               ->once()
-              ->andReturn(['title' => 'string']);
+              ->andReturn(false);
+
+        $file->shouldReceive('put')
+             ->once()
+             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model-no-fields.txt'));
+
+        $generator = new ModelGenerator($file, $cache);
+        $generator->make('app/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
+    }
+
+    public function testCanGenerateModelUsingCustomTemplateAndFields()
+    {
+        $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
+        $cache = m::Mock('Way\Generators\Cache');
+
+        $cache->shouldReceive('getFields')
+              ->once()
+              ->andReturn(['title' => 'string', 'age' => 'integer']);
 
         $file->shouldReceive('put')
              ->once()
