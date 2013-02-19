@@ -1,4 +1,4 @@
-	public function up()
+	public function down()
 	{
 	  Schema::table('{{tableName}}', function($table)
 	  {
