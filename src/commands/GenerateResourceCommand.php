@@ -1,10 +1,9 @@
 <?php
 
-namespace Way\Generators;
+namespace Way\Generators\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Support\Pluralizer;
 
 class GenerateResourceCommand extends Generate {
 

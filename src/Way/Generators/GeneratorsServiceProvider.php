@@ -32,32 +32,32 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	{
 		$this->app['generate.test'] = $this->app->share(function($app)
 		{
-			return new GenerateTestCommand($app);
+			return new Commands\GenerateTestCommand($app);
 		});
 
 		$this->app['generate.model'] = $this->app->share(function($app)
 		{
-			return new GenerateModelCommand($app);
+			return new Commands\GenerateModelCommand($app);
 		});
 
 		$this->app['generate.view'] = $this->app->share(function($app)
 		{
-			return new GenerateViewCommand($app);
+			return new Commands\GenerateViewCommand($app);
 		});
 
 		$this->app['generate.migration'] = $this->app->share(function($app)
 		{
-			return new GenerateMigrationCommand($app);
+			return new Commands\GenerateMigrationCommand($app);
 		});
 
 		$this->app['generate.resource'] = $this->app->share(function($app)
 		{
-			return new GenerateResourceCommand($app);
+			return new Commands\GenerateResourceCommand($app);
 		});
 
 		$this->app['generate.seed'] = $this->app->share(function($app)
 		{
-			return new GenerateSeedCommand($app);
+			return new Commands\GenerateSeedCommand($app);
 		});
 
 		$this->commands(

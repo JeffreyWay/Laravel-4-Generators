@@ -1,42 +1,32 @@
 <?php
 
-namespace Way\Generators;
+namespace Way\Generators\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class GenerateViewCommand extends Generate {
+class GenerateSeedCommand extends Generate {
 
   /**
    * The console command name.
    *
    * @var string
    */
-  protected $name = 'generate:view';
+  protected $name = 'generate:seed';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'Generate a new view';
+  protected $description = 'Generate a DB seed class.';
 
   /**
    * The type of file generation.
    * 
    * @var string
    */
-  protected $type = 'view';
-
-  /**
-   * Get the path to the file that should be generated.
-   * 
-   * @return string
-   */
-  protected function getNewFilePath()
-  {
-    return app_path() . '/' . $this->option('path') . '/' . $this->argument('fileName') . '.blade.php';
-  }
+  protected $type = 'seed';
 
   /**
    * Compile a template or return a string
@@ -46,7 +36,7 @@ class GenerateViewCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    return 'The ' . $this->argument('fileName') . '.blade.php view.';
+    return str_replace('{{tableName}}', ucwords($this->argument('fileName')), $this->getStub());
   }
 
   /**
@@ -57,8 +47,18 @@ class GenerateViewCommand extends Generate {
   protected function getArguments()
   {
     return array(
-      array('fileName', InputArgument::REQUIRED, 'Name of the view.'),
+      array('fileName', InputArgument::REQUIRED, 'Name of the model.'),
     );
+  }
+
+  /**
+   * Get the path to the file that should be generated.
+   * 
+   * @return string
+   */
+  protected function getNewFilePath()
+  {
+    return app_path() . '/' . $this->option('path') . '/' . ucwords($this->argument('fileName')) . 'TableSeeder.php';
   }
 
   /**
@@ -69,7 +69,7 @@ class GenerateViewCommand extends Generate {
   protected function getOptions()
   {
     return array(
-      array('path', null, InputOption::VALUE_OPTIONAL, 'Path to where the view should be created', 'views'),
+      array('path', null, InputOption::VALUE_OPTIONAL, 'The path to where the seed will be stored.', 'database/seeds'),
     );
   }
 

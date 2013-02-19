@@ -1,32 +1,32 @@
 <?php
 
-namespace Way\Generators;
+namespace Way\Generators\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class GenerateSeedCommand extends Generate {
+class GenerateModelCommand extends Generate {
 
   /**
    * The console command name.
    *
    * @var string
    */
-  protected $name = 'generate:seed';
+  protected $name = 'generate:model';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'Generate a DB seed class.';
+  protected $description = 'Generate an Eloquent model.';
 
   /**
    * The type of file generation.
    * 
    * @var string
    */
-  protected $type = 'seed';
+  protected $type = 'model';
 
   /**
    * Compile a template or return a string
@@ -36,7 +36,7 @@ class GenerateSeedCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    return str_replace('{{tableName}}', ucwords($this->argument('fileName')), $this->getStub());
+    return str_replace('{{name}}', ucwords($this->argument('fileName')), $this->getStub());
   }
 
   /**
@@ -52,16 +52,6 @@ class GenerateSeedCommand extends Generate {
   }
 
   /**
-   * Get the path to the file that should be generated.
-   * 
-   * @return string
-   */
-  protected function getNewFilePath()
-  {
-    return app_path() . '/' . $this->option('path') . '/' . ucwords($this->argument('fileName')) . 'TableSeeder.php';
-  }
-
-  /**
    * Get the console command options.
    *
    * @return array
@@ -69,7 +59,7 @@ class GenerateSeedCommand extends Generate {
   protected function getOptions()
   {
     return array(
-      array('path', null, InputOption::VALUE_OPTIONAL, 'The path to where the seed will be stored.', 'database/seeds'),
+      array('path', null, InputOption::VALUE_OPTIONAL, 'An example option.', 'models'),
     );
   }
 

@@ -14,7 +14,8 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
+            "src/migrations",
+            "src/commands"
         ],
         "psr-0": {
             "Way\\Generators": "src/"

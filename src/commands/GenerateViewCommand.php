@@ -1,32 +1,42 @@
 <?php
 
-namespace Way\Generators;
+namespace Way\Generators\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class GenerateTestCommand extends Generate {
+class GenerateViewCommand extends Generate {
 
   /**
    * The console command name.
    *
    * @var string
    */
-  protected $name = 'generate:test';
+  protected $name = 'generate:view';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'Generate a PHPUnit Test.';
+  protected $description = 'Generate a new view';
 
   /**
    * The type of file generation.
    * 
    * @var string
    */
-  protected $type = 'test';
+  protected $type = 'view';
+
+  /**
+   * Get the path to the file that should be generated.
+   * 
+   * @return string
+   */
+  protected function getNewFilePath()
+  {
+    return app_path() . '/' . $this->option('path') . '/' . $this->argument('fileName') . '.blade.php';
+  }
 
   /**
    * Compile a template or return a string
@@ -36,7 +46,7 @@ class GenerateTestCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    return str_replace('{{name}}', $this->argument('fileName'), $this->getStub());
+    return 'The ' . $this->argument('fileName') . '.blade.php view.';
   }
 
   /**
@@ -47,7 +57,7 @@ class GenerateTestCommand extends Generate {
   protected function getArguments()
   {
     return array(
-      array('fileName', InputArgument::REQUIRED, 'Name of the test file to generate.'),
+      array('fileName', InputArgument::REQUIRED, 'Name of the view.'),
     );
   }
 
@@ -59,10 +69,8 @@ class GenerateTestCommand extends Generate {
   protected function getOptions()
   {
     return array(
-      array('path', null, InputOption::VALUE_OPTIONAL, 'Path to where the test file should be created.', 'tests')
+      array('path', null, InputOption::VALUE_OPTIONAL, 'Path to where the view should be created', 'views'),
     );
   }
-
-  
 
 }
