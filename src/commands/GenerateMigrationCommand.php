@@ -64,7 +64,16 @@ class GenerateMigrationCommand extends Generate {
    */
   protected function parseMigrationName()
   {
-    return explode('_', $this->argument('fileName'));
+    // create_users_table
+    // add_user_id_to_posts_table
+    $pieces = explode('_', $this->argument('fileName'));
+
+    $action = $pieces[0];
+
+    end($pieces);
+    $tableName = prev($pieces);
+
+    return [$action, $tableName];
   }
 
   /**
@@ -116,7 +125,7 @@ class GenerateMigrationCommand extends Generate {
     // Are we creating a table?
     if ( $this->action === 'create' )
     {
-      $upMethod = \File::get(__DIR__ . '/stubs/migrationUpCreate.php');
+      $upMethod = \File::get(__DIR__ . '/../stubs/migrationUpCreate.php');
     }
 
     $upMethod = str_replace('{{tableName}}', $this->tableName, $upMethod);
@@ -136,7 +145,7 @@ class GenerateMigrationCommand extends Generate {
     if ( $this->action === 'create' )
     {
       // then we need to drop the table
-      $downMethod = \File::get(__DIR__ . '/stubs/migrationDownDrop.php');
+      $downMethod = \File::get(__DIR__ . '/../stubs/migrationDownDrop.php');
       $downMethod = str_replace('{{tableName}}', $this->tableName, $downMethod);
     }
 
