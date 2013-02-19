@@ -1,6 +1,6 @@
 {
     "name": "way/generators",
-    "description": "",
+    "description": "Speed up your workflow in Laravel 4 with custom generators.",
     "authors": [
         {
             "name": "Jeffrey Way",
