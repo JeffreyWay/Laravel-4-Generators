@@ -32,13 +32,6 @@ That's it! You're all set to go. Run the `artisan` command from the Terminal to 
 
 Think of generators as an easy way to speed up your workflow. Rather than opening the models directory, creating a new file, saving it, and adding the class, you can simply run a single generate command.
 
-- Migrations
-- Models
-- Tests
-- Views
-- Seeds
-- Resources
-
 - [Migrations](#migrations)
 - [Models](#models)
 - [Tests](#tests)
