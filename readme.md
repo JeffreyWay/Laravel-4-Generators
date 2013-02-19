@@ -266,7 +266,7 @@ class PostsTest extends TestCase {
 }
 ```
 
-Should you need to place this file within a subdirectory (or somewhere else in the `app` folder, use the `--path` option, like so:
+Should you need to place this file within a subdirectory (or somewhere else in the `app` folder), use the `--path` option, like so:
 
     php artisan generate:test PostsTest --path=tests/controllers
     
@@ -309,7 +309,7 @@ class PostsTest extends TestCase {
 
     php artisan generate:view dog
     
-This command will generate `app/views/dog.blade.php` and a simple string from convenience.
+This command will generate `app/views/dog.blade.php` and a simple string, for convenience.
 
     The dog.blade.php view.
     
@@ -380,7 +380,7 @@ Next, we'll seed this new `dogs` table. Open `database/seeds/DogsTableSeeder.php
     $Dogs = [
         ['name' => 'Sparky', 'age' => 5],
         ['name' => 'Joe', 'age' => 11]
-    }
+    ];
     
 We can't forget to call this new seed file from the master `DatabaseSeeder` file.
 
@@ -412,7 +412,7 @@ The last step is to update the view to display each of the posts that was passed
     
 Okay, okay, we're not using a layout file with the proper HTML. Who cares; this is just an example, fool.
 
-Anyhow, we're all set. Run the serve, and browse to `localhost:8000/dogs` to view your list.
+Anyhow, we're all set. Run the server, and browse to `localhost:8000/dogs` to view your list.
 
     php artisan serve
     
