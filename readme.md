@@ -39,6 +39,12 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - Seeds
 - Resources
 
+- [Migrations](#migrations)
+- [Models](#models)
+- [Tests](#tests)
+- [Views](#views)
+- [Seeds](#controllers)
+- [Resources](#resources)
 
 ### Migrations
 
