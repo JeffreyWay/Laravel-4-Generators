@@ -363,7 +363,7 @@ The following actions will take place:
 - Creates a `views/dogs` folder, containing the `index`, `show`, `create`, and `edit` views.
 - Creates a `database/seeds/DogsTableSeeder.php` seed file.
 - Creates `controllers/DogsController.php`, and fills it with restful methods.
-- Updates `routes.php` to include: `Route::resource('dog', 'DogsController')`.
+- Updates `routes.php` to include: `Route::resource('dogs', 'DogsController')`.
 - Creates a `tests/controllers/DogsControllerTest.php` file, and fills it with some boilerplate tests to get you started.
 
 > Please note that the resource name is singular - the same as how you would name your model.
