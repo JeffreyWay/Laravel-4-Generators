@@ -60,9 +60,11 @@ abstract class Generate extends Command {
    * 
    * @return string
    */
-  protected function getStub()
+  protected function getStub($fileName = null)
   {
-    return \File::get(__DIR__ . "/../stubs/{$this->type}.php");
+    $fileName = $fileName ? $fileName : $this->type;
+
+    return \File::get(__DIR__ . "/../stubs/{$fileName}.php");
   }
 
   /**

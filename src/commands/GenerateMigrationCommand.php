@@ -73,6 +73,7 @@ class GenerateMigrationCommand extends Generate {
     end($pieces);
     $tableName = prev($pieces);
 
+    // For example: ['add', 'posts']
     return [$action, $tableName];
   }
 
@@ -96,21 +97,15 @@ class GenerateMigrationCommand extends Generate {
   {
     $stub = $this->getStub();
 
+    // Replace the name of the class
     $stub = str_replace('{{name}}', \Str::camel($this->argument('fileName')), $stub);
 
-    // The migration's Up method.
     $upMethod = $this->setUpMethod();
-    $stub = str_replace('{{up}}', $upMethod, $stub);
-
-
-    // The migration's Down method.
     $downMethod = $this->setDownMethod();
+
+    // Replace the migration stub with the dynamic up and down methods
+    $stub = str_replace('{{up}}', $upMethod, $stub);
     $stub = str_replace('{{down}}', $downMethod, $stub);
-
-
-    // Do we need to set any fields?
-    $fields = $this->option('fields') ? $this->setFields() : '';
-    $stub = str_replace('{{methods}}', $fields, $stub);
 
     return $stub;
   }
@@ -122,16 +117,32 @@ class GenerateMigrationCommand extends Generate {
    */
   protected function setUpMethod()
   {
-    // Are we creating a table?
-    if ( $this->action === 'create' )
-    {
-      $upMethod = \File::get(__DIR__ . '/../stubs/migrationUpCreate.php');
+    switch($this->action) {
+      case 'add':
+      case 'insert':
+        $upMethod = \File::get(__DIR__ . '/../stubs/migrationUp.php');
+        $fields = $this->option('fields') ? $this->setFields('addColumn') : '';
+        break;
+
+      case 'remove':
+      case 'drop':
+        $upMethod = \File::get(__DIR__ . '/../stubs/migrationUp.php');
+        $fields = $this->option('fields') ? $this->setFields('dropColumn') : '';
+        break;
+
+      case 'create':
+      case 'make':
+      default:
+        $upMethod = \File::get(__DIR__ . '/../stubs/migrationUpCreate.php');
+        $fields = $this->option('fields') ? $this->setFields('addColumn') : '';
+        break;
     }
 
-    $upMethod = str_replace('{{tableName}}', $this->tableName, $upMethod);
+    // Replace the tableName in the template
+    $upMethod = $this->replaceTableNameInTemplate($upMethod);
 
-
-    return $upMethod;
+    // Insert the schema into the up method
+    return str_replace('{{methods}}', $fields, $upMethod);
   }
 
   /**
@@ -141,30 +152,47 @@ class GenerateMigrationCommand extends Generate {
    */
   protected function setDownMethod()
   {
-    // Are we creating a table?
-    if ( $this->action === 'create' )
-    {
-      // then we need to drop the table
-      $downMethod = \File::get(__DIR__ . '/../stubs/migrationDownDrop.php');
-      $downMethod = str_replace('{{tableName}}', $this->tableName, $downMethod);
+    switch($this->action) {
+      case 'add':
+      case 'insert':
+        // then we to remove columns in reverse
+        $downMethod = \File::get(__DIR__ . '/../stubs/migrationDown.php');
+        $fields = $this->option('fields') ? $this->setFields('dropColumn') : '';
+        break;
+
+      case 'remove':
+      case 'drop':
+        // then we need to add the columns in reverse
+        $downMethod = \File::get(__DIR__ . '/../stubs/migrationDown.php');
+        $fields = $this->option('fields') ? $this->setFields('addColumn') : '';
+        break;
+
+      case 'create':
+      case 'make':
+        // then we need to drop the table in reverse
+        $downMethod = \File::get(__DIR__ . '/../stubs/migrationDownDrop.php');
+        $fields = $this->option('fields') ? $this->setFields('dropColumn') : '';
+      default:
     }
 
-    return $downMethod;
+    $downMethod = $this->replaceTableNameInTemplate($downMethod);
+    
+    // Insert the schema into the down method
+    return str_replace('{{methods}}', $fields, $downMethod);
   }
 
   /**
    * Create a string of the Schema fields that
    * should be inserted into the sub template.
    * 
+   * @param string $method (addColumn | dropColumn)
    * @return string
    */
-  protected function setFields()
+  protected function setFields($method = 'addColumn')
   {
     $fields = $this->convertFieldsToArray();
 
-    $template = array_map(function($field) {
-      return "\$table->{$field->type}('" . $field->name . "');";
-    }, $fields);
+    $template = array_map(array($this, $method), $fields);
 
     return implode("\n\t\t\t", $template);
   }
@@ -172,6 +200,9 @@ class GenerateMigrationCommand extends Generate {
   /**
    * If Schema fields are specified, parse
    * them into an array of objects.
+   * 
+   * So: name:string, age:integer
+   * Becomes: [ ((object)['name' => 'string'], (object)['age' => 'integer'] ]
    * 
    * @returns mixed
    */
@@ -185,7 +216,7 @@ class GenerateMigrationCommand extends Generate {
     
     foreach($fields as &$bit)
     {
-      $fieldAndType = explode(':', $bit);
+      $fieldAndType = preg_split('/ ?: ?/', $bit);
 
       $bit = new \StdClass;
       $bit->name = $fieldAndType[0];
@@ -193,7 +224,41 @@ class GenerateMigrationCommand extends Generate {
     }
 
     return $fields;
-  }  
+  }
+
+  /**
+   * Searches for {{tableName}} and replaces it
+   * with what the user specifies
+   * 
+   * @param string $template
+   * @return string
+   */
+  protected function replaceTableNameInTemplate($template)
+  {
+    return str_replace('{{tableName}}', $this->tableName, $template);
+  }
+
+  /**
+   * Return template string for adding a column
+   * 
+   * @param string $field
+   * @return string
+   */
+  protected function addColumn($field)
+  {
+    return "\$table->{$field->type}('" . $field->name . "');";
+  }
+
+  /**
+   * Return template string for dropping a column
+   * 
+   * @param string $field
+   * @return string
+   */
+  protected function dropColumn($field)
+  {
+    return "\$table->dropColumn('" . $field->name . "');";
+  }
 
   /**
    * Get the console command arguments.

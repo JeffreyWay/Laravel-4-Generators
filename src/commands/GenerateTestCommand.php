@@ -36,6 +36,12 @@ class GenerateTestCommand extends Generate {
    */
   protected function applyDataToStub()
   {
+    if ( !! $this->option('controller') )
+    {
+      $stub = preg_replace('/{{resource}}/', $this->option('controller'), $this->getStub('controllerTest'));
+      return str_replace('{{name}}', $this->argument('fileName'), $stub);
+    }
+
     return str_replace('{{name}}', $this->argument('fileName'), $this->getStub());
   }
 
@@ -59,7 +65,8 @@ class GenerateTestCommand extends Generate {
   protected function getOptions()
   {
     return array(
-      array('path', null, InputOption::VALUE_OPTIONAL, 'Path to where the test file should be created.', 'tests')
+      array('path', null, InputOption::VALUE_OPTIONAL, 'Path to where the test file should be created.', 'tests'),
+      array('controller', null, InputOption::VALUE_OPTIONAL, 'Specifies whether controller tests should be generated and populated.')
     );
   }
 

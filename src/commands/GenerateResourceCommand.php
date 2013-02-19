@@ -4,6 +4,7 @@ namespace Way\Generators\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Support\Pluralizer;
 
 class GenerateResourceCommand extends Generate {
 
@@ -61,7 +62,8 @@ class GenerateResourceCommand extends Generate {
 			'generate:test',
 			[
 				'fileName' => $pluralName . 'ControllerTest',
-				'--path' => 'tests/controllers'
+				'--path' => 'tests/controllers',
+				'--controller' => strtolower($pluralName)
 			]
 		);
 
@@ -83,14 +85,12 @@ class GenerateResourceCommand extends Generate {
 
 
 		// Create the views
-		// generate:resource dog
 		if ( ! \File::exists(app_path() . '/views/' . strtolower($pluralName)) )
 		{
 			\File::makeDirectory(app_path() . '/views/' . strtolower($pluralName));
 		}
 
 		$views = ['index', 'show', 'create', 'edit'];
-
 		foreach($views as $view)
 		{
 			$this->call(
