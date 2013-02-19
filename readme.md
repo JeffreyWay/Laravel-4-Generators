@@ -7,6 +7,10 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:migration`
 - `generate:resource`
 
+## Prefer a Video Walk-through?
+
+[See here.](http://tutsplus.s3.amazonaws.com/tutspremium/courses_$folder$/WhatsNewInLaravel4/9-Generators.mp4)
+
 ## Installation
 
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
@@ -19,11 +23,11 @@ Begin by installing this package through Composer. Edit your project's `composer
 Next, update Composer from the Terminal:
 
     composer update
-    
+
 Once this operation completes, the final step is to add the service provider. Open `app/config/app.php`, and add a new item to the providers array.
 
     'Way\Generators\GeneratorsServiceProvider'
-    
+
 That's it! You're all set to go. Run the `artisan` command from the Terminal to see the new `generate` commands.
 
     php artisan
@@ -44,7 +48,7 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 Laravel 4 offers a migration generator, but it stops just short of creating the schema (or the fields for the table). Let's review a couple examples, using `generate:migration`.
 
     php artisan generate:migration create_post_table
-    
+
 If we don't specify the `fields` option, the following file will be created within `app/database/migrations`.
 
 ```php
@@ -64,7 +68,7 @@ class CreatePostTable extends Migration {
 	  Schema::create('post', function($table)
 	  {
 	    $table->increments('id');
-	    
+
 	    $table->timestamps();
 	  });
 	}
@@ -87,7 +91,7 @@ Notice that the generator is smart enough to detect that you're trying to create
 If you instead use a migration name along the lines of `add_user_id_to_posts_table`, in that case, the keyword is "add," signaling that we intend to add rows to an existing table. Let's see what that generates.
 
     php artisan generate:migration add_user_id_to_posts_table
-    
+
 This will prepare the following boilerplate:
 
 ```php
@@ -106,7 +110,7 @@ class AddUserIdToPostsTable extends Migration {
 	{
 	  Schema::table('posts', function($table)
 	  {
-	    
+
 	  });
 	}
 
@@ -119,7 +123,7 @@ class AddUserIdToPostsTable extends Migration {
 	{
 	  Schema::table('posts', function($table)
 	  {
-	    
+
 	  });
 	}
 
@@ -141,7 +145,7 @@ When writing migration names, use the following keywords to provide hints for th
 This is pretty nice, but let's take things a step further and also generate the schema, using the `fields` option.
 
     php artisan generate:migration create_posts_table --fields="title:string, body:text"
-    
+
 Before we decipher this new option, let's see the output:
 
 ```php
@@ -237,14 +241,14 @@ class RemoveCompletedFromTasksTable extends Migration {
 ### Models
 
     php artisan generate:model Post
-    
+
 This will create the file, `app/models/Post.php` and insert the following boilerplate:
 
 ```php
 <?php
 
 class Post extends Eloquent {
-    
+
 }
 ```
 
@@ -252,7 +256,7 @@ class Post extends Eloquent {
 ### Tests
 
     php artisan generate:test PostsTest
-    
+
 This will generate the file, `app/tests/PostsTest.php` and fill it with a starting template:
 
 ```php
@@ -261,7 +265,7 @@ This will generate the file, `app/tests/PostsTest.php` and fill it with a starti
 class PostsTest extends TestCase {
     public function test()
 	{
-		
+
 	}
 }
 ```
@@ -269,7 +273,7 @@ class PostsTest extends TestCase {
 Should you need to place this file within a subdirectory (or somewhere else in the `app` folder), use the `--path` option, like so:
 
     php artisan generate:test PostsTest --path=tests/controllers
-    
+
 Now, `PostsTest.php` will be placed in `app/tests/controllers/`. Please note that, if the designated directory does not exist, it will be created recursively for you.
 
 If you pass a `--controller=posts` flag, then the generator will assume that you're writing tests for your controller, and will give you some extra boilerplate to get you started.
@@ -308,15 +312,15 @@ class PostsTest extends TestCase {
 ### Views
 
     php artisan generate:view dog
-    
+
 This command will generate `app/views/dog.blade.php` and a simple string, for convenience.
 
     The dog.blade.php view.
-    
+
 As with all of the commands, you may specify a `--path` option to place this file elsewhere.
 
     php artisan generate:view index --path=views/dogs
-    
+
 Now, we get: `app/views/dogs/index.blade.php`.
 
 ### Seeds
@@ -324,7 +328,7 @@ Now, we get: `app/views/dogs/index.blade.php`.
 Laravel 4 provides us with a flexible way to seed new tables.
 
     php artisan generate:seed dogs
-    
+
 Set the argument to the name of the table that you'd like a seed file for. This will generate `app/database/seeds/DogsTableSeeder.php` and populate it with:
 
 ```php
@@ -335,7 +339,7 @@ class DogsTableSeeder extends Seeder {
   public function run()
   {
     $Dogs = [
-        
+
     ];
 
     DB::table('Dogs')->insert($Dogs);
@@ -355,7 +359,7 @@ You're of course free to adjust this, if needed. To fully seed the `dogs` table:
 Think of the resource generator as the big enchilda. It calls all of its sibling generate commands. Assuming the following command:
 
     php artisan generate:resource dog --fields="name:string"
-    
+
 The following actions will take place:
 
 - Creates a `create_dogs_table` migration, with a name column.
@@ -374,26 +378,26 @@ Let's create a resource for displaying dogs in a restful way.
 
     php artisan generate:resource dog --fields="name:string, age:integer"
     composer dump-autoload
-    
+
 Next, we'll seed this new `dogs` table. Open `database/seeds/DogsTableSeeder.php` and add a couple of rows. Remember, you only need to edit the `$Dogs` array within this file.
 
     $Dogs = [
         ['name' => 'Sparky', 'age' => 5],
         ['name' => 'Joe', 'age' => 11]
     ];
-    
+
 We can't forget to call this new seed file from the master `DatabaseSeeder` file.
 
     public function run()
     {
     	$this->call('DogsTableSeeder');
     }
-    
+
 Now, we migrate the database and seed the `dogs` table.
 
     php artisan migrate
     php artisan db:seed
-    
+
 Finally, let's display these two dogs, when accessing the `dogs/` route. Edit `controllers/DogsController.php`, and update the `index` method, like so:
 
     public function index()
@@ -401,7 +405,7 @@ Finally, let's display these two dogs, when accessing the `dogs/` route. Edit `c
         return View::make('dogs.index')
     		->with('dogs', Dog::all());
     }
-    
+
 The last step is to update the view to display each of the posts that was passed to it. Open `views/dogs/index.blade.php` and add:
 
     <ul>
@@ -409,18 +413,18 @@ The last step is to update the view to display each of the posts that was passed
     		<li>{{ $dog->name }} : {{ $dog->age }}</li>
     	@endforeach
     </ul>
-    
+
 Okay, okay, we're not using a layout file with the proper HTML. Who cares; this is just an example, fool.
 
 Anyhow, we're all set. Run the server, and browse to `localhost:8000/dogs` to view your list.
 
     php artisan serve
-    
+
 - Sparky : 5
 - Joe : 11
-    
+
 Isn't that way faster than manually doing all of that writing? To finish up, let's run the tests to make sure that everything is working, as expected.
 
     phpunit
-    
+
 And...it's green!
