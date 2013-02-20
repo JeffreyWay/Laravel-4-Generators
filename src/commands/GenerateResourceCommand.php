@@ -45,7 +45,7 @@ class GenerateResourceCommand extends Generate {
 		$pluralName = Pluralizer::plural($name);
 
 		// Create the model
-		$this->call('generate:model', ['fileName' => $name]);
+		$this->call('generate:model', array('fileName' => $name));
 
 
 		// Create the controller

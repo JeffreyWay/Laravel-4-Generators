@@ -74,7 +74,7 @@ class GenerateMigrationCommand extends Generate {
     $tableName = prev($pieces);
 
     // For example: ['add', 'posts']
-    return [$action, $tableName];
+    return array($action, $tableName);
   }
 
   /**
