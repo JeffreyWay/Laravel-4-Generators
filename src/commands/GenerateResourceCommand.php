@@ -60,21 +60,21 @@ class GenerateResourceCommand extends Generate {
 		// Create a test
 		$this->call(
 			'generate:test',
-			[
+			array(
 				'fileName' => $pluralName . 'ControllerTest',
 				'--path' => 'tests/controllers',
 				'--controller' => strtolower($pluralName)
-			]
+			)
 		);
 
 
 		// Create the migration
 		$this->call(
 			'generate:migration',
-			[
+			array(
 				'fileName' => 'create_' . strtolower($pluralName) . '_table',
 				'--fields' => $this->option('fields')
-			]
+			)
 		);
 
 		// Update the routes.php file
@@ -90,15 +90,15 @@ class GenerateResourceCommand extends Generate {
 			\File::makeDirectory(app_path() . '/views/' . strtolower($pluralName));
 		}
 
-		$views = ['index', 'show', 'create', 'edit'];
+		$views = array('index', 'show', 'create', 'edit');
 		foreach($views as $view)
 		{
 			$this->call(
 				'generate:view',
-				[
+				array(
 					'fileName' => "{$view}",
 					'--path' => 'views/' . strtolower($pluralName)
-				]
+				)
 			);
 		}
 
@@ -106,9 +106,9 @@ class GenerateResourceCommand extends Generate {
 		// Create the seed file
 		$this->call(
 			'generate:seed',
-			[
+			array(
 				'fileName' => $pluralName
-			]
+			)
 		);
 	}
 
