@@ -54,8 +54,6 @@ class GenerateMigrationCommand extends Generate {
     $this->action = $action;
     $this->tableName = $tableName;
 
-    $files = \App::make('\Illuminate\Filesystem\Filesystem');
-
     parent::fire();
 
     $this->dumpAutoloads();
