@@ -23,28 +23,28 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * The type of file generation.
-   * 
+   *
    * @var string
    */
   protected $type = 'migration';
 
   /**
    * What are we doing to this table?
-   * 
+   *
    * @var string
    */
   protected $action;
 
   /**
    * Which table to work with
-   * 
+   *
    * @var string
    */
   protected $tableName;
 
   /**
    * Run the command. Executed immediately.
-   * 
+   *
    * @return void
    */
   public function fire()
@@ -54,12 +54,31 @@ class GenerateMigrationCommand extends Generate {
     $this->action = $action;
     $this->tableName = $tableName;
 
+    $files = \App::make('\Illuminate\Filesystem\Filesystem');
+
     parent::fire();
+
+    $this->dumpAutoloads();
+  }
+
+  /**
+   * composer dump-autoload to recognize new migration file
+   * @return void
+   */
+  protected function dumpAutoloads()
+  {
+    // TODO: Find better way to do this through IoC
+    $composer = new \Illuminate\Foundation\Composer(
+                  new \Illuminate\Filesystem\Filesystem,
+                  base_path()
+                );
+
+    $composer->dumpAutoloads();
   }
 
   /**
    * Parse some_migration_name into array
-   * 
+   *
    * @return array
    */
   protected function parseMigrationName()
@@ -79,7 +98,7 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * Get the path to the file that should be generated.
-   * 
+   *
    * @return string
    */
   protected function getNewFilePath()
@@ -90,7 +109,7 @@ class GenerateMigrationCommand extends Generate {
   /**
    * Compile a template or return a string
    * that should be inserted into the generated file.
-   * 
+   *
    * @return string
    */
   protected function applyDataToStub()
@@ -112,7 +131,7 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * Grab up method stub and replace template vars
-   * 
+   *
    * @return string
    */
   protected function setUpMethod()
@@ -147,7 +166,7 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * Grab down method stub and replace template vars
-   * 
+   *
    * @return string
    */
   protected function setDownMethod()
@@ -176,7 +195,7 @@ class GenerateMigrationCommand extends Generate {
     }
 
     $downMethod = $this->replaceTableNameInTemplate($downMethod);
-    
+
     // Insert the schema into the down method
     return str_replace('{{methods}}', $fields, $downMethod);
   }
@@ -184,7 +203,7 @@ class GenerateMigrationCommand extends Generate {
   /**
    * Create a string of the Schema fields that
    * should be inserted into the sub template.
-   * 
+   *
    * @param string $method (addColumn | dropColumn)
    * @return string
    */
@@ -200,10 +219,10 @@ class GenerateMigrationCommand extends Generate {
   /**
    * If Schema fields are specified, parse
    * them into an array of objects.
-   * 
+   *
    * So: name:string, age:integer
    * Becomes: [ ((object)['name' => 'string'], (object)['age' => 'integer'] ]
-   * 
+   *
    * @returns mixed
    */
   protected function convertFieldsToArray()
@@ -213,7 +232,7 @@ class GenerateMigrationCommand extends Generate {
     if ( !$fields ) return;
 
     $fields = preg_split('/, ?/', $fields);
-    
+
     foreach($fields as &$bit)
     {
       $fieldAndType = preg_split('/ ?: ?/', $bit);
@@ -229,7 +248,7 @@ class GenerateMigrationCommand extends Generate {
   /**
    * Searches for {{tableName}} and replaces it
    * with what the user specifies
-   * 
+   *
    * @param string $template
    * @return string
    */
@@ -240,7 +259,7 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * Return template string for adding a column
-   * 
+   *
    * @param string $field
    * @return string
    */
@@ -251,7 +270,7 @@ class GenerateMigrationCommand extends Generate {
 
   /**
    * Return template string for dropping a column
-   * 
+   *
    * @param string $field
    * @return string
    */
@@ -284,5 +303,4 @@ class GenerateMigrationCommand extends Generate {
       array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null)
     );
   }
-
 }
