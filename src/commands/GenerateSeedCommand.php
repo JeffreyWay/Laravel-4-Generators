@@ -23,20 +23,48 @@ class GenerateSeedCommand extends Generate {
 
   /**
    * The type of file generation.
-   * 
+   *
    * @var string
    */
   protected $type = 'seed';
 
   /**
+   * Execute the console command.
+   *
+   * @return void
+   */
+  public function fire()
+  {
+    parent::fire();
+
+    $this->updateDatabaseSeederRunMethod();
+  }
+
+  /**
    * Compile a template or return a string
    * that should be inserted into the generated file.
-   * 
+   *
    * @return string
    */
   protected function applyDataToStub()
   {
     return str_replace('{{tableName}}', ucwords($this->argument('fileName')), $this->getStub());
+  }
+
+  /**
+   * Updates the DatabaseSeeder file's run method to
+   * call this new seed class
+   * @return void
+   */
+  protected function updateDatabaseSeederRunMethod()
+  {
+    $databaseSeederPath = app_path() . '/database/seeds/DatabaseSeeder.php';
+    $tableSeederClassName = ucwords($this->argument('fileName')) . 'TableSeeder';
+
+    $content = \File::get($databaseSeederPath);
+    $content = preg_replace("/(run\(\).+?)}/us", "$1\t\$this->call('{$tableSeederClassName}');\n\t}", $content);
+
+    \File::put($databaseSeederPath, $content);
   }
 
   /**
@@ -53,7 +81,7 @@ class GenerateSeedCommand extends Generate {
 
   /**
    * Get the path to the file that should be generated.
-   * 
+   *
    * @return string
    */
   protected function getNewFilePath()
