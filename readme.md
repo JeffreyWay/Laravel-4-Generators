@@ -348,10 +348,11 @@ class DogsTableSeeder extends Seeder {
 }
 ```
 
-You're of course free to adjust this, if needed. To fully seed the `dogs` table:
+This command will also update `app/database/seeds/DatabaseSeeder.php` to include a call to this new seed class, as required by Laravel.
 
-- Within the `$Dogs` array, add any number of arrays, containing the necessary row.
-- Open `DatabaseSeeder.php` and call this new class from the `run()` method. (`$this->call('DogsTableSeeder');`).
+To fully seed the `dogs` table:
+
+- Within the `$Dogs` array, add any number of arrays, containing the necessary rows.
 - Return to the Terminal and run Laravel's `db:seed command` (`php artisan db:seed`).
 
 ### Resources
