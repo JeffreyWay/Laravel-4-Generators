@@ -367,6 +367,7 @@ The following actions will take place:
 - Creates a `Dog.php` model.
 - Creates a `views/dogs` folder, containing the `index`, `show`, `create`, and `edit` views.
 - Creates a `database/seeds/DogsTableSeeder.php` seed file.
+- Updates `DatabaseSeeder.php` to run `DogsTableSeeder`
 - Creates `controllers/DogsController.php`, and fills it with restful methods.
 - Updates `routes.php` to include: `Route::resource('dogs', 'DogsController')`.
 - Creates a `tests/controllers/DogsControllerTest.php` file, and fills it with some boilerplate tests to get you started.
@@ -386,13 +387,6 @@ Next, we'll seed this new `dogs` table. Open `database/seeds/DogsTableSeeder.php
         ['name' => 'Sparky', 'age' => 5],
         ['name' => 'Joe', 'age' => 11]
     ];
-
-We can't forget to call this new seed file from the master `DatabaseSeeder` file.
-
-    public function run()
-    {
-    	$this->call('DogsTableSeeder');
-    }
 
 Now, we migrate the database and seed the `dogs` table.
 
