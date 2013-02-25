@@ -115,7 +115,7 @@ class GenerateMigrationCommand extends Generate {
     $stub = $this->getStub();
 
     // Replace the name of the class
-    $stub = str_replace('{{name}}', \Str::camel($this->argument('fileName')), $stub);
+    $stub = str_replace('{{name}}', camel_case($this->argument('fileName')), $stub);
 
     $upMethod = $this->setUpMethod();
     $downMethod = $this->setDownMethod();
