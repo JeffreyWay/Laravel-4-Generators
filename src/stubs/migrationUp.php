@@ -1,7 +1,6 @@
 	public function up()
 	{
-	  Schema::table('{{tableName}}', function($table)
-	  {
-	    {{methods}}
-	  });
+		Schema::table('{{tableName}}', function($table) {
+			{{methods}}
+		});
 	}

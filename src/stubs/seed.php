@@ -2,13 +2,13 @@
 
 class {{tableName}}TableSeeder extends Seeder {
 
-  public function run()
-  {
-    ${{tableName}} = [
-        
-    ];
+	public function run()
+	{
+		${{tableName}} = [
 
-    DB::table('{{tableName}}')->insert(${{tableName}});
-  }
+		];
+
+		DB::table('{{tableName}}')->insert(${{tableName}});
+	}
 
 }
