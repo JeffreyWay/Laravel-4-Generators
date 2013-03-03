@@ -48,7 +48,7 @@ class GenerateSeedCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    $camel = $this->argument('tableName');
+    $camel = strtolower($this->argument('tableName'));
     $studly = ucwords($camel);
 
     $stub = str_replace('{{TableName}}', $studly, $this->getStub());
