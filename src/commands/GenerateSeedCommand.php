@@ -48,7 +48,11 @@ class GenerateSeedCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    return str_replace('{{tableName}}', ucwords($this->argument('fileName')), $this->getStub());
+    $camel = $this->argument('tableName');
+    $studly = ucwords($camel);
+
+    $stub = str_replace('{{TableName}}', $studly, $this->getStub());
+    return str_replace('{{tableName}}', $camel, $stub);
   }
 
   /**
@@ -59,7 +63,7 @@ class GenerateSeedCommand extends Generate {
   protected function updateDatabaseSeederRunMethod()
   {
     $databaseSeederPath = app_path() . '/database/seeds/DatabaseSeeder.php';
-    $tableSeederClassName = ucwords($this->argument('fileName')) . 'TableSeeder';
+    $tableSeederClassName = ucwords($this->argument('tableName')) . 'TableSeeder';
 
     $content = \File::get($databaseSeederPath);
     $content = preg_replace("/(run\(\).+?)}/us", "$1\t\$this->call('{$tableSeederClassName}');\n\t}", $content);
@@ -75,7 +79,7 @@ class GenerateSeedCommand extends Generate {
   protected function getArguments()
   {
     return array(
-      array('fileName', InputArgument::REQUIRED, 'Name of the model.'),
+      array('tableName', InputArgument::REQUIRED, 'Name of the table.'),
     );
   }
 
@@ -86,7 +90,7 @@ class GenerateSeedCommand extends Generate {
    */
   protected function getNewFilePath()
   {
-    return app_path() . '/' . $this->option('path') . '/' . ucwords($this->argument('fileName')) . 'TableSeeder.php';
+    return app_path() . '/' . $this->option('path') . '/' . ucwords($this->argument('tableName')) . 'TableSeeder.php';
   }
 
   /**
