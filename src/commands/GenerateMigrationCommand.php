@@ -87,8 +87,15 @@ class GenerateMigrationCommand extends Generate {
 
     $action = $pieces[0];
 
-    end($pieces);
-    $tableName = prev($pieces);
+    // If the migration name is create_users,
+    // then we'll set the tableName to the last
+    // item. But, if it's create_users_table,
+    // then we have to compensate, accordingly.
+    $tableName = end($pieces);
+    if ( $tableName === 'table' )
+    {
+      $tableName = prev($pieces);
+    }
 
     // For example: ['add', 'posts']
     return array($action, $tableName);
