@@ -24,7 +24,7 @@ class GenerateResourceCommand extends Generate {
 
 	/**
 	 * The type of file generation.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $type = 'resource';
@@ -107,7 +107,7 @@ class GenerateResourceCommand extends Generate {
 		$this->call(
 			'generate:seed',
 			array(
-				'fileName' => $pluralName
+				'tableName' => $pluralName
 			)
 		);
 	}
