@@ -338,11 +338,11 @@ class DogsTableSeeder extends Seeder {
 
   public function run()
   {
-    $Dogs = [
+    $dogs = [
 
     ];
 
-    DB::table('Dogs')->insert($Dogs);
+    DB::table('Dogs')->insert($dogs);
   }
 
 }
@@ -352,7 +352,7 @@ This command will also update `app/database/seeds/DatabaseSeeder.php` to include
 
 To fully seed the `dogs` table:
 
-- Within the `$Dogs` array, add any number of arrays, containing the necessary rows.
+- Within the `$dogs` array, add any number of arrays, containing the necessary rows.
 - Return to the Terminal and run Laravel's `db:seed command` (`php artisan db:seed`).
 
 ### Resources
@@ -379,11 +379,10 @@ The following actions will take place:
 Let's create a resource for displaying dogs in a restful way.
 
     php artisan generate:resource dog --fields="name:string, age:integer"
-    composer dump-autoload
 
-Next, we'll seed this new `dogs` table. Open `database/seeds/DogsTableSeeder.php` and add a couple of rows. Remember, you only need to edit the `$Dogs` array within this file.
+Next, we'll seed this new `dogs` table. Open `database/seeds/DogsTableSeeder.php` and add a couple of rows. Remember, you only need to edit the `$dogs` array within this file.
 
-    $Dogs = [
+    $dogs = [
         ['name' => 'Sparky', 'age' => 5],
         ['name' => 'Joe', 'age' => 11]
     ];
