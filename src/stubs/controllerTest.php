@@ -1,6 +1,7 @@
 <?php
 
 class {{name}} extends TestCase {
+
 	public function testAll()
 	{
 		$response = $this->call('GET', '{{resource}}');
@@ -24,4 +25,5 @@ class {{name}} extends TestCase {
 		$response = $this->call('GET', '{{resource}}/1/edit');
 		$this->assertTrue($response->isOk());
 	}
+	
 }
