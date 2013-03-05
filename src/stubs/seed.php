@@ -4,9 +4,9 @@ class {{TableName}}TableSeeder extends Seeder {
 
 	public function run()
 	{
-		${{tableName}} = [
+		${{tableName}} = array(
 
-		];
+		);
 
 		DB::table('{{tableName}}')->insert(${{tableName}});
 	}
