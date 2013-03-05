@@ -1,7 +1,7 @@
 <?php
 
 class {{name}} extends TestCase {
-	public function testAll()
+	public function testIndex()
 	{
 		$response = $this->call('GET', '{{resource}}');
 		$this->assertTrue($response->isOk());
