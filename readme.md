@@ -119,7 +119,7 @@ class AddUserIdToPostsTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
+	public function down()
 	{
 	  Schema::table('posts', function($table)
 	  {
@@ -227,7 +227,7 @@ class RemoveCompletedFromTasksTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
+	public function down()
 	{
 	  Schema::table('tasks', function($table)
 	  {
