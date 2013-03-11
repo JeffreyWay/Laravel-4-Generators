@@ -5,4 +5,4 @@ class {{name}} extends TestCase {
 	{
 
 	}
-}`
+}
