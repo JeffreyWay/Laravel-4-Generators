@@ -4,6 +4,8 @@ class {{TableName}}TableSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('{{tableName}}')->delete();
+		
 		${{tableName}} = array(
 
 		);
