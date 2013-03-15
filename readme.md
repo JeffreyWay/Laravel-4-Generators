@@ -196,6 +196,9 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
 - `--fields="username:string:unique, age:integer:nullable"`
+- `--fields="username:string[30]:unique, age:integer:nullable"`
+
+Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
 
 As a final demonstration, let's run a migration to remove the `completed` field from a `tasks` table.
 
