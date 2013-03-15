@@ -240,11 +240,18 @@ class GenerateMigrationCommand extends Generate {
 
     foreach($fields as &$bit)
     {
-      $fieldAndType = preg_split('/ ?: ?/', $bit);
+      $columnInfo = preg_split('/ ?: ?/', $bit);
 
       $bit = new \StdClass;
-      $bit->name = $fieldAndType[0];
-      $bit->type = $fieldAndType[1];
+      $bit->name = $columnInfo[0];
+      $bit->type = $columnInfo[1];
+
+      // If there is a third key, then
+      // the user is setting an index/option.
+      if ( isset($columnInfo[2]) )
+      {
+        $bit->index = $columnInfo[2];
+      }
     }
 
     return $fields;
@@ -270,7 +277,17 @@ class GenerateMigrationCommand extends Generate {
    */
   protected function addColumn($field)
   {
-    return "\$table->{$field->type}('" . $field->name . "');";
+    $html = "\$table->{$field->type}('" . $field->name . "')";
+
+    // Take care of any indexes or options
+    if ( isset($field->index) )
+    {
+      $html .= strpos($field->index, '(') !== false
+        ? "->{$field->index}"
+        : "->{$field->index}()";
+    }
+
+    return $html.';';
   }
 
   /**

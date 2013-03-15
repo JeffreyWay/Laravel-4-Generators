@@ -166,7 +166,7 @@ class CreatePostsTable extends Migration {
 	  {
 	    $table->increments('id');
 	    $table->string('title');
-		$table->text('body');
+			$table->text('body');
 	    $table->timestamps();
 	  });
 	}
@@ -191,10 +191,11 @@ Nice! A few things to notice here:
 - It parsed the `fields` options, and added those fields.
 - The drop method is smart enough to realize that, in reverse, the table should be dropped entirely.
 
-To declare fields, use a comma-separated list of key:value pairs, where `key` is the name of the field, and `value` is the [column type](http://four.laravel.com/docs/schema#adding-columns). Here are some examples:
+To declare fields, use a comma-separated list of key:value:option sets, where `key` is the name of the field, `value` is the [column type](http://four.laravel.com/docs/schema#adding-columns), and `option` is a way to specify indexes and such, like `unique` or `nullable`. Here are some examples:
 
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
+- `--fields="username:string:unique, age:integer:nullable"`
 
 As a final demonstration, let's run a migration to remove the `completed` field from a `tasks` table.
 
