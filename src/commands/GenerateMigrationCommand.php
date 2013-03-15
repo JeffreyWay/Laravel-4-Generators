@@ -277,12 +277,26 @@ class GenerateMigrationCommand extends Generate {
    */
   protected function addColumn($field)
   {
-    $html = "\$table->{$field->type}('" . $field->name . "')";
+    // Let's see if they're setting
+    // a limit, like: string[50]
+    if ( str_contains($field->type, '[') )
+    {
+      preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
+      $field->type = $matches[1]; // string
+      $field->limit = $matches[2]; // 50
+    }
 
-    // Take care of any indexes or options
+    // We'll start building the appropriate Schema method
+    $html = "\$table->{$field->type}";
+
+    $html .= isset($field->limit)
+      ? "('{$field->name}', {$field->limit})"
+      : "('{$field->name}')";
+
+    // Take care of any potential indexes or options
     if ( isset($field->index) )
     {
-      $html .= strpos($field->index, '(') !== false
+      $html .= str_contains($field->index, '(')
         ? "->{$field->index}"
         : "->{$field->index}()";
     }
