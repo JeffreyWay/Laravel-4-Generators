@@ -32,6 +32,8 @@ That's it! You're all set to go. Run the `artisan` command from the Terminal to 
 
     php artisan
 
+> There's also a [Sublime Text plugin available](http://net.tutsplus.com/tutorials/tools-and-tips/pro-workflow-in-laravel-and-sublime-text/) to assist with the generators. Definitely use it, but not before you learn the syntax below.
+
 ## Usage
 
 Think of generators as an easy way to speed up your workflow. Rather than opening the models directory, creating a new file, saving it, and adding the class, you can simply run a single generate command.
