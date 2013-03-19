@@ -45,7 +45,12 @@ class GenerateResourceCommand extends Generate {
 		$pluralName = Pluralizer::plural($name);
 
 		// Create the model
-		$this->call('generate:model', array('fileName' => $name));
+		$this->call('generate:model',
+			array(
+				'fileName' => $name,
+				'--relationships' => $this->option('relationships')
+			)
+		);
 
 
 		// Create the controller
@@ -125,7 +130,8 @@ class GenerateResourceCommand extends Generate {
 	protected function getOptions()
 	{
 		return array(
-			array('fields', null, InputOption::VALUE_OPTIONAL, 'Schema fields', null)
+			array('fields', null, InputOption::VALUE_OPTIONAL, 'Schema fields', null),
+		    array('relationships', null, InputOption::VALUE_OPTIONAL, 'Relationship options', null)
 		);
 	}
 
