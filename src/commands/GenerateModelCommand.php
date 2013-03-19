@@ -36,7 +36,76 @@ class GenerateModelCommand extends Generate {
    */
   protected function applyDataToStub()
   {
-    return str_replace('{{name}}', ucwords($this->argument('fileName')), $this->getStub());
+    $stub = $this->getStub();
+
+    $stub = str_replace('{{name}}', ucwords($this->argument('fileName')), $this->getStub());
+
+    $fields = $this->option('relationships') ? $this->setFields() : '';
+
+    return str_replace('{{relationships}}', $fields, $stub);
+  }
+
+  /**
+   * Create a string of the Schema fields that
+   * should be inserted into the sub template.
+   *
+   * @param string $method (addColumn | dropColumn)
+   * @return string
+   */
+  protected function setFields($method = 'setRelationShip')
+  {
+    $fields = $this->convertFieldsToArray();
+
+    $template = array_map(array($this, $method), $fields);
+
+    return implode("", $template);
+  }
+
+  /**
+   * Return template string for dropping a column
+   *
+   * @param string $field
+   * @return string
+   */
+  protected function setRelationShip($field)
+  {
+    $stub = \File::get(__DIR__ . '/../stubs/relationships.php');
+
+    // Insert the schema into the down method
+    $stub = str_replace('{{relationType}}', $field->type, $stub);
+    $stub = str_replace('{{modelName}}', $field->model, $stub);
+    $stub = str_replace('{{ucModelName}}', ucfirst($field->model), $stub);
+
+    return $stub;
+  }
+
+  /**
+   * If relationships are specified, parse
+   * them into an array of objects.
+   *
+   * So: has_many:model, has_one:model
+   * Becomes: [ ((object)['has_many' => 'model'], (object)['has_one' => 'model'] ]
+   *
+   * @returns mixed
+   */
+  protected function convertFieldsToArray()
+  {
+    $relationships = $this->option('relationships');
+
+    if ( !$relationships ) return;
+
+    $relationships = preg_split('/, ?/', $relationships);
+
+    foreach($relationships as &$bit)
+    {
+      $columnInfo = preg_split('/ ?: ?/', $bit);
+
+      $bit = new \StdClass;
+      $bit->type = $columnInfo[0];
+      $bit->model = $columnInfo[1];
+    }
+
+    return $relationships;
   }
 
   /**
@@ -60,6 +129,7 @@ class GenerateModelCommand extends Generate {
   {
     return array(
       array('path', null, InputOption::VALUE_OPTIONAL, 'An example option.', 'models'),
+      array('relationships', null, InputOption::VALUE_OPTIONAL, 'Relationship options', null)
     );
   }
 

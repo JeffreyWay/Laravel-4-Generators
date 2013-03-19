@@ -2,4 +2,6 @@
 
 class {{name}} extends Eloquent {
 
+{{relationships}}
+
 }
