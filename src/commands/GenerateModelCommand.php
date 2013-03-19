@@ -46,10 +46,10 @@ class GenerateModelCommand extends Generate {
   }
 
   /**
-   * Create a string of the Schema fields that
+   * Create a string of the relationships that
    * should be inserted into the sub template.
    *
-   * @param string $method (addColumn | dropColumn)
+   * @param string $method (setRelationShip)
    * @return string
    */
   protected function setFields($method = 'setRelationShip')
@@ -62,7 +62,7 @@ class GenerateModelCommand extends Generate {
   }
 
   /**
-   * Return template string for dropping a column
+   * Return template string for relationship setup
    *
    * @param string $field
    * @return string
