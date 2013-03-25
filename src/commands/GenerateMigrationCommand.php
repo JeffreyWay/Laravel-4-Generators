@@ -193,10 +193,11 @@ class GenerateMigrationCommand extends Generate {
 
       case 'create':
       case 'make':
+      default:
         // then we need to drop the table in reverse
         $downMethod = \File::get(__DIR__ . '/../stubs/migrationDownDrop.php');
         $fields = $this->option('fields') ? $this->setFields('dropColumn') : '';
-      default:
+        break;
     }
 
     $downMethod = $this->replaceTableNameInTemplate($downMethod);
