@@ -8,7 +8,8 @@ class {{TableName}}TableSeeder extends Seeder {
 
 		);
 
-		DB::table('{{tableName}}')->insert(${{tableName}});
+		// Uncomment the below to run the seeder
+		// DB::table('{{tableName}}')->insert(${{tableName}});
 	}
 
 }
