@@ -42,7 +42,7 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - [Models](#models)
 - [Tests](#tests)
 - [Views](#views)
-- [Seeds](#controllers)
+- [Seeds](#seeds)
 - [Resources](#resources)
 
 ### Migrations
