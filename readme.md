@@ -1,11 +1,13 @@
 This Laravel 4 package provides a variety of generators to speed up your development process. These generators include:
 
 - `generate:model`
+- `generate:controller`
 - `generate:seed`
 - `generate:test`
 - `generate:view`
 - `generate:migration`
 - `generate:resource`
+- `generate:scaffold` *<-- NEW!!*
 
 ## Prefer a Video Walk-through?
 
