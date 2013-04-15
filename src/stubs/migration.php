@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class {{name}} extends Migration {
-
+class {{name}} extends Migration
+{
 	/**
 	 * Run the migrations.
 	 *
@@ -17,5 +17,4 @@ class {{name}} extends Migration {
 	 * @return void
 	 */
 {{down}}
-
 }

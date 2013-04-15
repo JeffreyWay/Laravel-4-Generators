@@ -1,6 +1,7 @@
 <?php
 
-class {{TableName}}TableSeeder extends Seeder {
+class {{TableName}}TableSeeder extends Seeder
+{
 
 	public function run()
 	{

@@ -1,5 +1,6 @@
 <?php
 
-class {{name}} extends Eloquent {
+class {{name}} extends Eloquent
+{
 
 }

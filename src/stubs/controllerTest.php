@@ -1,6 +1,7 @@
 <?php
 
-class {{name}} extends TestCase {
+class {{name}} extends TestCase
+{
 	public function testIndex()
 	{
 		$response = $this->call('GET', '{{resource}}');
