@@ -94,7 +94,11 @@ class GenerateMigrationCommand extends Generate {
     $tableName = end($pieces);
     if ( $tableName === 'table' )
     {
-      $tableName = prev($pieces);
+      $tableName = '';
+      while($part = prev($pieces) and $part !== $action) 
+      {
+        $tableName = $part . (!empty($tableName) ? '_' : '') . $tableName;
+      }
     }
 
     // For example: ['add', 'posts']
