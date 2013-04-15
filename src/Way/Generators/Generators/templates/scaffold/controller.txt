@@ -72,7 +72,7 @@ class {{name}} extends BaseController {
      */
     public function show($id)
     {
-        ${{modelInstance}} = $this->{{modelInstance}}->find($id);
+        ${{modelInstance}} = $this->{{modelInstance}}->findOrFail($id);
 
         $this->layout->content = View::make('{{collection}}.show', compact('{{modelInstance}}'));
     }
@@ -86,6 +86,11 @@ class {{name}} extends BaseController {
     public function edit($id)
     {
         ${{modelInstance}} = $this->{{modelInstance}}->find($id);
+
+        if (is_null(${{modelInstance}}))
+        {
+            return Redirect::route('{{collection}}.index');
+        }
 
         $this->layout->content = View::make('{{collection}}.edit', compact('{{modelInstance}}'));
     }
