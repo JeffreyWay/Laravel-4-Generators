@@ -49,7 +49,7 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 
 Laravel 4 offers a migration generator, but it stops just short of creating the schema (or the fields for the table). Let's review a couple examples, using `generate:migration`.
 
-    php artisan generate:migration create_post_table
+    php artisan generate:migration create_posts_table
 
 If we don't specify the `fields` option, the following file will be created within `app/database/migrations`.
 
@@ -58,7 +58,7 @@ If we don't specify the `fields` option, the following file will be created with
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostTable extends Migration {
+class CreatePostsTable extends Migration {
 
     /**
 	 * Run the migrations.
@@ -67,7 +67,7 @@ class CreatePostTable extends Migration {
 	 */
 	public function up()
 	{
-	  Schema::create('post', function($table)
+	  Schema::create('posts', function($table)
 	  {
 	    $table->increments('id');
 
@@ -82,7 +82,7 @@ class CreatePostTable extends Migration {
 	 */
 	public function down()
 	{
-	  Schema::drop('post');
+	  Schema::drop('posts');
 	}
 
 }
