@@ -19,24 +19,30 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
     public function testCanGenerateModelUsingTemplate()
     {
         $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
+        $cache = m::Mock('Way\Generators\Cache');
 
         $file->shouldReceive('put')
              ->once()
              ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/model.txt'));
 
-        $generator = new ModelGenerator($file);
+        $generator = new ModelGenerator($file, $cache);
         $generator->make('app/models/Foo.php', static::$templatesDir.'/model.txt');
     }
 
-    public function testCanGenerateModelUsingCustomTemplate()
+    public function testCanGenerateModelUsingCustomTemplateAndNoFields()
     {
         $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
+        $cache = m::Mock('Way\Generators\Cache');
+
+        $cache->shouldReceive('getFields')
+              ->once()
+              ->andReturn(['title' => 'string']);
 
         $file->shouldReceive('put')
              ->once()
              ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model.txt'));
 
-        $generator = new ModelGenerator($file);
+        $generator = new ModelGenerator($file, $cache);
         $generator->make('app/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
     }
 }
