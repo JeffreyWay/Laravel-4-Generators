@@ -430,3 +430,15 @@ Isn't that way faster than manually doing all of that writing? To finish up, let
     phpunit
 
 And...it's green!
+
+### Scaffolding
+
+![scaffolding](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/scaffold-example.png)
+
+Think of scaffolding as an extension of a resource. It has the exact same interface.
+
+```bash
+php artisan generate:scaffold dog --fields="name:string, owner:string"
+```
+
+The only difference is that it will handle all of the boilerplate. This can be particularly useful for prototyping - or even learning how to do basic things, such as delete a record from a database table, or perform validation on a form.
