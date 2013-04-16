@@ -3,15 +3,20 @@
 class FoosController extends BaseController {
 
     /**
+     * The layout that should be used for responses.
+     */
+    protected $layout = 'layouts.master';
+
+    /**
      * Foo Repository
      *
      * @var Foo
      */
-    protected $Foo;
+    protected $foo;
 
-    public function __construct(Foo $foos)
+    public function __construct(Foo $foo)
     {
-        $this->foos = $foos;
+        $this->foo = $foo;
     }
 
     /**
@@ -21,9 +26,9 @@ class FoosController extends BaseController {
      */
     public function index()
     {
-        $foos = $this->foos->all();
+        $foos = $this->foo->all();
 
-        return View::make('foos.index', compact('foos'));
+        $this->layout->content = View::make('foos.index', compact('foos'));
     }
 
     /**
@@ -43,7 +48,20 @@ class FoosController extends BaseController {
      */
     public function store()
     {
-        //
+        $input = Input::all();
+        $validation = Validator::make($input, Foo::$rules);
+
+        if ($validation->passes())
+        {
+            $this->foo->create($input);
+
+            return Redirect::route('foos.index');
+        }
+
+        return Redirect::route('foos.create')
+            ->withInput()
+            ->withErrors($validation)
+            ->with('flash', 'There were validation errors.');
     }
 
     /**
@@ -54,9 +72,9 @@ class FoosController extends BaseController {
      */
     public function show($id)
     {
-        $foos = $this->foos->find($id);
+        $foo = $this->foo->findOrFail($id);
 
-        return View::make('foos.show', compact('foos'));
+        $this->layout->content = View::make('foos.show', compact('foo'));
     }
 
     /**
@@ -67,7 +85,14 @@ class FoosController extends BaseController {
      */
     public function edit($id)
     {
-        //
+        $foo = $this->foo->find($id);
+
+        if (is_null($foo))
+        {
+            return Redirect::route('foos.index');
+        }
+
+        $this->layout->content = View::make('foos.edit', compact('foo'));
     }
 
     /**
@@ -78,7 +103,21 @@ class FoosController extends BaseController {
      */
     public function update($id)
     {
-        //
+        $input = array_except(Input::all(), '_method');
+        $validation = Validator::make($input, Foo::$rules);
+
+        if ($validation->passes())
+        {
+            $foo = $this->foo->find($id);
+            $foo->update($input);
+
+            return Redirect::route('foos.show', $id);
+        }
+
+        return Redirect::route('foos.edit', $id)
+            ->withInput()
+            ->withErrors($validation)
+            ->with('flash', 'There were validation errors.');
     }
 
     /**
@@ -89,7 +128,9 @@ class FoosController extends BaseController {
      */
     public function destroy($id)
     {
-        //
+        $this->foo->find($id)->delete();
+
+        return Redirect::route('foos.index');
     }
 
 }
