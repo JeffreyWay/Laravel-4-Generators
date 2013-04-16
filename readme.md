@@ -442,3 +442,5 @@ php artisan generate:scaffold dog --fields="name:string, owner:string"
 ```
 
 The only difference is that it will handle all of the boilerplate. This can be particularly useful for prototyping - or even learning how to do basic things, such as delete a record from a database table, or perform validation on a form.
+
+![view scaffold](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/scaffold-view.png)
