@@ -3,11 +3,6 @@
 class FoosController extends BaseController {
 
     /**
-     * The layout that should be used for responses.
-     */
-    protected $layout = 'layouts.master';
-
-    /**
      * Foo Repository
      *
      * @var Foo
@@ -28,7 +23,7 @@ class FoosController extends BaseController {
     {
         $foos = $this->foo->all();
 
-        $this->layout->content = View::make('foos.index', compact('foos'));
+        return View::make('foos.index', compact('foos'));
     }
 
     /**
@@ -38,7 +33,7 @@ class FoosController extends BaseController {
      */
     public function create()
     {
-        $this->layout->content = View::make('foos.create');
+        return View::make('foos.create');
     }
 
     /**
@@ -74,7 +69,7 @@ class FoosController extends BaseController {
     {
         $foo = $this->foo->findOrFail($id);
 
-        $this->layout->content = View::make('foos.show', compact('foo'));
+        return View::make('foos.show', compact('foo'));
     }
 
     /**
@@ -92,7 +87,7 @@ class FoosController extends BaseController {
             return Redirect::route('foos.index');
         }
 
-        $this->layout->content = View::make('foos.edit', compact('foo'));
+        return View::make('foos.edit', compact('foo'));
     }
 
     /**

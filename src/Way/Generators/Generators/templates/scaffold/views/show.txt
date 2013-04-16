@@ -1,3 +1,5 @@
+@extends('layouts.master')
+
 @section('main')
 
 <h1>Show {{className}}</h1>

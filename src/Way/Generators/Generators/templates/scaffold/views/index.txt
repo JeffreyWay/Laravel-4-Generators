@@ -1,3 +1,5 @@
+@extends('layouts.master')
+
 @section('main')
 
 <h1>All {{formalModel}}</h1>
