@@ -43,10 +43,11 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 
 - [Migrations](#migrations)
 - [Models](#models)
-- [Tests](#tests)
 - [Views](#views)
 - [Seeds](#controllers)
 - [Resources](#resources)
+- [Scaffolding](#scaffolding)
+- [Forms](#forms)
 
 ### Migrations
 
@@ -261,63 +262,6 @@ class Post extends Eloquent {
 }
 ```
 
-
-### Tests
-
-    php artisan generate:test PostsTest
-
-This will generate the file, `app/tests/PostsTest.php` and fill it with a starting template:
-
-```php
-<?php
-
-class PostsTest extends TestCase {
-    public function test()
-	{
-
-	}
-}
-```
-
-Should you need to place this file within a subdirectory (or somewhere else in the `app` folder), use the `--path` option, like so:
-
-    php artisan generate:test PostsTest --path=tests/controllers
-
-Now, `PostsTest.php` will be placed in `app/tests/controllers/`. Please note that, if the designated directory does not exist, it will be created recursively for you.
-
-If you pass a `--controller=posts` flag, then the generator will assume that you're writing tests for your controller, and will give you some extra boilerplate to get you started.
-
-```php
-<?php
-
-class PostsTest extends TestCase {
-    public function testAll()
-	{
-		$response = $this->call('GET', 'posts');
-		$this->assertTrue($response->isOk());
-	}
-
-	public function testShow()
-	{
-		$response = $this->call('GET', 'posts/1');
-		$this->assertTrue($response->isOk());
-	}
-
-	public function testCreate()
-	{
-		$response = $this->call('GET', 'posts/create');
-		$this->assertTrue($response->isOk());
-	}
-
-	public function testEdit()
-	{
-		$response = $this->call('GET', 'posts/1/edit');
-		$this->assertTrue($response->isOk());
-	}
-}
-```
-
-
 ### Views
 
     php artisan generate:view dog
@@ -448,7 +392,7 @@ The only difference is that it will handle all of the boilerplate. This can be p
 
 ![view validation](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/scaffold-validation.png)
 
-### Form
+### Forms
 This handy new generator allows you to, with a single command, generate the necessary HTML for a form, based on attributes from a provided model. Perhaps an example is in order:
 
 ```bash
