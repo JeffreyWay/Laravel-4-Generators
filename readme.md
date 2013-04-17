@@ -462,3 +462,16 @@ Now, the generator we'll present the elements within `div`s!
     </div>
 {{ Form::close() }}
 ```
+
+#### Copying and Saving
+
+At least for now, and unlike the other generators in this package, this command will output the form, at which point you can copy and paste it where needed. Of course, you can always pipe the output to the clipboard or save to a file, using existing tools. For instance:
+
+```bash
+# copy the output to the clipboard
+php artisan generate:form tweet | pbcopy
+
+# save it to a form partial
+php artisan generate:form tweet > app/views/posts/form.blade.php
+```
+
