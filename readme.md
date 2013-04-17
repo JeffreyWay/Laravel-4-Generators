@@ -8,6 +8,7 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:migration`
 - `generate:resource`
 - `generate:scaffold` *<-- NEW!!*
+- `generate:form` *<-- NEW!!*
 
 ## Prefer a Video Walk-through?
 
@@ -446,3 +447,74 @@ The only difference is that it will handle all of the boilerplate. This can be p
 ![view scaffold](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/scaffold-view.png)
 
 ![view validation](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/scaffold-validation.png)
+
+### Form
+This handy new generator allows you to, with a single command, generate the necessary HTML for a form, based on attributes from a provided model. Perhaps an example is in order:
+
+```bash
+php artisan generate:form dog
+```
+Assuming that I do have a `Dog` model and its associated `dogs` table, this command will output:
+
+```html
+{{ Form::open(array('route' => 'tweets.store')) }}
+    <ul>
+        <li>
+            {{ Form::label('author', 'Author:') }}
+            {{ Form::text('author') }}
+        </li>
+
+        <li>
+            {{ Form::label('body', 'Body:') }}
+            {{ Form::textarea('body') }}
+        </li>
+
+        <li>
+            {{ Form::submit() }}
+        </li>
+    </ul>
+{{ Form::close() }}
+```
+Pretty neat, huh? It read the attributes and data types, and prepared the markup for you! One less thing to worry about!
+
+#### Specifying the Form's Method
+But what if you intend to update a resource, rather than create a new one? Well, in that case, use the `--method` option.
+
+```bash
+php artisan generate:form dog --method="update"
+```
+
+This will mostly generate the same HTML, however, the `Form::open()` method will be adjusted, as needed:
+
+```php
+{{ Form::open(array('method' => 'PATCH', 'route' => 'tweets.update')) }}
+```
+
+The method option will accept any number of values (*add, edit, update, post, create, etc.*), but, essentially, you're just telling it whether you are creating or editing a resource. As such, there's only two possible outputs: `POST` and `PATCH` (the former being the default).
+
+#### Custom HTML
+
+What if you don't like the idea of using an unordered list for a form? Use the `--html` option, along with the name of the element that you'd prefer to use:
+
+```bash
+php artisan generate:form tweet --html="div"
+```
+Now, the generator we'll present the elements within `div`s!
+
+```html
+{{ Form::open(array('route' => 'tweets.store')) }}
+    <div>
+        {{ Form::label('author', 'Author:') }}
+        {{ Form::text('author') }}
+    </div>
+
+    <div>
+        {{ Form::label('body', 'Body:') }}
+        {{ Form::textarea('body') }}
+    </div>
+
+    <div>
+        {{ Form::submit() }}
+    </div>
+{{ Form::close() }}
+```

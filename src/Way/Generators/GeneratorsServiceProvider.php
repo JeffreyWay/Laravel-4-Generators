@@ -28,6 +28,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 		$this->registerViewGenerator();
 		$this->registerMigrationGenerator();
 		$this->registerSeedGenerator();
+		$this->registerFormDumper();
 
 		$this->commands(
 			'generate.model',
@@ -36,7 +37,8 @@ class GeneratorsServiceProvider extends ServiceProvider {
 			'generate.resource',
 			'generate.view',
 			'generate.migration',
-			'generate.seed'
+			'generate.seed',
+			'generate.form'
 		);
 	}
 
@@ -149,6 +151,21 @@ class GeneratorsServiceProvider extends ServiceProvider {
 			$generator = new Generators\SeedGenerator($app['files'], $cache);
 
 			return new Commands\SeedGeneratorCommand($generator);
+		});
+	}
+
+	/**
+	 * Register generate:migration
+	 *
+	 * @return Commands\MigrationGeneratorCommand
+	 */
+	protected function registerFormDumper()
+	{
+		$this->app['generate.form'] = $this->app->share(function($app)
+		{
+			$gen = new Generators\FormDumperGenerator($app['files'], new \Mustache_Engine);
+
+			return new Commands\FormDumperCommand($gen);
 		});
 	}
 

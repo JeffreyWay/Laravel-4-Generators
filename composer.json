@@ -14,7 +14,8 @@
         "illuminate/filesystem": "4.0.x"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master"
+        "mockery/mockery": "dev-master",
+        "mustache/mustache": "dev-master"
     },
     "autoload": {
         "psr-0": {

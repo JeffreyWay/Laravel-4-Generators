@@ -1,0 +1,13 @@
+
+{{ Form::open(array('method' => 'PATCH', 'route' => 'dogs.update')) }}
+    <ul>
+        <li>
+            {{ Form::label('name', 'Name:') }}
+            {{ Form::text('name') }}
+        </li>
+
+        <li>
+            {{ Form::submit() }}
+        </li>
+    </ul>
+{{ Form::close() }}
