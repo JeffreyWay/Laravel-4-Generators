@@ -122,7 +122,7 @@ class FormDumperGenerator {
      */
     protected function getFormOpen($method, $model)
     {
-        $collection = Pluralizer::plural($model);
+        $collection = $this->getTableName($model);
 
         if (preg_match('/edit|update|put|patch/i', $method))
         {
@@ -139,7 +139,7 @@ class FormDumperGenerator {
      */
     public function getTableInfo($model)
     {
-        $table = Pluralizer::plural($model);
+        $table = $this->getTableName($model);
 
         return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
     }
@@ -214,6 +214,16 @@ class FormDumperGenerator {
     protected function getTemplate($type = 'list')
     {
         return $this->file->get(static::$templatePath."/{$type}.txt");
+    }
+
+    /**
+     * Get the table name
+     * @param  string $model
+     * @return string
+     */
+    protected function getTableName($model)
+    {
+        return (new $model)->getTable() ? (new $model)->getTable() : Pluralizer::plural($model);
     }
 
 }
