@@ -70,11 +70,7 @@ class MigrationGenerator extends Generator {
         $tableName = end($pieces);
         if ( $tableName === 'table' )
         {
-            $tableName = '';
-            while($part = prev($pieces) and $part !== $action)
-            {
-                $tableName = $part . (!empty($tableName) ? '_' : '') . $tableName;
-            }
+            $tableName = prev($pieces);
         }
 
         // For example: ['add', 'posts']
