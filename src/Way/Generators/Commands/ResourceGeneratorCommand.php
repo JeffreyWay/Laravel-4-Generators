@@ -178,7 +178,7 @@ class ResourceGeneratorCommand extends Command {
 
         // Let's filter through all of our needed views
         // and create each one.
-        foreach(array('scaffold', 'index', 'show', 'create', 'edit') as $view)
+        foreach(array('index', 'show', 'create', 'edit') as $view)
         {
             $path = $view === 'scaffold' ? $layouts : $container;
             $this->generateView($view, $path);
