@@ -163,13 +163,18 @@ class ResourceGeneratorCommand extends Command {
         $viewsDir = app_path().'/views';
         $container = $viewsDir . '/' . Pluralizer::plural($this->model);
         $layouts = $viewsDir . '/layouts';
+        $views = array('index', 'show', 'create', 'edit');
 
         $this->generator->folders(
-            array(
-                $container,
-                $layouts
-            )
+            array($container)
         );
+
+        // If generating a scaffold, we also need views/layouts/scaffold
+        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
+        {
+            $views[] = 'scaffold';
+            $this->generator->folders($layouts);
+        }
 
         // Let's filter through all of our needed views
         // and create each one.
