@@ -88,7 +88,7 @@ class ViewGenerator extends Generator {
                     <td>{{ link_to_route('{$model}s.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
                         {{ Form::open(array('method' => 'DELETE', 'route' => array('{$model}s.destroy', \${$model}->id))) }}
-                            {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}</td>
+                            {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
 EOT;
