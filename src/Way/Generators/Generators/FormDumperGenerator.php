@@ -223,7 +223,7 @@ class FormDumperGenerator {
      */
     protected function getTableName($model)
     {
-        return (new $model)->getTable() ? (new $model)->getTable() : Pluralizer::plural($model);
+        return (new $model)->getTable() ?: Pluralizer::plural($model);
     }
 
 }
