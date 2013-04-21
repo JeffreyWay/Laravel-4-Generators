@@ -176,6 +176,7 @@ class FormDumperGenerator {
      */
     protected function getFormElements($type = 'list', $element)
     {
+        $form = array();
         $template = $this->getTemplate("{$type}-block");
         $attributes = $this->getModelAttributes($this->tableInfo);
 
