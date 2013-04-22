@@ -157,7 +157,7 @@ class FormDumperGenerator {
         $lookup = array(
             'string'  => 'text',
             'float'   => 'text',
-            'date'    => 'string',
+            'date'    => 'text',
             'text'    => 'textarea',
             'boolean' => 'checkbox'
         );
@@ -202,7 +202,7 @@ class FormDumperGenerator {
             'element'   => $element,
             'name'      => $name,
             'type'      => $this->getInputType($name),
-            'label'     => ucwords($name) . ':'
+            'label'     => str_replace('_', ' ', ucwords($name)) . ':'
         ));
     }
 
