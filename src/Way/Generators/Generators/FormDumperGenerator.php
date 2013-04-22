@@ -201,7 +201,7 @@ class FormDumperGenerator {
             'element'   => $element,
             'name'      => $name,
             'type'      => $this->getInputType($name),
-            'label'     => ucwords($name) . ':'
+            'label'     => str_replace('_', ' ', ucwords($name)) . ':'
         ));
     }
 
