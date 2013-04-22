@@ -157,7 +157,7 @@ class FormDumperGenerator {
         $lookup = array(
             'string'  => 'text',
             'float'   => 'text',
-            'date'    => 'string',
+            'date'    => 'text',
             'text'    => 'textarea',
             'boolean' => 'checkbox'
         );
