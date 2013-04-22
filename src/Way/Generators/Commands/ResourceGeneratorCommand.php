@@ -144,10 +144,12 @@ class ResourceGeneratorCommand extends Command {
      */
    protected function generateController()
     {
+        $name = Pluralizer::plural($this->model);
+
         $this->call(
             'generate:controller',
             array(
-                'name' => "{$this->model}sController", // todo
+                'name' => "{$name}Controller",
                 '--template' => $this->getControllerTemplatePath()
             )
         );
