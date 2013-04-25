@@ -15,6 +15,7 @@ class SeedGenerator extends Generator {
     {
         $this->template = $this->file->get($template);
         $pluralModel = strtolower(str_replace('TableSeeder', '', $className));
+        $className = str_replace('tableseeder', 'TableSeeder', \Str::studly($className));
 
         $this->template = str_replace('{{className}}', $className, $this->template);
 
@@ -28,6 +29,7 @@ class SeedGenerator extends Generator {
     */
     public function updateDatabaseSeederRunMethod($className)
     {
+        $className = str_replace('tableseeder', 'TableSeeder', \Str::studly($className));
         $databaseSeederPath = app_path() . '/database/seeds/DatabaseSeeder.php';
 
         $content = $this->file->get($databaseSeederPath);

@@ -38,7 +38,7 @@ class ViewGenerator extends Generator {
         $model = $this->cache->getModelName();
 
         $pluralModel = Pluralizer::plural($model); // posts
-        $formalModel = ucwords($pluralModel); // Posts
+        $formalModel = ucwords(str_replace(array('_', '-'), ' ', $pluralModel)); // Posts
         $className = Pluralizer::singular($formalModel);
 
         // Create and Edit views require form elements
@@ -108,7 +108,7 @@ EOT;
 
         foreach($this->cache->getFields() as $name => $type)
         {
-            $formalName = ucwords($name);
+            $formalName = ucwords(str_replace(array('_', '-'), ' ', $name));
 
             // TODO: add remaining types
             switch($type)

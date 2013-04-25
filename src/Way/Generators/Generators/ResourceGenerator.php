@@ -36,7 +36,7 @@ class ResourceGenerator {
 
         $this->file->append(
             app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
+            "\n\nRoute::resource('" . $name . "', '" . \Str::studly($name) . "Controller');"
         );
     }
 

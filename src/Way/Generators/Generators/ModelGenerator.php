@@ -13,6 +13,7 @@ class ModelGenerator extends Generator {
      */
     protected function getTemplate($template, $name)
     {
+        $name = \Str::studly($name);
         $this->template = $this->file->get($template);
 
         if ($this->needsScaffolding($template))
