@@ -71,6 +71,8 @@ class ViewGenerator extends Generator {
      */
     protected function makeTableRows($model)
     {
+        $pluralModel = Pluralizer::plural($model); // posts
+
         $fields = $this->cache->getFields();
 
         // First, we build the table headings
@@ -85,9 +87,9 @@ class ViewGenerator extends Generator {
 
         // Now, we'll add the edit and delete buttons.
         $editAndDelete = <<<EOT
-                    <td>{{ link_to_route('{$model}s.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
+                    <td>{{ link_to_route('{$pluralModel}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$model}s.destroy', \${$model}->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$pluralModel}.destroy', \${$model}->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
