@@ -292,7 +292,7 @@ This will create a hasMany relation
 ```php
 <?php
 
-class Post extends Eloquent {
+class User extends Eloquent {
     protected $guarded = array();
 
     public static $rules = array();
