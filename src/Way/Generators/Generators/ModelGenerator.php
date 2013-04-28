@@ -19,7 +19,7 @@ class ModelGenerator extends Generator {
 		
 		$upperCase = ucfirst($relname);
 		$relname = substr($relname, 2, 0);
-		$container = str_replace('{{relname}}', $relname, $container);
+		$container = str_replace('{{relname}}', strtolower($relname), $container);
 		$container = str_replace('{{reltype}}', $type, $container);
 		$container = str_replace('{{relnameUpperCase}}', $upperCase, $container);
 		
