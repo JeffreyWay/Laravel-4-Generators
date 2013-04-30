@@ -211,32 +211,41 @@ class MigrationGenerator extends Generator {
     */
     protected function addColumn($field)
     {
-        // Let's see if they're setting
-        // a limit, like: string[50]
-        if ( str_contains($field->type, '[') )
-        {
-            preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
-            $field->type = $matches[1]; // string
-            $field->limit = $matches[2]; // 50
-        }
+		$html = '';
+		// Let's see if they're setting
+		// a limit, like: string[50]
+		if ( str_contains($field->type, '[') )
+		{
 
-        // We'll start building the appropriate Schema method
-        $html = "\$table->{$field->type}";
+			if (preg_match('/([^\[]+?)\[(\d+)\]/', $field->type)){
+				preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
+				$field->type = $matches[1]; // string
+				$field->limit = $matches[2]; // 50
+			}
+			elseif(preg_match("/([^\[]+?)\[(\d+-\d+)\]/", $field->type, $matches)){//use hyphen instead
+				preg_match("/([^\[]+?)\[(\d+-\d+)\]/", $field->type, $matches);
+				$field->type = $matches[1]; // decimal
+				$with_hyphen = $matches[2]; // 10-5
+				$field->precision = preg_replace('/-/',',', $with_hyphen);//replace the hyphen with a comma again
+			}
+		}
+		// We'll start building the appropriate Schema method
+		$html = "\$table->{$field->type}";
 
-        $html .= isset($field->limit)
-            ? "('{$field->name}', {$field->limit})"
-            : "('{$field->name}')";
+		$html .= isset($field->precision)
+		? "('{$field->name}', {$field->precision})"
+		: "('{$field->name}')";
 
-        // Take care of any potential indexes or options
-        if ( isset($field->index) )
-        {
-            $html .= str_contains($field->index, '(')
-                ? "->{$field->index}"
-                : "->{$field->index}()";
-        }
+		// Take care of any potential indexes or options
+		if ( isset($field->index) )
+		{
+			$html .= str_contains($field->index, '(')
+			? "->{$field->index}"
+			: "->{$field->index}()";
+		}
 
-        return $html.';';
-    }
+		return $html.';';
+	}
 
     /**
     * Return template string for dropping a column
