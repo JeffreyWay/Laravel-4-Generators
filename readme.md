@@ -425,7 +425,7 @@ Pretty neat, huh? It read the attributes and data types, and prepared the markup
 But what if you intend to update a resource, rather than create a new one? Well, in that case, use the `--method` option.
 
 ```bash
-php artisan generate:form dog --method="update"
+php artisan generate:form tweet --method="update"
 ```
 
 This will mostly generate the same HTML, however, the `Form::open()` method will be adjusted, as needed:
