@@ -398,7 +398,7 @@ This handy new generator allows you to, with a single command, generate the nece
 ```bash
 php artisan generate:form dog
 ```
-Assuming that I do have a `Dog` model and its associated `dogs` table, this command will output:
+Assuming that I do have a `Tweet` model and its associated `tweet` table, this command will output:
 
 ```html
 {{ Form::open(array('route' => 'tweets.store')) }}
