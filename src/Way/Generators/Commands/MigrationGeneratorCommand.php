@@ -5,8 +5,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MigrationGeneratorCommand extends BaseGeneratorCommand {
-
+class MigrationGeneratorCommand extends BaseGeneratorCommand
+{
     /**
      * The console command name.
      *
@@ -54,6 +54,8 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand {
         $created = $this->generator
                         ->parse($name, $fields)
                         ->make($path, null);
+
+        $this->call('dump-autoload');
 
         $this->printResult($created, $path);
     }
