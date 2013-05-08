@@ -23,6 +23,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	{
 		$this->registerModelGenerator();
 		$this->registerControllerGenerator();
+		$this->registerTestGenerator();
 		$this->registerResourceGenerator();
 		$this->registerScaffoldGenerator();
 		$this->registerViewGenerator();
@@ -33,6 +34,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 		$this->commands(
 			'generate.model',
 			'generate.controller',
+			'generate.test',
 			'generate.scaffold',
 			'generate.resource',
 			'generate.view',
@@ -71,6 +73,22 @@ class GeneratorsServiceProvider extends ServiceProvider {
 			$generator = new Generators\ControllerGenerator($app['files'], $cache);
 
 			return new Commands\ControllerGeneratorCommand($generator);
+		});
+	}
+
+	/**
+	 * Register generate:test
+	 *
+	 * @return Commands\TestGeneratorCommand
+	 */
+	protected function registerTestGenerator()
+	{
+		$this->app['generate.test'] = $this->app->share(function($app)
+		{
+			$cache = new Cache($app['files']);
+			$generator = new Generators\TestGenerator($app['files'], $cache);
+
+			return new Commands\TestGeneratorCommand($generator);
 		});
 	}
 
