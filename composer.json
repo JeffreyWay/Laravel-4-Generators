@@ -12,7 +12,8 @@
         "illuminate/support": "4.0.x",
         "illuminate/console": "4.0.x",
         "illuminate/filesystem": "4.0.x",
-        "mustache/mustache": "dev-master"
+        "mustache/mustache": "dev-master",
+        "way/laravel-test-helpers": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"
