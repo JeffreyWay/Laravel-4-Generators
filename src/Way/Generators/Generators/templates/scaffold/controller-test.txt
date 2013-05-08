@@ -118,7 +118,6 @@ class {{className}} extends TestCase {
     {
         Validator::shouldReceive('make')
                 ->once()
-                ->andReturn()
                 ->andReturn(m::mock(['passes' => $bool]));
     }
 }
