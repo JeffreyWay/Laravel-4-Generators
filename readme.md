@@ -9,6 +9,7 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:resource`
 - `generate:scaffold` *<-- NEW!!*
 - `generate:form` *<-- NEW!!*
+- `generate:test` *<-- NEW!!*
 
 ## Prefer a Video Walk-through?
 
@@ -474,4 +475,25 @@ php artisan generate:form tweet | pbcopy
 # save it to a form partial
 php artisan generate:form tweet > app/views/posts/form.blade.php
 ```
+### Tests
 
+Use `generate:test` when you need to create a new PHPUnit test class. Here's an example:
+
+```bash
+php artisan generate:test FooTest
+```
+
+This will produce `app/tests/FooTest.php`.
+
+```php
+<?php
+
+class FooTest extends TestCase {
+
+    public function test()
+    {
+
+    }
+
+}
+```
