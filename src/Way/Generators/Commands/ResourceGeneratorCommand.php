@@ -82,6 +82,11 @@ class ResourceGeneratorCommand extends Command {
         $this->generateMigration();
         $this->generateSeed();
 
+        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
+        {
+            $this->generateTest();
+        }
+
         $this->generator->updateRoutesFile($this->model);
         $this->info('Updated app/routes.php');
 
@@ -151,6 +156,28 @@ class ResourceGeneratorCommand extends Command {
             array(
                 'name' => "{$name}Controller",
                 '--template' => $this->getControllerTemplatePath()
+            )
+        );
+    }
+
+    /**
+     * Call generate:test
+     *
+     * @return void
+     */
+    protected function generateTest()
+    {
+        if ( ! file_exists('app/tests/controllers'))
+        {
+            mkdir('app/tests/controllers');
+        }
+
+        $this->call(
+            'generate:test',
+            array(
+                'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
+                '--template' => $this->getTestTemplatePath(),
+                '--path' => 'app/tests/controllers'
             )
         );
     }

@@ -13,9 +13,18 @@ class TestGenerator extends Generator {
      */
     protected function getTemplate($template, $className)
     {
-        $this->template = $this->file->get($template);
+        $pluralModel = strtolower(str_replace('Test', '', $className)); //  dogs
+        $model = str_singular($pluralModel); // dog
+        $Model = ucwords($model); // Dog
 
-        return str_replace('{{name}}', $className, $this->template);
+        $template = $this->file->get($template);
+
+        foreach(array('pluralModel', 'model', 'Model', 'className') as $var)
+        {
+            $template = str_replace('{{'.$var.'}}', $$var, $template);
+        }
+
+        return $template;
     }
 
 }

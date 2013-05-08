@@ -45,6 +45,17 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         return __DIR__.'/../Generators/templates/scaffold/controller.txt';
     }
 
+
+    /**
+     * Get the path to the template for a controller
+     *
+     * @return string
+     */
+    protected function getTestTemplatePath()
+    {
+        return __DIR__.'/../Generators/templates/scaffold/controller-test.txt';
+    }
+
     /**
      * Get the path to the template for a view
      *
