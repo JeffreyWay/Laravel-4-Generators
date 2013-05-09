@@ -71,7 +71,8 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 	{
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to the models directory.', 'app/models'),
-			array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/model.txt')
+			array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/model.txt'),
+			array('relTemplate', null, InputOption::VALUE_OPTIONAL, 'Path to relTemplate.', __DIR__.'/../Generators/templates/relmodel.txt')
 		);
 	}
 

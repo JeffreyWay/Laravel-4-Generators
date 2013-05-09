@@ -28,6 +28,20 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
         $generator = new ModelGenerator($file, $cache);
         $generator->make('app/models/Foo.php', static::$templatesDir.'/model.txt');
     }
+	
+	public function testCanGenerateRelationModelUsingRelationTemplate()
+    {
+        $file = m::mock('Illuminate\Filesystem\Filesystem')->makePartial();
+        $cache = m::Mock('Way\Generators\Cache');
+
+        $file->shouldReceive('put')
+             ->once()
+             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/relmodel.txt'));
+
+        $generator = new ModelGenerator($file, $cache);
+        $generator->make('app/models/Foo.php', static::$templatesDir.'/relmodel.txt');
+    }
+	
 
     public function testCanGenerateModelUsingCustomTemplateAndNoFields()
     {

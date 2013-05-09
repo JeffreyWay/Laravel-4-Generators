@@ -259,7 +259,49 @@ This will create the file, `app/models/Post.php` and insert the following boiler
 <?php
 
 class Post extends Eloquent {
+    protected $guarded = array();
 
+    public static $rules = array();
+
+}
+```
+You can also define a relationship when creating the model.
+
+    php artisan generate:model Post<-User
+    
+This will create a belongsTo relation
+
+```php
+<?php
+
+class Post extends Eloquent {
+    protected $guarded = array();
+
+    public static $rules = array();
+
+    public function user()
+    {
+       return $this->belongsTo('User');
+    }
+}
+```
+
+    php artisan generate:model User->Post
+    
+This will create a hasMany relation
+
+```php
+<?php
+
+class User extends Eloquent {
+    protected $guarded = array();
+
+    public static $rules = array();
+
+    public function post()
+    {
+       return $this->hasMany('Post');
+    }
 }
 ```
 
