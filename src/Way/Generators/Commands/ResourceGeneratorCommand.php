@@ -88,7 +88,7 @@ class ResourceGeneratorCommand extends Command {
         }
 
         $this->generator->updateRoutesFile($this->model);
-        $this->info('Updated app/routes.php');
+        $this->info('Updated ' . app_path() . '/routes.php');
 
         // We're all finished, so we
         // can delete the cache.
@@ -167,9 +167,9 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateTest()
     {
-        if ( ! file_exists('app/tests/controllers'))
+        if ( ! file_exists(app_path() . '/tests/controllers'))
         {
-            mkdir('app/tests/controllers');
+            mkdir(app_path() . '/tests/controllers');
         }
 
         $this->call(
@@ -177,7 +177,7 @@ class ResourceGeneratorCommand extends Command {
             array(
                 'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
                 '--template' => $this->getTestTemplatePath(),
-                '--path' => 'app/tests/controllers'
+                '--path' => app_path() . '/tests/controllers'
             )
         );
     }
@@ -281,7 +281,7 @@ class ResourceGeneratorCommand extends Command {
     protected function getOptions()
     {
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', 'app/database/migrations'),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null)
         );
     }
