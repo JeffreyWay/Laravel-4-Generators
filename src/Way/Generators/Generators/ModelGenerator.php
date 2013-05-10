@@ -20,7 +20,18 @@ class ModelGenerator extends Generator {
             $this->template = $this->getScaffoldedModel($name);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        $this->template = str_replace('{{name}}', $name, $this->template);
+
+        if($this->haveModelValidator())
+        {
+            $this->template = str_replace('{{model_parent}}', 'Model', $this->template);
+        }
+        else
+        {
+            $this->template = str_replace('{{model_parent}}', 'Eloquent', $this->template);
+        }
+
+        return $this->template;
     }
 
     /**
