@@ -23,10 +23,10 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $file->shouldReceive('put')
              ->once()
-             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/model.txt'));
+             ->with(app_path() . '/models/Foo.php', file_get_contents(__DIR__.'/stubs/model.txt'));
 
         $generator = new ModelGenerator($file, $cache);
-        $generator->make('app/models/Foo.php', static::$templatesDir.'/model.txt');
+        $generator->make(app_path() . '/models/Foo.php', static::$templatesDir.'/model.txt');
     }
 
     public function testCanGenerateModelUsingCustomTemplateAndNoFields()
@@ -40,10 +40,10 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $file->shouldReceive('put')
              ->once()
-             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model-no-fields.txt'));
+             ->with(app_path() . '/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model-no-fields.txt'));
 
         $generator = new ModelGenerator($file, $cache);
-        $generator->make('app/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
+        $generator->make(app_path() . '/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
     }
 
     public function testCanGenerateModelUsingCustomTemplateAndFields()
@@ -57,9 +57,9 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $file->shouldReceive('put')
              ->once()
-             ->with('app/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model.txt'));
+             ->with(app_path() . '/models/Foo.php', file_get_contents(__DIR__.'/stubs/scaffold/model.txt'));
 
         $generator = new ModelGenerator($file, $cache);
-        $generator->make('app/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
+        $generator->make(app_path() . '/models/Foo.php', static::$templatesDir.'/scaffold/model.txt');
     }
 }

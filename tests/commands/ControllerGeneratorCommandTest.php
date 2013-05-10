@@ -15,7 +15,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $gen = m::mock('Way\Generators\Generators\ControllerGenerator');
         $gen->shouldReceive('make')
             ->once()
-            ->with('app/controllers/FooController.php', 'foo')
+            ->with(app_path() . '/controllers/FooController.php', 'foo')
             ->andReturn(true);
 
         $command = new ControllerGeneratorCommand($gen);
@@ -23,7 +23,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'FooController', '--template' => 'foo']);
 
-        $this->assertEquals("Created app/controllers/FooController.php\n", $tester->getDisplay());
+        $this->assertEquals("Created " . app . "/controllers/FooController.php\n", $tester->getDisplay());
     }
 
     public function testCanSetCustomPath()
@@ -36,7 +36,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'FooController', '--path' => 'app', '--template' => 'foo']);
 
-        $this->assertEquals("Created app/FooController.php\n", $tester->getDisplay());
+        $this->assertEquals("Created " . app . "/FooController.php\n", $tester->getDisplay());
     }
 
     public function testCanSetCustomStub()
@@ -44,7 +44,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $gen = m::mock('Way\Generators\Generators\ControllerGenerator[make]');
         $gen->shouldReceive('make')
             ->once()
-            ->with('app/controllers/FooController.php', 'foo')
+            ->with(app_path() . '/controllers/FooController.php', 'foo')
             ->andReturn(true);
 
         $command = new ControllerGeneratorCommand($gen);
