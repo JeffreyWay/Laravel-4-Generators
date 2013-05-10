@@ -86,6 +86,17 @@ abstract class Generator {
         return str_contains($template, 'scaffold');
     }
 
+
+    protected function haveModelValidator()
+    {
+        if(class_exists('Way\Database\Model'))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Get compiled template
      *
