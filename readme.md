@@ -45,7 +45,7 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - [Migrations](#migrations)
 - [Models](#models)
 - [Views](#views)
-- [Seeds](#controllers)
+- [Seeds](#seeds)
 - [Resources](#resources)
 - [Scaffolding](#scaffolding)
 - [Forms](#forms)
