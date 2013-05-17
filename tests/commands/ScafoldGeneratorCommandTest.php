@@ -16,7 +16,7 @@ class ScaffoldGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         // $command = new ScaffoldGeneratorCommand;
 
         // $tester = new CommandTester($command);
-        // $tester->execute(['name' => 'dog']);
+        // $tester->execute(array('name' => 'dog'));
     }
 
 }

@@ -53,7 +53,7 @@ class ModelGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $cache->shouldReceive('getFields')
               ->once()
-              ->andReturn(['title' => 'string', 'age' => 'integer']);
+              ->andReturn(array('title' => 'string', 'age' => 'integer'));
 
         $file->shouldReceive('put')
              ->once()

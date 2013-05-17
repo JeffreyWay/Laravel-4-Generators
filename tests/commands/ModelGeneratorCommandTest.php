@@ -21,7 +21,7 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ModelGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'foo']);
+        $tester->execute(array('name' => 'foo'));
 
         $this->assertEquals("Created app/models/Foo.php\n", $tester->getDisplay());
     }
@@ -38,7 +38,7 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ModelGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'Foo']);
+        $tester->execute(array('name' => 'Foo'));
 
         $this->assertEquals("Could not create app/models/Foo.php\n", $tester->getDisplay());
     }
@@ -54,6 +54,6 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ModelGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'foo', '--path' => 'app/foo/models']);
+        $tester->execute(array('name' => 'foo', '--path' => 'app/foo/models'));
     }
 }
