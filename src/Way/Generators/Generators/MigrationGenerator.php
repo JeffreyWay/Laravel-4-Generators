@@ -182,7 +182,7 @@ class MigrationGenerator extends Generator {
 
         if ( !$fields ) return;
 
-        $fields = preg_split('/, ?/', $fields);
+        $fields = preg_split('/,[^0-9]/', $fields);
 
         foreach($fields as &$bit)
         {
@@ -212,19 +212,19 @@ class MigrationGenerator extends Generator {
     protected function addColumn($field)
     {
         // Let's see if they're setting
-        // a limit, like: string[50]
+        // a limit, like: string[50] or decimal[10,2]
         if ( str_contains($field->type, '[') )
         {
-            preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
-            $field->type = $matches[1]; // string
-            $field->limit = $matches[2]; // 50
+            preg_match('/([^\[]+?)\[([\d,]+)\]/', $field->type, $matches);
+            $field->type = $matches[1]; // string or decimal
+            $field->limit = explode(',', $matches[2]); // 50 or "10,2"
         }
 
         // We'll start building the appropriate Schema method
         $html = "\$table->{$field->type}";
 
         $html .= isset($field->limit)
-            ? "('{$field->name}', {$field->limit})"
+            ? "('{$field->name}', " . implode(', ', $field->limit) . ")"
             : "('{$field->name}')";
 
         // Take care of any potential indexes or options
