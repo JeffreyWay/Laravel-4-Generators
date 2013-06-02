@@ -163,8 +163,6 @@ class MigrationGenerator extends Generator {
 
         $template = array_map(array($this, $method), $fields);
 
-        var_dump($template); exit;
-
         return implode("\n\t\t\t", $template);
     }
 
