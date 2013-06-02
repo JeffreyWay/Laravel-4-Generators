@@ -185,7 +185,7 @@ class MigrationGenerator extends Generator {
         /**
          * Black Magic Regex-Fu! Let me explain...
          *
-         * After this beast of a regular expresseion,
+         * After this beast of a regular expression,
          * we have 4 capturing cases
          *
          *   $matches[0] : The whole shebang
