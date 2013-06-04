@@ -213,13 +213,16 @@ class MigrationGenerator extends Generator {
          *
          */
 
-        $pattern = "/([a-z_][a-z0-9_]*:[a-z]+)(\[(?:[\d,]+|'[[:print:]]+',?)+\])?:?([a-z]+)?/i";
+        $pattern = "/([a-z_][a-z0-9_]*:[a-z]+)(\[(?:[\d,]+|'[[:print:]]+',?)+\])?:?([a-z:\(\))]+)?/i";
 
         preg_match_all($pattern, $fields, $matches);
 
         // Re-Format the matches
         $fields     = array();
         $fieldCount = count($matches[0]);
+
+        // Sanitizer for 3rd-nth params
+        $sanitize_index = function($val) { return strpos($val, '(') !== FALSE ? $val : $val . '()'; };
 
         while($fieldCount--)
         {
@@ -243,7 +246,8 @@ class MigrationGenerator extends Generator {
             // the user is setting an index/option.
             if($matches[3][$fieldCount])
             {
-                $field->index = $matches[3][$fieldCount];
+                $indexes = explode(':', $matches[3][$fieldCount]);
+                $field->index = array_map($sanitize_index, $indexes);
             }
 
             array_push($fields, $field);
@@ -287,9 +291,7 @@ class MigrationGenerator extends Generator {
         // Take care of any potential indexes or options
         if ( isset($field->index) )
         {
-            $html .= str_contains($field->index, '(')
-                ? "->{$field->index}"
-                : "->{$field->index}()";
+            $html .= '->' . implode('->', $field->index);
         }
 
         return $html.';';
