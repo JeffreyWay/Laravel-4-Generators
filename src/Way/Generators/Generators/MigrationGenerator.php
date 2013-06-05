@@ -205,7 +205,7 @@ class MigrationGenerator extends Generator {
          *      Note: This group is completely optional
          *              ( '?' at the end of the pattern )
          *
-         *   $matches[3] : :?([a-z]+)?
+         *   $matches[3] : :?([a-z:\(\))]+)?
          *       Returns the 'index' options, if any are set
          *
          *
