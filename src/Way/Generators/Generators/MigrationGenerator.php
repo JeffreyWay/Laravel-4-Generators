@@ -205,7 +205,7 @@ class MigrationGenerator extends Generator {
          *      Note: This group is completely optional
          *              ( '?' at the end of the pattern )
          *
-         *   $matches[3] : :?([a-z:\(\))]+)?
+         *   $matches[3] : :?([a-z:'\(\))]+)?
          *       Returns the 'index' options, if any are set
          *
          *
@@ -213,7 +213,7 @@ class MigrationGenerator extends Generator {
          *
          */
 
-        $pattern = "/([a-z_][a-z0-9_]*:[a-z]+)(\[(?:[\d,]+|'[[:print:]]+',?)+\])?:?([a-z:\(\))]+)?/i";
+        $pattern = "/([a-z_][a-z0-9_]*:[a-z]+)(\[(?:[\d,]+|'[[:print:]]+',?)+\])?:?([a-z:'\(\))]+)?/i";
 
         preg_match_all($pattern, $fields, $matches);
 
