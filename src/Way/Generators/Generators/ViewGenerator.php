@@ -82,7 +82,7 @@ class ViewGenerator extends Generator {
 
         // And then the rows, themselves
         $fields = array_map(function($field) use ($model) {
-            return "<td>{{ \$$model->$field }}</td>";
+            return "<td>{{{ \$$model->$field }}}</td>";
         }, array_keys($fields));
 
         // Now, we'll add the edit and delete buttons.
