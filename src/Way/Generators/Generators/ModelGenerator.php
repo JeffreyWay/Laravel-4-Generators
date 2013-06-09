@@ -2,6 +2,8 @@
 
 namespace Way\Generators\Generators;
 
+use Illuminate\Support\Str;
+
 class ModelGenerator extends Generator {
 
     /**
@@ -20,7 +22,7 @@ class ModelGenerator extends Generator {
             $this->template = $this->getScaffoldedModel($name);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        return str_replace('{{name}}', Str::studly($name), $this->template);
     }
 
     /**

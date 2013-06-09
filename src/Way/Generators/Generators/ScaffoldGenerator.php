@@ -4,6 +4,7 @@ namespace Way\Generators\Generators;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Support\Pluralizer;
+use Illuminate\Support\Str;
 
 class ScaffoldGenerator {
 
@@ -36,7 +37,7 @@ class ScaffoldGenerator {
 
         $this->file->append(
             app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
+            "\n\nRoute::resource('" . $name . "', '" . Str::studly($name) . "Controller');"
         );
     }
 

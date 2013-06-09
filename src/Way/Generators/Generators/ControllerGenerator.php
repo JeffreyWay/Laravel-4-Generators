@@ -4,6 +4,7 @@ namespace Way\Generators\Generators;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Support\Pluralizer;
+use Illuminate\Support\Str;
 
 class ControllerGenerator extends Generator {
 
@@ -23,7 +24,7 @@ class ControllerGenerator extends Generator {
             $this->template = $this->getScaffoldedController($template, $name);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        return str_replace('{{name}}', Str::studly($name), $this->template);
     }
 
     /**
@@ -35,9 +36,9 @@ class ControllerGenerator extends Generator {
      */
     protected function getScaffoldedController($template, $name)
     {
-        $collection = strtolower(str_replace('Controller', '', $name)); // dogs
-        $modelInstance = Pluralizer::singular($collection); // dog
-        $modelClass = ucwords($modelInstance); // Dog
+        $collection = Str::snake(str_replace('Controller', '', $name)); // dog_kinds
+        $modelInstance = Pluralizer::singular($collection); // dog_kind
+        $modelClass = Str::studly($modelInstance); // DogKind
 
         foreach(array('modelInstance', 'modelClass', 'collection') as $var)
         {
