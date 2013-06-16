@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Support\Pluralizer;
+use Illuminate\Support\Str;
 
 class MissingFieldsException extends \Exception {}
 
@@ -149,7 +150,7 @@ class ResourceGeneratorCommand extends Command {
      */
    protected function generateController()
     {
-        $name = Pluralizer::plural($this->model);
+        $name = Str::studly(Pluralizer::plural($this->model));
 
         $this->call(
             'generate:controller',
