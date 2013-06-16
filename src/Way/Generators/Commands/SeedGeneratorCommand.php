@@ -4,6 +4,7 @@ use Way\Generators\Generators\SeedGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Support\Str;
 
 class SeedGeneratorCommand extends BaseGeneratorCommand {
 
@@ -66,7 +67,7 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
      */
     protected function getPath()
     {
-        return $this->option('path') . '/' . ucwords($this->argument('name')) . 'TableSeeder.php';
+        return $this->option('path') . '/' . Str::studly($this->argument('name')) . 'TableSeeder.php';
     }
 
     /**

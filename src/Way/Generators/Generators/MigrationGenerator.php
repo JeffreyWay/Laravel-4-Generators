@@ -2,7 +2,30 @@
 
 namespace Way\Generators\Generators;
 
+use Way\Generators\Cache;
+use Illuminate\Filesystem\Filesystem as File;
+use Illuminate\Support\Str;
+
 class MigrationGenerator extends Generator {
+
+    /**
+     * Date of migration creation
+     *
+     * @var string
+     */
+    public $date;
+
+    /**
+     * Constructor
+     *
+     * @param $file
+     */
+    public function __construct(File $file, Cache $cache)
+    {
+        parent::__construct($file, $cache);
+
+        $this->date = date('Y_m_d_His');
+    }
 
     /**
      * Fetch the compiled template for a migration
@@ -17,7 +40,7 @@ class MigrationGenerator extends Generator {
         $stub = $this->file->get(__DIR__.'/templates/migration/migration.txt');
 
         // Next, set the migration class name
-        $stub = str_replace('{{name}}', \Str::studly($name), $stub);
+        $stub = str_replace('{{name}}', Str::studly($name), $stub);
 
         // Now, we're going to handle the tricky
         // work of creating the Schema
@@ -61,17 +84,19 @@ class MigrationGenerator extends Generator {
         // add_user_id_to_posts_table
         $pieces = explode('_', $name);
 
-        $action = $pieces[0];
+        $action = array_shift($pieces);
 
         // If the migration name is create_users,
         // then we'll set the tableName to the last
         // item. But, if it's create_users_table,
         // then we have to compensate, accordingly.
-        $tableName = end($pieces);
-        if ( $tableName === 'table' )
+
+        if ( end($pieces) === 'table' )
         {
-            $tableName = prev($pieces);
+            array_pop($pieces);
         }
+
+        $tableName = implode('_', $pieces);
 
         // For example: ['add', 'posts']
         return array($action, $tableName);
@@ -253,7 +278,7 @@ class MigrationGenerator extends Generator {
     {
         $migrationFile = strtolower(basename($path));
 
-        return dirname($path).'/'.date('Y_m_d_His').'_'.$migrationFile;
+        return dirname($path).'/'.$this->date.'_'.$migrationFile;
     }
 
 }

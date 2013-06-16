@@ -2,6 +2,9 @@
 
 namespace Way\Generators\Generators;
 
+use Illuminate\Support\Pluralizer;
+use Illuminate\Support\Str;
+
 class TestGenerator extends Generator {
 
     /**
@@ -13,13 +16,13 @@ class TestGenerator extends Generator {
      */
     protected function getTemplate($template, $className)
     {
-        $pluralModel = strtolower(str_replace('Test', '', $className)); //  dogs
-        $model = str_singular($pluralModel); // dog
-        $Model = ucwords($model); // Dog
+        $collection = Str::snake(str_replace('Test', '', $className)); //  dog_kinds
+        $modelInstance = Pluralizer::singular($collection); // dog_kind
+        $modelClass = Str::studly($modelInstance); // DogKind
 
         $template = $this->file->get($template);
 
-        foreach(array('pluralModel', 'model', 'Model', 'className') as $var)
+        foreach(array('collection', 'modelInstance', 'modelClass', 'className') as $var)
         {
             $template = str_replace('{{'.$var.'}}', $$var, $template);
         }
