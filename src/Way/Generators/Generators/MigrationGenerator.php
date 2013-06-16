@@ -217,11 +217,20 @@ class MigrationGenerator extends Generator {
             $bit->name = $columnInfo[0];
             $bit->type = $columnInfo[1];
 
-            // If there is a third key, then
-            // the user is setting an index/option.
-            if ( isset($columnInfo[2]) )
+            // If there are more keys, then
+            // the user is setting indexes/options.
+            $i = 2;
+
+            while(isset($columnInfo[$i]))
             {
-                $bit->index = $columnInfo[2];
+                if( !isset($bit->indexes))
+                {
+                    $bit->indexes = array();
+                }
+
+                $bit->indexes[] = $columnInfo[$i];
+
+                $i++;
             }
         }
 
@@ -253,11 +262,14 @@ class MigrationGenerator extends Generator {
             : "('{$field->name}')";
 
         // Take care of any potential indexes or options
-        if ( isset($field->index) )
+        if ( isset($field->indexes) )
         {
-            $html .= str_contains($field->index, '(')
-                ? "->{$field->index}"
-                : "->{$field->index}()";
+            foreach($field->indexes as $index)
+            {
+                $html .= str_contains($index, '(')
+                    ? "->{$index}"
+                    : "->{$index}()";
+            }
         }
 
         return $html.';';
