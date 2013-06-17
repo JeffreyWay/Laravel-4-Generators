@@ -56,7 +56,7 @@ class FoosController extends BaseController {
         return Redirect::route('foos.create')
             ->withInput()
             ->withErrors($validation)
-            ->with('flash', 'There were validation errors.');
+            ->with('message', 'There were validation errors.');
     }
 
     /**
@@ -112,7 +112,7 @@ class FoosController extends BaseController {
         return Redirect::route('foos.edit', $id)
             ->withInput()
             ->withErrors($validation)
-            ->with('flash', 'There were validation errors.');
+            ->with('message', 'There were validation errors.');
     }
 
     /**

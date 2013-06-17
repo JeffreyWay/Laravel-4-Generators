@@ -2,6 +2,8 @@
 
 namespace Way\Generators\Generators;
 
+use Illuminate\Support\Str;
+
 class SeedGenerator extends Generator {
 
     /**
@@ -14,7 +16,7 @@ class SeedGenerator extends Generator {
     protected function getTemplate($template, $className)
     {
         $this->template = $this->file->get($template);
-        $pluralModel = strtolower(str_replace('TableSeeder', '', $className));
+        $pluralModel = Str::snake(str_replace('TableSeeder', '', $className));
 
         $this->template = str_replace('{{className}}', $className, $this->template);
 

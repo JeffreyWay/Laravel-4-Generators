@@ -10,6 +10,14 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         m::close();
     }
 
+    protected function mockControllerGenerator()
+    {
+        $filesystem = m::mock('Illuminate\Filesystem\Filesystem');
+        $cache = m::mock('Way\Generators\Cache');
+
+        return m::mock('Way\Generators\Generators\ControllerGenerator[make]', [$filesystem, $cache]);
+    }
+
     public function testGeneratesController()
     {
         $gen = m::mock('Way\Generators\Generators\ControllerGenerator');
@@ -28,7 +36,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
 
     public function testCanSetCustomPath()
     {
-        $gen = m::mock('Way\Generators\Generators\ControllerGenerator[make]');
+        $gen = $this->mockControllerGenerator();
         $gen->shouldReceive('make')->once()->andReturn(true);
 
         $command = new ControllerGeneratorCommand($gen);
@@ -41,7 +49,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
 
     public function testCanSetCustomStub()
     {
-        $gen = m::mock('Way\Generators\Generators\ControllerGenerator[make]');
+        $gen = $this->mockControllerGenerator();
         $gen->shouldReceive('make')
             ->once()
             ->with('app/controllers/FooController.php', 'foo')

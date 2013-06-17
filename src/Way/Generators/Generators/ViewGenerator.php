@@ -77,7 +77,7 @@ class ViewGenerator extends Generator {
 
         // First, we build the table headings
         $headings = array_map(function($field) {
-            return '<th>' . ucwords($field) . '</th>';
+            return '<th>' . ucwords(str_replace(array('-', '_'), ' ', $field)) . '</th>';
         }, array_keys($fields));
 
         // And then the rows, themselves
@@ -110,7 +110,7 @@ EOT;
 
         foreach($this->cache->getFields() as $name => $type)
         {
-            $formalName = ucwords($name);
+            $formalName = ucwords(str_replace(array('-', '_'), ' ', $name));
 
             // TODO: add remaining types
             switch($type)
