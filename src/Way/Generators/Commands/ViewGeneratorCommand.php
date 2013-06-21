@@ -60,7 +60,7 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
     protected function getOptions()
     {
         return array(
-           array('path', null, InputOption::VALUE_OPTIONAL, 'Path to views directory.', 'app/views'),
+           array('path', null, InputOption::VALUE_OPTIONAL, 'Path to views directory.', app_path() . '/views'),
            array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/view.txt'),
         );
     }

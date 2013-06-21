@@ -23,10 +23,10 @@ class ControllerGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $file->shouldReceive('put')
              ->once()
-             ->with('app/controllers/FooController.php', file_get_contents(__DIR__.'/stubs/controller.txt'));
+             ->with(app_path() . '/controllers/FooController.php', file_get_contents(__DIR__.'/stubs/controller.txt'));
 
         $generator = new ControllerGenerator($file, $cache);
-        $generator->make('app/controllers/FooController.php', static::$templatesDir.'/controller.txt');
+        $generator->make(app_path() . '/controllers/FooController.php', static::$templatesDir.'/controller.txt');
     }
 
     public function testCanGenerateControllerUsingCustomTemplate()
@@ -36,9 +36,9 @@ class ControllerGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $file->shouldReceive('put')
              ->once()
-             ->with('app/controllers/FoosController.php', file_get_contents(__DIR__.'/stubs/scaffold/controller.txt'));
+             ->with(app_path() . '/controllers/FoosController.php', file_get_contents(__DIR__.'/stubs/scaffold/controller.txt'));
 
         $generator = new ControllerGenerator($file, $cache);
-        $generator->make('app/controllers/FoosController.php', static::$templatesDir.'/scaffold/controller.txt');
+        $generator->make(app_path() . '/controllers/FoosController.php', static::$templatesDir.'/scaffold/controller.txt');
     }
 }

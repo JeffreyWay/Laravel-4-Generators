@@ -9,13 +9,14 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
     {
         m::close();
     }
+
     public function testGeneratesModelSuccessfully()
     {
         $gen = m::mock('Way\Generators\Generators\ModelGenerator');
 
         $gen->shouldReceive('make')
             ->once()
-            ->with('app/models/Foo.php', m::any())
+            ->with(app_path() . '/models/Foo.php', m::any())
             ->andReturn(true);
 
         $command = new ModelGeneratorCommand($gen);
@@ -23,7 +24,7 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'foo']);
 
-        $this->assertEquals("Created app/models/Foo.php\n", $tester->getDisplay());
+        $this->assertEquals("Created " . app_path() . "/models/Foo.php\n", $tester->getDisplay());
     }
 
     public function testAlertsUserIfModelGenerationFails()
@@ -32,7 +33,7 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
 
         $gen->shouldReceive('make')
             ->once()
-            ->with('app/models/Foo.php', m::any())
+            ->with(app_path() . '/models/Foo.php', m::any())
             ->andReturn(false);
 
         $command = new ModelGeneratorCommand($gen);
@@ -40,7 +41,7 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'Foo']);
 
-        $this->assertEquals("Could not create app/models/Foo.php\n", $tester->getDisplay());
+        $this->assertEquals("Could not create " . app_path() . "/models/Foo.php\n", $tester->getDisplay());
     }
 
     public function testCanAcceptCustomPathToModelsDirectory()
@@ -49,11 +50,11 @@ class ModelGeneratorCommandTest extends PHPUnit_Framework_TestCase {
 
         $gen->shouldReceive('make')
             ->once()
-            ->with('app/foo/models/Foo.php', m::any());
+            ->with(app_path() . '/foo/models/Foo.php', m::any());
 
         $command = new ModelGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'foo', '--path' => 'app/foo/models']);
+        $tester->execute(['name' => 'foo', '--path' => app_path() . '/foo/models']);
     }
 }
