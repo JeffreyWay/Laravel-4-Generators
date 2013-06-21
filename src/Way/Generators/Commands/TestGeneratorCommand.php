@@ -70,7 +70,7 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
     protected function getOptions()
     {
         return array(
-           array('path', null, InputOption::VALUE_OPTIONAL, 'Path to tests directory.', 'app/tests'),
+           array('path', null, InputOption::VALUE_OPTIONAL, 'Path to tests directory.', app_path() . '/tests'),
            array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/test.txt'),
         );
     }

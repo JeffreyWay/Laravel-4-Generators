@@ -5,6 +5,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Mockery as m;
 
 class ScaffoldGeneratorCommandTest extends PHPUnit_Framework_TestCase {
+
     public function tearDown()
     {
         m::close();
@@ -13,10 +14,9 @@ class ScaffoldGeneratorCommandTest extends PHPUnit_Framework_TestCase {
     public function testGenerateScaffold()
     {
         $this->assertTrue(true);
-        // $command = new ScaffoldGeneratorCommand;
 
+        // $command = new ScaffoldGeneratorCommand;
         // $tester = new CommandTester($command);
         // $tester->execute(['name' => 'dog']);
     }
-
 }
