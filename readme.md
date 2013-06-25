@@ -396,7 +396,7 @@ The only difference is that it will handle all of the boilerplate. This can be p
 This handy new generator allows you to, with a single command, generate the necessary HTML for a form, based on attributes from a provided model. Perhaps an example is in order:
 
 ```bash
-php artisan generate:form dog
+php artisan generate:form tweet
 ```
 Assuming that I do have a `Tweet` model and its associated `tweet` table, this command will output:
 
