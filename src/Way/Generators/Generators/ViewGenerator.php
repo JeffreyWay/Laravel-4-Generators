@@ -24,7 +24,7 @@ class ViewGenerator extends Generator {
 
         // Otherwise, just set the file
         // contents to the file name
-        return $name;
+        return $name . PHP_EOL;
     }
 
     /**
