@@ -206,6 +206,14 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 
 Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
 
+You can also add multiple options if required such as :
+- `--fields="first:string:unique:nullable, last:string"`
+
+In this example both unique and nullable were set as options.  This will produce
+ `$table->string('first')->unique()->nullable();`
+ `$table->string('last');`
+
+
 As a final demonstration, let's run a migration to remove the `completed` field from a `tasks` table.
 
     php artisan generate:migration remove_completed_from_tasks_table --fields="completed:boolean"
