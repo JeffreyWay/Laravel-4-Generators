@@ -61,6 +61,17 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     }
 
     /**
+     * Same as base method, but adds the date to the file name
+     * @param  boolean $successful
+     * @param  string $path
+     * @return string
+     */
+    protected function printResult($successful, $path)
+    {
+        return parent::printResult($successful, dirname($path).'/'.$this->generator->date.'_'.basename($path));
+    }
+
+    /**
      * Get the path to the file that should be generated
      *
      * @return string
