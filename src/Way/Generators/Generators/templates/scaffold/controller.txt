@@ -50,7 +50,8 @@ class {{name}} extends BaseController {
         {
             $this->{{modelInstance}}->create($input);
 
-            return Redirect::route('{{collection}}.index');
+            return Redirect::route('{{collection}}.index')
+                ->with('message-success', '{{modelClass}} was successfully created.');
         }
 
         return Redirect::route('{{collection}}.create')
