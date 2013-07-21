@@ -26,14 +26,14 @@ class ResourceGeneratorCommand extends Command {
     protected $description = 'Generate a resource.';
 
     /**
-     * Model generator instance
+     * Model generator instance.
      *
      * @var Way\Generators\Generators\ResourceGenerator
      */
     protected $generator;
 
     /**
-     * File cache
+     * File cache.
      *
      * @var Cache
      */
@@ -96,7 +96,7 @@ class ResourceGeneratorCommand extends Command {
     }
 
     /**
-     * Get the path to the template for a model
+     * Get the path to the template for a model.
      *
      * @return string
      */
@@ -106,7 +106,7 @@ class ResourceGeneratorCommand extends Command {
     }
 
     /**
-     * Get the path to the template for a controller
+     * Get the path to the template for a controller.
      *
      * @return string
      */
@@ -116,7 +116,7 @@ class ResourceGeneratorCommand extends Command {
     }
 
     /**
-     * Get the path to the template for a view
+     * Get the path to the template for a view.
      *
      * @return string
      */

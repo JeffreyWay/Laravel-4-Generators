@@ -22,7 +22,7 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
     protected $description = 'Generate a seed file.';
 
     /**
-     * Model generator instance
+     * Model generator instance.
      *
      * @var Way\Generators\Generators\SeedGenerator
      */
@@ -60,7 +60,7 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
     }
 
     /**
-     * Get the path to the file that should be generated
+     * Get the path to the file that should be generated.
      *
      * @return string
      */

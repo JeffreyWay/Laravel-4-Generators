@@ -22,7 +22,7 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     protected $description = 'Generate a new migration.';
 
     /**
-     * Model generator instance
+     * Model generator instance.
      *
      * @var Way\Generators\Generators\MigrationGenerator
      */
@@ -61,7 +61,7 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     }
 
     /**
-     * Get the path to the file that should be generated
+     * Get the path to the file that should be generated.
      *
      * @return string
      */
