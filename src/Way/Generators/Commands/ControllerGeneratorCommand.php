@@ -22,7 +22,7 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
     protected $description = 'Generate a new controller.';
 
     /**
-     * Model generator instance
+     * Model generator instance.
      *
      * @var Way\Generators\Generators\ControllerGenerator
      */
@@ -41,7 +41,7 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
     }
 
     /**
-     * Get the path to the file that should be generated
+     * Get the path to the file that should be generated.
      *
      * @return string
      */

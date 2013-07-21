@@ -21,7 +21,7 @@ class BaseGeneratorCommand extends Command {
     }
 
     /**
-     * Provide user feedback, based on success or not
+     * Provide user feedback, based on success or not.
      *
      * @param  boolean $successful
      * @param  string $path
@@ -38,7 +38,7 @@ class BaseGeneratorCommand extends Command {
     }
 
     /**
-     * Get the path to the file that should be generated
+     * Get the path to the file that should be generated.
      *
      * @return string
      */

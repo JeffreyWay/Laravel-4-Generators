@@ -25,7 +25,7 @@ class FormDumperCommand extends BaseGeneratorCommand {
     protected $description = 'Dump form HTML for a model';
 
     /**
-     * FormDumper generator instance
+     * FormDumper generator instance.
      *
      * @var Way\Generators\Generators\FormDumperGenerator
      */

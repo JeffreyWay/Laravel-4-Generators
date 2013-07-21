@@ -22,7 +22,7 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
     protected $description = 'Generate a PHPUnit test class.';
 
     /**
-     * Test generator instance
+     * Test generator instance.
      *
      * @var Way\Generators\Generators\TestGenerator
      */
@@ -41,7 +41,7 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
     }
 
     /**
-     * Get the path to the file that should be generated
+     * Get the path to the file that should be generated.
      *
      * @return string
      */

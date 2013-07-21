@@ -91,7 +91,7 @@ class FormDumperGenerator {
     {
         $names = array_keys($table);
 
-        return array_diff($names, array('id', 'created_at', 'updated_at', 'deleted_at','password'));
+        return array_diff($names, array('id', 'created_at', 'updated_at', 'deleted_at', 'password'));
     }
 
     /**
