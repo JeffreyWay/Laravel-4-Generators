@@ -22,7 +22,7 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
     protected $description = 'Generate a new view.';
 
     /**
-     * Model generator instance
+     * Model generator instance.
      *
      * @var Way\Generators\Generators\ViewGenerator
      */

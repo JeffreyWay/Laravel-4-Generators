@@ -26,7 +26,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
     protected $description = 'Generate scaffolding for a resource.';
 
     /**
-     * Get the path to the template for a model
+     * Get the path to the template for a model.
      *
      * @return string
      */
@@ -36,7 +36,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
     }
 
     /**
-     * Get the path to the template for a controller
+     * Get the path to the template for a controller.
      *
      * @return string
      */
@@ -47,7 +47,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
 
 
     /**
-     * Get the path to the template for a controller
+     * Get the path to the template for a controller.
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
     }
 
     /**
-     * Get the path to the template for a view
+     * Get the path to the template for a view.
      *
      * @return string
      */

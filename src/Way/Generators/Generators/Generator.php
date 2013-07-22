@@ -43,7 +43,7 @@ abstract class Generator {
      * Compile template and generate
      *
      * @param  string $path
-     * @param  string $template Path to tempalte
+     * @param  string $template Path to template
      * @return boolean
      */
     public function make($path, $template)
@@ -62,7 +62,7 @@ abstract class Generator {
 
     /**
      * Get the path to the file
-     * that should be gereated
+     * that should be generated
      *
      * @param  string $path
      * @return string
@@ -70,7 +70,7 @@ abstract class Generator {
     protected function getPath($path)
     {
         // By default, we won't do anything, but
-        // it can be overriden from a child class
+        // it can be overridden from a child class
         return $path;
     }
 
