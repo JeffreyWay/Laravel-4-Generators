@@ -22,6 +22,10 @@ class ControllerGenerator extends Generator {
         {
             $this->template = $this->getScaffoldedController($template, $name);
         }
+        
+        //sub folder class name fix
+        $new_name = str_replace(app_path() . '/controllers', '', $this->path);
+        $name = str_replace('/', '_',substr($new_name, 1, -4));
 
         return str_replace('{{name}}', $name, $this->template);
     }
