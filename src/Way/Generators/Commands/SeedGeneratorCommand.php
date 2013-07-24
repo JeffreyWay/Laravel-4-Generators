@@ -89,7 +89,7 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
     protected function getOptions()
     {
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to the models directory.', app_path() . '/database/seeds'),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to the seeds directory.', app_path() . '/database/seeds'),
             array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/seed.txt'),
         );
     }
