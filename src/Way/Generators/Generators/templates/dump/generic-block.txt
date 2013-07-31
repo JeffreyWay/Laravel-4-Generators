@@ -1,5 +1,5 @@
 {{=<% %>=}}
-    <<%element%>>
-        {{ Form::label('<%name%>', '<%label%>') }}
-        {{ Form::<%type%>('<%name%>') }}
-    </<%element%>>
+	<<%element%>>
+		{{ Form::label('<%name%>', '<%label%>') }}
+		{{ Form::<%type%>('<%name%>') }}
+	</<%element%>>

@@ -2,7 +2,7 @@
 {{{formElements}}}
 
 {{=<% %>=}}
-    <<%element%>>
-        {{ Form::submit() }}
-    </<%element%>>
+	<<%element%>>
+		{{ Form::submit() }}
+	</<%element%>>
 {{ Form::close() }}
