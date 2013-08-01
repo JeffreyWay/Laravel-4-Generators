@@ -66,7 +66,8 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
      */
     protected function getPath()
     {
-        return $this->option('path') . '/' . ucwords($this->argument('name')) . 'TableSeeder.php';
+        $parts = pathinfo($this->argument('name'));
+        return $this->option('path') . '/' . ucwords($parts['basename']) . 'TableSeeder.php';
     }
 
     /**

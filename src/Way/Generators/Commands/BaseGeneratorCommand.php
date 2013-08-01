@@ -1,12 +1,16 @@
 <?php namespace Way\Generators\Commands;
 
-use Way\Generators\Generators\ViewGenerator;
+use Way\Generators\Generators\Generator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 class BaseGeneratorCommand extends Command {
 
+    /**
+     * @var \Way\Generators\Generators\Generator
+     */
+    protected $generator;
     /**
      * Execute the console command.
      *
@@ -44,7 +48,8 @@ class BaseGeneratorCommand extends Command {
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . strtolower($this->argument('name')) . '.blade.php';
+        $parts = pathinfo($this->argument('name'));
+        return $this->option('path') . '/' . $parts['dirname'] . '/' . strtolower($parts['basename']) . '.blade.php';
     }
 
 }

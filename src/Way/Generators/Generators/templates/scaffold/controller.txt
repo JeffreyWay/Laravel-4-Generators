@@ -23,7 +23,7 @@ class {{name}} extends BaseController {
 	{
 		${{collection}} = $this->{{modelInstance}}->all();
 
-		return View::make('{{collection}}.index', compact('{{collection}}'));
+		return View::make('{{folder}}{{collection}}.index', compact('{{collection}}'));
 	}
 
 	/**
@@ -33,7 +33,7 @@ class {{name}} extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('{{collection}}.create');
+		return View::make('{{folder}}{{collection}}.create');
 	}
 
 	/**
@@ -69,7 +69,7 @@ class {{name}} extends BaseController {
 	{
 		${{modelInstance}} = $this->{{modelInstance}}->findOrFail($id);
 
-		return View::make('{{collection}}.show', compact('{{modelInstance}}'));
+		return View::make('{{folder}}{{collection}}.show', compact('{{modelInstance}}'));
 	}
 
 	/**
@@ -87,7 +87,7 @@ class {{name}} extends BaseController {
 			return Redirect::route('{{collection}}.index');
 		}
 
-		return View::make('{{collection}}.edit', compact('{{modelInstance}}'));
+		return View::make('{{folder}}{{collection}}.edit', compact('{{modelInstance}}'));
 	}
 
 	/**
