@@ -23,7 +23,7 @@ class ControllerGenerator extends Generator {
             $this->template = $this->getScaffoldedController($template, $name);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        return str_replace('{{name}}', \Str::studly($name), $this->template);
     }
 
     /**
@@ -37,7 +37,7 @@ class ControllerGenerator extends Generator {
     {
         $collection = strtolower(str_replace('Controller', '', $name)); // dogs
         $modelInstance = Pluralizer::singular($collection); // dog
-        $modelClass = ucwords($modelInstance); // Dog
+        $modelClass = \Str::studly($modelInstance); // Dog
 
         foreach(array('modelInstance', 'modelClass', 'collection') as $var)
         {

@@ -83,6 +83,20 @@ class MigrationGenerator extends Generator {
             ? implode('_', array_slice($pieces, $divider + 1))
             : implode('_', $pieces);
 
+        // If the migration name is 2+ words like
+        // create_github_users_table then we'll need
+        // to set the tableName to github_users
+        $keywords = array(
+            'create', 'make',
+            'add', 'insert',
+            'remove', 'drop',
+            'to', 'from'
+        );
+
+        while ( ! in_array(prev($pieces), $keywords) ) {
+            $tableName = current($pieces) . '_' . $tableName;
+        }
+
         // For example: ['add', 'posts']
         return array($action, $tableName);
     }
