@@ -80,8 +80,8 @@ class MigrationGenerator extends Generator {
         // If we did find one of those "to" or "from" connecting words,
         // we know that what follows is the table name.
         $tableName = ($divider !== false)
-            ? $tableName = implode('_', array_slice($pieces, $divider + 1))
-            : $tableName = implode('_', $pieces);
+            ? implode('_', array_slice($pieces, $divider + 1))
+            : implode('_', $pieces);
 
         // For example: ['add', 'posts']
         return array($action, $tableName);
