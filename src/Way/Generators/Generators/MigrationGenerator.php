@@ -59,19 +59,29 @@ class MigrationGenerator extends Generator {
     {
         // create_users_table
         // add_user_id_to_posts_table
+        // create_post_tag_table
         $pieces = explode('_', $name);
 
-        $action = $pieces[0];
+        // This is the action that the user
+        // wants to take. Create or Delete or Add.
+        $action = array_shift($pieces);
 
-        // If the migration name is create_users,
-        // then we'll set the tableName to the last
-        // item. But, if it's create_users_table,
-        // then we have to compensate, accordingly.
-        $tableName = end($pieces);
-        if ( $tableName === 'table' )
-        {
-            $tableName = prev($pieces);
-        }
+        // Adding _table to the migration name is optional
+        if (end($pieces) == 'table') array_pop($pieces);
+
+        // Next, we need to determine what the table name is.
+        // This is tough, because it could be something like
+        // posts, or posts_tags. Further, the migration name could
+        // be 'create_posts_tags_table', or 'add_post_id_to_posts_tags_table'
+        // So we'll search for the keywords 'to' or 'from'.
+        $divider = array_search('to', $pieces);
+        if ($divider === false) $divider = array_search('from', $pieces);
+
+        // If we did find one of those "to" or "from" connecting words,
+        // we know that what follows is the table name.
+        $tableName = ($divider !== false)
+            ? $tableName = implode('_', array_slice($pieces, $divider + 1))
+            : $tableName = implode('_', $pieces);
 
         // For example: ['add', 'posts']
         return array($action, $tableName);
