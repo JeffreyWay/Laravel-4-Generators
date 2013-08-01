@@ -32,11 +32,12 @@ class ResourceGenerator {
      */
     public function updateRoutesFile($name)
     {
-        $name = strtolower(Pluralizer::plural($name));
+        $parts = pathinfo($name);
+        $path = strtolower(Pluralizer::plural($parts['basename']));
 
         $this->file->append(
             app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
+            "\n\nRoute::resource('" . $path . "', '" . ucwords($path) . "Controller');"
         );
     }
 

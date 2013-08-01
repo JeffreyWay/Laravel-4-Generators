@@ -47,7 +47,8 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . studly_case($this->argument('name')) . '.php';
+        $parts = pathinfo($this->argument('name'));
+        return $this->option('path') . '/' . $parts['dirname'] . '/' . studly_case($parts['basename']) . '.php';
     }
 
     /**

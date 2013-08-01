@@ -47,7 +47,9 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
+        $parts = pathinfo($this->argument('name'));
+        $this->generator->setViewsSubfolder($parts['dirname']);
+        return $this->option('path') . '/' . $parts['dirname'] . '/' . ucfirst($parts['basename']) . '.php';
     }
 
     /**

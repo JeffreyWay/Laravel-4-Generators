@@ -67,7 +67,8 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
+        $parts = pathinfo($this->argument('name'));
+        return $this->option('path') . '/' . ucfirst($parts['basename']) . '.php';
     }
 
     /**

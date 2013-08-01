@@ -8,6 +8,14 @@ use Illuminate\Support\Pluralizer;
 class ControllerGenerator extends Generator {
 
     /**
+     * What subfolder are templates save to
+     * @var string
+     */
+    private $views_subfolder = '';
+    public function setViewsSubfolder($path) {
+        $this->views_subfolder = str_finish(preg_replace('#/|\\\\#', '.', $path), '.');
+    }
+    /**
      * Fetch the compiled template for a controller
      *
      * @param  string $template Path to template
@@ -35,11 +43,12 @@ class ControllerGenerator extends Generator {
      */
     protected function getScaffoldedController($template, $name)
     {
+        $folder = $this->views_subfolder; //anything before / translated to dot path (example.and)
         $collection = strtolower(str_replace('Controller', '', $name)); // dogs
         $modelInstance = Pluralizer::singular($collection); // dog
         $modelClass = ucwords($modelInstance); // Dog
 
-        foreach(array('modelInstance', 'modelClass', 'collection') as $var)
+        foreach(array('modelInstance', 'modelClass', 'collection', 'folder') as $var)
         {
             $this->template = str_replace('{{'.$var.'}}', $$var, $this->template);
         }
