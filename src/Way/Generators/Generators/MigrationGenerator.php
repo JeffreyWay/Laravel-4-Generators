@@ -198,23 +198,79 @@ class MigrationGenerator extends Generator {
 
         if ( !$fields ) return;
 
-        $fields = preg_split('/, ?/', $fields);
+        /**
+         * Black Magic Regex-Fu! Let me explain...
+         *
+         * After this beast of a regular expression,
+         * we have 4 capturing cases
+         *
+         *   $matches[0] : The whole shebang
+         *       Gives an array of complete field descriptions
+         *
+         *   $matches[1] : ([a-z]+:[a-z]+)
+         *       returns <name>:<type> descriptions
+         *
+         *   $matches[2] : (\[(?:[\d,]+|'[[:print:]]+',?)+\])?
+         *       I know this looks bad at first, but basically it looks for
+         *           integer and decimal options via [\d,]+
+         *               [50] or [10,2]
+         *           and
+         *           lists via '[[:print:]]+',?
+         *               ['this', 'is', 'a list.', '123', 'comma, see']
+         *
+         *      Note: This group is completely optional
+         *              ( '?' at the end of the pattern )
+         *
+         *   $matches[3] : :?([a-z:'\(\))]+)?
+         *       Returns the 'index' options, if any are set
+         *
+         *
+         * See this, for reference: http://d.pr/i/CSOH
+         *
+         */
 
-        foreach($fields as &$bit)
+        $pattern = "/([a-z_][a-z0-9_]*:[a-z]+)(\[(?:[\d,]+|'[[:print:]]+',?)+\])?:?([a-z:'\(\))]+)?/i";
+
+        preg_match_all($pattern, $fields, $matches);
+
+        // Re-Format the matches
+        $fields     = array();
+        $fieldCount = count($matches[0]);
+
+        // Sanitizer for 3rd-nth params
+        $sanitize_index = function($val) { return strpos($val, '(') !== FALSE ? $val : $val . '()'; };
+
+        while($fieldCount--)
         {
-            $columnInfo = preg_split('/ ?: ?/', $bit);
+            $columnInfo = explode(':', $matches[1][$fieldCount]);
 
-            $bit = new \StdClass;
-            $bit->name = $columnInfo[0];
-            $bit->type = $columnInfo[1];
+            $field = new \StdClass;
+            $field->name = $columnInfo[0];
+            $field->type = $columnInfo[1];
+
+            // Did the user set any data-type related options?
+            if($matches[2][$fieldCount])
+            {
+                // Turn the options string into an array:
+                // Well, we know the option string pretty much looks like PHP's array shorthand notation [1,2,3,4]
+                // So, with a little modification to the string and the help of json_decode(); we can easily
+                // get this job done.
+                $field->options = json_decode(str_replace("'", '"', $matches[2][$fieldCount]));
+            }
 
             // If there is a third key, then
             // the user is setting an index/option.
-            if ( isset($columnInfo[2]) )
+            if($matches[3][$fieldCount])
             {
-                $bit->index = $columnInfo[2];
+                $indexes = explode(':', $matches[3][$fieldCount]);
+                $field->index = array_map($sanitize_index, $indexes);
             }
+
+            array_push($fields, $field);
         }
+
+        // Flip to preserve the field order
+        $fields = array_reverse($fields);
 
         return $fields;
     }
@@ -227,28 +283,31 @@ class MigrationGenerator extends Generator {
     */
     protected function addColumn($field)
     {
-        // Let's see if they're setting
-        // a limit, like: string[50]
-        if ( str_contains($field->type, '[') )
-        {
-            preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
-            $field->type = $matches[1]; // string
-            $field->limit = $matches[2]; // 50
-        }
 
         // We'll start building the appropriate Schema method
         $html = "\$table->{$field->type}";
 
-        $html .= isset($field->limit)
-            ? "('{$field->name}', {$field->limit})"
-            : "('{$field->name}')";
+        // Some type specific alterations
+        $html .= "('{$field->name}'";
+        if($field->type === 'enum' && isset($field->options))
+        {
+            // Re-wrap the enum values in quotes
+            $list = array_map('json_encode', $field->options);
+            // and generate a nice and safe array syntax
+            $html .= ', array(' . implode(', ', $list) . ')';
+        }
+        else
+        {
+            $html .= isset($field->options)
+                ? ', ' . implode(', ', $field->options)
+                : '';
+        }
+        $html .= ')';
 
         // Take care of any potential indexes or options
         if ( isset($field->index) )
         {
-            $html .= str_contains($field->index, '(')
-                ? "->{$field->index}"
-                : "->{$field->index}()";
+            $html .= '->' . implode('->', $field->index);
         }
 
         return $html.';';
