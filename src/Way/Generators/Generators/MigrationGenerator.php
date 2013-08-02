@@ -107,6 +107,11 @@ class MigrationGenerator extends Generator {
                 $fields = $this->fields ? $this->setFields('dropColumn') : '';
                 break;
 
+            case 'pivot':
+                $upMethod = $this->file->get(__DIR__ .'/templates/migration/migration-up-pivot.txt');
+                $fields = $this->fields ? $this->setFields('addColumn') : '';
+                break;
+
             case 'create':
             case 'make':
             default:

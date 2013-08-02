@@ -27,7 +27,7 @@ class PivotGeneratorCommand extends BaseGeneratorCommand {
         $this->call(
             'generate:migration',
             array(
-                'name'      => "create_{$tables[0]}_{$tables[1]}_table",
+                'name'      => "pivot_{$tables[0]}_{$tables[1]}_table",
                 '--fields'  => "{$tables[0]}_id:integer, {$tables[1]}_id:integer"
             )
         );
