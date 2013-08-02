@@ -145,6 +145,7 @@ class MigrationGenerator extends Generator {
 
           case 'remove':
           case 'drop':
+          case 'delete':
             // then we need to add the columns in reverse
             $downMethod = $this->file->get(__DIR__ . '/templates/migration/migration-down.txt');
             $fields = $this->fields ? $this->setFields('addColumn') : '';
