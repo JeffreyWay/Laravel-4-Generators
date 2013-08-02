@@ -31,8 +31,8 @@ class PivotGeneratorCommand extends BaseGeneratorCommand {
                 '--fields'  => implode(', ', array(
                     "{$tables[0]}_id:integer:unsigned:index",
                     "{$tables[1]}_id:integer:unsigned:index",
-                    "{$tables[0]}_id:foreign:references('id'):on('{$tables[0]}'):onDelete('cascade')",
-                    "{$tables[1]}_id:foreign:references('id'):on('{$tables[1]}'):onDelete('cascade')"
+                    "{$tables[0]}_id:foreign:references('id'):on('" . str_plural($tables[0]) . "'):onDelete('cascade')",
+                    "{$tables[1]}_id:foreign:references('id'):on('" . str_plural($tables[1]) . "'):onDelete('cascade')"
                 ))
             )
         );
