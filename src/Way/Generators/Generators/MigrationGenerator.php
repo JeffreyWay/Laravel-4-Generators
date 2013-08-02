@@ -193,7 +193,6 @@ class MigrationGenerator extends Generator {
     */
     protected function convertFieldsToArray()
     {
-        // TODO this needs to be injected
         $fields = $this->fields;
 
         if ( !$fields ) return;
