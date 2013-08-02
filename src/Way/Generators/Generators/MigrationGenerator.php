@@ -103,6 +103,7 @@ class MigrationGenerator extends Generator {
 
             case 'remove':
             case 'drop':
+            case 'delete':
                 $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up.txt');
                 $fields = $this->fields ? $this->setFields('dropColumn') : '';
                 break;

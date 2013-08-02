@@ -147,7 +147,7 @@ When writing migration names, use the following keywords to provide hints for th
 
 - `create` or `make` (`create_users_table`)
 - `add` or `insert` (`add_user_id_to_posts_table`)
-- `remove` or `drop` (`remove_user_id_from_posts_table`)
+- `remove` or `drop` or `delete` (`remove_user_id_from_posts_table`)
 
 #### Generating Schema
 
