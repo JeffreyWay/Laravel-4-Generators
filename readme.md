@@ -49,6 +49,8 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - [Resources](#resources)
 - [Scaffolding](#scaffolding)
 - [Forms](#forms)
+- [Tests](#tests)
+- [Pivot Tables](#pivot-tables)
 
 ### Migrations
 
@@ -503,7 +505,7 @@ class FooTest extends TestCase {
 Creating joinable/pivot tables can sometimes be confusing.
 
 - Should the table names be plural?
-- In what order do we correct the table names?
+- In what order do we write the table names to make Laravel happy?
 - What fields should be in the pivot table?
 
 This process can be automated now. Simply call the `generate:pivot`
@@ -517,8 +519,17 @@ php artisan generate:pivot posts tags
 
 It doesn't matter which order you provide the table names (or whether
 you pluralize them or not). The command will correctly create a
-`post_tag` migration that has `post_id` and `tag_id` fields. Finally,
-simply migrate the database to create it.
+`post_tag` migration that has `post_id` and `tag_id` fields.
+
+```php
+Schema::create('post_tag', function(Blueprint $table) {
+    $table->integer('post_id');
+    $table->integer('tag_id');
+});
+```
+
+
+Finally, simply migrate the database to create it.
 
 ```bash
 php artisan migrate
@@ -531,8 +542,7 @@ a tags table, and the connecting pivot table for the two. We can tackle
 this easily with the generators.
 
 ```bash
-php artisan generate:migration create_posts_table
---fields="title:string, description:body"
+php artisan generate:migration create_posts_table --fields="title:string, description:body"
 
 php artisan generate:migration create_tags_table --fields="name:string"
 
