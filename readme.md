@@ -205,6 +205,7 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
 - `--fields="username:string:unique, age:integer:nullable"`
+- `--fields="name:string:default('John'), email:string:unique:nullable"`
 - `--fields="username:string[30]:unique, age:integer:nullable"`
 
 Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
