@@ -205,14 +205,14 @@ class MigrationGenerator extends Generator {
             $columnInfo = preg_split('/ ?: ?/', $bit);
 
             $bit = new \StdClass;
-            $bit->name = $columnInfo[0];
-            $bit->type = $columnInfo[1];
+            $bit->name = array_shift($columnInfo);
+            $bit->type = array_shift($columnInfo);
 
-            // If there is a third key, then
-            // the user is setting an index/option.
-            if ( isset($columnInfo[2]) )
+            // If there are any remaining array elements,
+            // then the user is setting one or more index/options.
+            if ( count($columnInfo)>0)
             {
-                $bit->index = $columnInfo[2];
+                $bit->index = $columnInfo;
             }
         }
 
@@ -246,9 +246,11 @@ class MigrationGenerator extends Generator {
         // Take care of any potential indexes or options
         if ( isset($field->index) )
         {
-            $html .= str_contains($field->index, '(')
-                ? "->{$field->index}"
-                : "->{$field->index}()";
+            foreach ($field->index as $index) {
+                $html .= str_contains($index, '(')
+                ? "->{$index}"
+                : "->{$index}()";
+            }
         }
 
         return $html.';';
