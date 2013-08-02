@@ -6,9 +6,10 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:view`
 - `generate:migration`
 - `generate:resource`
-- `generate:scaffold` *<-- NEW!!*
-- `generate:form` *<-- NEW!!*
-- `generate:test` *<-- NEW!!*
+- `generate:scaffold`
+- `generate:form`
+- `generate:test`
+- `generate:pivot` <-- NEW!!
 
 ## Prefer a Video Walk-through?
 
@@ -496,3 +497,45 @@ class FooTest extends TestCase {
 
 }
 ```
+
+### Pivot Tables
+
+Creating joinable/pivot tables can sometimes be confusing.
+
+- Should the table names be plural?
+- In what order do we correct the table names?
+- What fields should be in the pivot table?
+
+This process can be automated now. Simply call the `generate:pivot`
+command, and provide the names of the tables that should be joinable.
+For example, a post can have many tags, and a tag can have many posts.
+Run the following command to create the necessary pivot table.
+
+```bash
+php artisan generate:pivot posts tags
+```
+
+It doesn't matter which order you provide the table names (or whether
+you pluralize them or not). The command will correctly create a
+`post_tag` migration that has `post_id` and `tag_id` fields. Finally,
+simply migrate the database to create it.
+
+```bash
+php artisan migrate
+```
+
+Pivot table finished!
+
+To put it all together, let's do it from scratch. We need a posts table,
+a tags table, and the connecting pivot table for the two. We can tackle
+this easily with the generators.
+
+```bash
+php artisan generate:migration create_posts_table
+--fields="title:string, description:body"
+
+php artisan generate:migration create_tags_table --fields="name:string"
+
+php artisan generate:pivot posts tags
+```
+
