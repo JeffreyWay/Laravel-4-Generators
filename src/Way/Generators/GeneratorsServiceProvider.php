@@ -28,8 +28,9 @@ class GeneratorsServiceProvider extends ServiceProvider {
 		$this->registerScaffoldGenerator();
 		$this->registerViewGenerator();
 		$this->registerMigrationGenerator();
+        $this->registerPivotGenerator();
 		$this->registerSeedGenerator();
-		$this->registerFormDumper();
+        $this->registerFormDumper();
 
 		$this->commands(
 			'generate.model',
@@ -40,7 +41,8 @@ class GeneratorsServiceProvider extends ServiceProvider {
 			'generate.view',
 			'generate.migration',
 			'generate.seed',
-			'generate.form'
+            'generate.form',
+            'generate.pivot'
 		);
 	}
 
@@ -157,7 +159,20 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	}
 
 	/**
-	 * Register generate:migration
+	 * Register generate:pivot
+	 *
+	 * @return Commands\PivotGeneratorCommand
+	 */
+    protected function registerPivotGenerator()
+    {
+        $this->app['generate.pivot'] = $this->app->share(function($app)
+        {
+            return new Commands\PivotGeneratorCommand;
+        });
+    }
+
+	/**
+	 * Register generate:seed
 	 *
 	 * @return Commands\MigrationGeneratorCommand
 	 */
