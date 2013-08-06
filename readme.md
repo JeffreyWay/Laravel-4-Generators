@@ -6,9 +6,10 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:view`
 - `generate:migration`
 - `generate:resource`
-- `generate:scaffold` *<-- NEW!!*
-- `generate:form` *<-- NEW!!*
-- `generate:test` *<-- NEW!!*
+- `generate:scaffold`
+- `generate:form`
+- `generate:test`
+- `generate:pivot` <-- NEW!!
 
 ## Prefer a Video Walk-through?
 
@@ -48,6 +49,8 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - [Resources](#resources)
 - [Scaffolding](#scaffolding)
 - [Forms](#forms)
+- [Tests](#tests)
+- [Pivot Tables](#pivot-tables)
 
 ### Migrations
 
@@ -144,7 +147,7 @@ When writing migration names, use the following keywords to provide hints for th
 
 - `create` or `make` (`create_users_table`)
 - `add` or `insert` (`add_user_id_to_posts_table`)
-- `remove` or `drop` (`remove_user_id_from_posts_table`)
+- `remove` or `drop` or `delete` (`remove_user_id_from_posts_table`)
 
 #### Generating Schema
 
@@ -202,6 +205,7 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
 - `--fields="username:string:unique, age:integer:nullable"`
+- `--fields="name:string:default('John'), email:string:unique:nullable"`
 - `--fields="username:string[30]:unique, age:integer:nullable"`
 
 Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
@@ -496,3 +500,53 @@ class FooTest extends TestCase {
 
 }
 ```
+
+### Pivot Tables
+
+Creating joinable/pivot tables can sometimes be confusing.
+
+- Should the table names be plural?
+- In what order do we write the table names to make Laravel happy?
+- What fields should be in the pivot table?
+
+This process can be automated now. Simply call the `generate:pivot`
+command, and provide the names of the tables that should be joinable.
+For example, a post can have many tags, and a tag can have many posts.
+Run the following command to create the necessary pivot table.
+
+```bash
+php artisan generate:pivot posts tags
+```
+
+It doesn't matter which order you provide the table names (or whether
+you pluralize them or not). The command will correctly create a
+`post_tag` migration that has `post_id` and `tag_id` fields.
+
+```php
+Schema::create('post_tag', function(Blueprint $table) {
+    $table->integer('post_id');
+    $table->integer('tag_id');
+});
+```
+
+
+Finally, simply migrate the database to create it.
+
+```bash
+php artisan migrate
+```
+
+Pivot table finished!
+
+To put it all together, let's do it from scratch. We need a posts table,
+a tags table, and the connecting pivot table for the two. We can tackle
+this easily with the generators.
+
+```bash
+php artisan generate:migration create_posts_table --fields="title:string, description:body"
+
+php artisan generate:migration create_tags_table --fields="name:string"
+
+php artisan generate:pivot posts tags
+```
+
