@@ -82,10 +82,7 @@ class ResourceGeneratorCommand extends Command {
         $this->generateMigration();
         $this->generateSeed();
 
-        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
-        {
-            $this->generateTest();
-        }
+        $this->generateMisc();
 
         $this->generator->updateRoutesFile($this->model);
         $this->info('Updated ' . app_path() . '/routes.php');
@@ -147,7 +144,7 @@ class ResourceGeneratorCommand extends Command {
      *
      * @return void
      */
-   protected function generateController()
+    protected function generateController()
     {
         $name = Pluralizer::plural($this->model);
 
@@ -159,27 +156,9 @@ class ResourceGeneratorCommand extends Command {
             )
         );
     }
-
-    /**
-     * Call generate:test
-     *
-     * @return void
-     */
-    protected function generateTest()
+    protected function generateMisc()
     {
-        if ( ! file_exists(app_path() . '/tests/controllers'))
-        {
-            mkdir(app_path() . '/tests/controllers');
-        }
-
-        $this->call(
-            'generate:test',
-            array(
-                'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
-                '--template' => $this->getTestTemplatePath(),
-                '--path' => app_path() . '/tests/controllers'
-            )
-        );
+        //Do nothing here, used in subclasses
     }
 
     /**
@@ -189,28 +168,16 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateViews()
     {
-        $viewsDir = app_path().'/views';
-        $container = $viewsDir . '/' . Pluralizer::plural($this->model);
-        $layouts = $viewsDir . '/layouts';
+        $container = app_path().'/views/' . Pluralizer::plural($this->model);
         $views = array('index', 'show', 'create', 'edit');
 
-        $this->generator->folders(
-            array($container)
-        );
-
-        // If generating a scaffold, we also need views/layouts/scaffold
-        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
-        {
-            $views[] = 'scaffold';
-            $this->generator->folders($layouts);
-        }
+        $this->generator->folders($container);
 
         // Let's filter through all of our needed views
         // and create each one.
         foreach($views as $view)
         {
-            $path = $view === 'scaffold' ? $layouts : $container;
-            $this->generateView($view, $path);
+            $this->generateView($view, $container);
         }
     }
 

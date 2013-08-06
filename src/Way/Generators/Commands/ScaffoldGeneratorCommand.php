@@ -66,4 +66,39 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         return __DIR__."/../Generators/templates/scaffold/views/{$view}.txt";
     }
 
+    public function generateMisc()
+    {
+        $this->generateTest();
+    }
+
+    /**
+     * Call generate:test
+     *
+     * @return void
+     */
+    protected function generateTest()
+    {
+        if ( ! file_exists(app_path() . '/tests/controllers'))
+        {
+            mkdir(app_path() . '/tests/controllers');
+        }
+
+        $this->call(
+            'generate:test',
+            array(
+                'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
+                '--template' => $this->getTestTemplatePath(),
+                '--path' => app_path() . '/tests/controllers'
+            )
+        );
+    }
+    public function generateViews()
+    {
+        parent::generateViews();
+        $layouts = app_path() . '/views/layouts';
+
+        $this->generator->folders($layouts);
+
+        $this->generateView('scaffold', $layouts);
+    }
 }
