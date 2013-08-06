@@ -66,7 +66,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         return __DIR__."/../Generators/templates/scaffold/views/{$view}.txt";
     }
 
-    public function generateMisc()
+    protected function generateMisc()
     {
         $this->generateTest();
     }
