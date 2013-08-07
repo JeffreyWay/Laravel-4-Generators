@@ -33,7 +33,7 @@ class ControllerGenerator extends Generator {
 
         $this->getNamespaced($nameparser);
 
-        return str_replace('{{name}}', $nameparser->get('controller'), $this->template);
+        return str_replace('{{name}}', $nameparser->get('controller') . 'Controller', $this->template);
     }
 
     /**
