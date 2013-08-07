@@ -2,22 +2,24 @@
 
 namespace Way\Generators\Generators;
 
+use Way\Generators\NameParser;
+
 class MigrationGenerator extends Generator {
 
     /**
      * Fetch the compiled template for a migration
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param  NameParser $nameparser
      * @return string Compiled template
      */
-    protected function getTemplate($template, $name)
+    protected function getTemplate($template, NameParser $nameparser)
     {
         // We begin by fetching the master migration stub.
         $stub = $this->file->get(__DIR__.'/templates/migration/migration.txt');
 
         // Next, set the migration class name
-        $stub = str_replace('{{name}}', \Str::studly($name), $stub);
+        $stub = str_replace('{{name}}', \Str::studly($nameparser->get('controller')), $stub);
 
         // Now, we're going to handle the tricky
         // work of creating the Schema

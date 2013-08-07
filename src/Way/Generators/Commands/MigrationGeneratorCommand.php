@@ -4,6 +4,7 @@ use Way\Generators\Generators\MigrationGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class MigrationGeneratorCommand extends BaseGeneratorCommand
 {
@@ -31,6 +32,7 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     /**
      * Create a new command instance.
      *
+     * @param MigrationGenerator $generator
      * @return void
      */
     public function __construct(MigrationGenerator $generator)
@@ -47,28 +49,27 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
      */
     public function fire()
     {
-        $name = $this->argument('name');
-        $path = $this->getPath();
+        $nameparser = new NameParser($this->argument('name'));
+        $path = $this->getPath($nameparser);
         $fields = $this->option('fields');
 
         $created = $this->generator
-                        ->parse($name, $fields)
-                        ->make($path, null);
+                        ->parse($nameparser->get('basename'), $fields)
+                        ->make($path, null, $nameparser);
 
         $this->call('dump-autoload');
 
         $this->printResult($created, $path);
     }
-
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-        $parts = pathinfo($this->argument('name'));
-        return $this->option('path') . '/' . ucfirst($parts['basename']) . '.php';
+        return $this->option('path') . '/' . ucfirst($nameparser->get('basename')) . '.php';
     }
 
     /**

@@ -4,6 +4,7 @@ use Way\Generators\Generators\TestGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class TestGeneratorCommand extends BaseGeneratorCommand {
 
@@ -31,6 +32,7 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Create a new command instance.
      *
+     * @param TestGenerator $generator
      * @return void
      */
     public function __construct(TestGenerator $generator)
@@ -43,12 +45,12 @@ class TestGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-        $parts = pathinfo($this->argument('name'));
-        return $this->option('path') . '/' . $parts['dirname'] . '/' . studly_case($parts['basename']) . '.php';
+        return $this->option('path') . '/' . $nameparser->get('dirname') . '/' . studly_case($nameparser->get('basename')) . 'Test.php';
     }
 
     /**

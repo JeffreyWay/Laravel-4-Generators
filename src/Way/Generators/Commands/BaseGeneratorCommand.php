@@ -1,9 +1,11 @@
 <?php namespace Way\Generators\Commands;
 
+use Doctrine\Tests\DBAL\Functional\Ticket\NamedParametersTest;
 use Way\Generators\Generators\Generator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class BaseGeneratorCommand extends Command {
 
@@ -18,10 +20,11 @@ class BaseGeneratorCommand extends Command {
      */
     public function fire()
     {
-        $path = $this->getPath();
+        $nameparser = new NameParser($this->argument('name'));
+        $path = $this->getPath($nameparser);
         $template = $this->option('template');
 
-        $this->printResult($this->generator->make($path, $template), $path);
+        $this->printResult($this->generator->make($path, $template, $nameparser), $path);
     }
 
     /**
@@ -40,16 +43,15 @@ class BaseGeneratorCommand extends Command {
 
         $this->error("Could not create {$path}");
     }
-
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-        $parts = pathinfo($this->argument('name'));
-        return $this->option('path') . '/' . $parts['dirname'] . '/' . strtolower($parts['basename']) . '.blade.php';
+        return $this->option('path') . '/' . $nameparser->get('dirname') . '/' . strtolower($nameparser->get('basename')) . '.blade.php';
     }
 
 }

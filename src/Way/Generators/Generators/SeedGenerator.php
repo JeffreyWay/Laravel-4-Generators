@@ -2,21 +2,23 @@
 
 namespace Way\Generators\Generators;
 
+use Way\Generators\NameParser;
+
 class SeedGenerator extends Generator {
 
     /**
      * Fetch the compiled template for a seed
      *
      * @param  string $template Path to template
-     * @param  string $className
+     * @param  string $classNameparser
      * @return string Compiled template
      */
-    protected function getTemplate($template, $className)
+    protected function getTemplate($template, NameParser $nameparser)
     {
         $this->template = $this->file->get($template);
-        $pluralModel = strtolower(str_replace('TableSeeder', '', $className));
+        $pluralModel = strtolower($nameparser->get('controller'));
 
-        $this->template = str_replace('{{className}}', $className, $this->template);
+        $this->template = str_replace('{{className}}', $nameparser->get('controller'), $this->template);
 
         return str_replace('{{pluralModel}}', $pluralModel, $this->template);
     }

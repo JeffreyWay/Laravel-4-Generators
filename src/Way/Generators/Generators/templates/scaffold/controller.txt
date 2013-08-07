@@ -1,6 +1,10 @@
-<?php
+<?php{{namespace}}
 
-class {{name}} extends BaseController {
+{use}
+use BaseController, View, Input, Redirect, Validator;
+{/use}
+
+class {{name}}Controller extends BaseController {
 
 	/**
 	 * {{modelClass}} Repository

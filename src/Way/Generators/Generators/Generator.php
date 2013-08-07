@@ -4,6 +4,7 @@ namespace Way\Generators\Generators;
 
 use Way\Generators\Cache;
 use Illuminate\Filesystem\Filesystem as File;
+use Way\Generators\NameParser;
 
 class RequestedCacheNotFound extends \Exception {}
 
@@ -29,6 +30,18 @@ abstract class Generator {
     protected $cache;
 
     /**
+     * File name
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Parsed template
+     * @var string
+     */
+    protected $template;
+
+    /**
      * Constructor
      *
      * @param $file
@@ -42,15 +55,16 @@ abstract class Generator {
     /**
      * Compile template and generate
      *
-     * @param  string $path
-     * @param  string $template Path to template
-     * @return boolean
+     * @param string $path Path to file
+     * @param string $template Path to template
+     * @param NameParser $mameparser parsed name
+     * @return bool
      */
-    public function make($path, $template)
+    public function make($path, $template, NameParser $mameparser)
     {
         $this->name = basename($path, '.php');
         $this->path = $this->getPath($path);
-        $template = $this->getTemplate($template, $this->name);
+        $template = $this->getTemplate($template, $mameparser);
 
         if (! $this->file->exists($this->path))
         {
@@ -58,6 +72,27 @@ abstract class Generator {
         }
 
         return false;
+    }
+
+    /**
+     * Adds namespace and use if needed
+     *
+     * @param NameParser $nameparser
+     * @return mixed
+     */
+    protected function getNamespaced(NameParser $nameparser) {
+
+        $namespace = '';
+
+        if($nameparser->get('has_namespace')) {
+            $namespace = ' namespace ' . $nameparser->get('namespace') . ';';
+            //Remove {use} and {/use} tags
+            $this->template = preg_replace('#\n?{/?use}#', '', $this->template);
+        }else {
+            //remove {use}{/use} content
+            $this->template = preg_replace('#\n?{use}.*{/use}#', '', $this->template);
+        }
+        $this->template = str_replace('{{namespace}}', $namespace, $this->template);
     }
 
     /**
@@ -90,8 +125,8 @@ abstract class Generator {
      * Get compiled template
      *
      * @param  string $template
-     * @param  $name Name of file
+     * @param NameParser $nameparser Parsed name
      * @return string
      */
-    abstract protected function getTemplate($template, $name);
+    abstract protected function getTemplate($template, NameParser $nameparser);
 }

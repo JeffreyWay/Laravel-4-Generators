@@ -1,9 +1,9 @@
 <?php namespace Way\Generators\Commands;
 
 use Way\Generators\Generators\ControllerGenerator;
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class ControllerGeneratorCommand extends BaseGeneratorCommand {
 
@@ -24,14 +24,13 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Model generator instance.
      *
-     * @var Way\Generators\Generators\ControllerGenerator
+     * @var \Way\Generators\Generators\ControllerGenerator
      */
     protected $generator;
 
     /**
      * Create a new command instance.
-     *
-     * @return void
+     * @param ControllerGenerator $generator
      */
     public function __construct(ControllerGenerator $generator)
     {
@@ -43,13 +42,13 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-        $parts = pathinfo($this->argument('name'));
-        $this->generator->setViewsSubfolder($parts['dirname']);
-        return $this->option('path') . '/' . $parts['dirname'] . '/' . ucfirst($parts['basename']) . '.php';
+        $this->generator->setViewsSubfolder($nameparser->get('dirname'));
+        return $this->option('path') . '/' . $nameparser->get('dirname') . '/' . ucfirst($nameparser->get('basename')) . 'Controller.php';
     }
 
     /**
@@ -76,5 +75,4 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
            array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/controller.txt'),
         );
     }
-
 }

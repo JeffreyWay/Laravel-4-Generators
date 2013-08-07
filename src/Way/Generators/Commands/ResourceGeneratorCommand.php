@@ -40,6 +40,12 @@ class ResourceGeneratorCommand extends Command {
     protected $cache;
 
     /**
+     * The name argument
+     * @var string
+     */
+    protected $nameArgument;
+    
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -87,7 +93,7 @@ class ResourceGeneratorCommand extends Command {
             $this->generateTest();
         }
 
-        $this->generator->updateRoutesFile($this->model);
+        $this->generator->updateRoutesFile($this->nameArgument);
         $this->info('Updated ' . app_path() . '/routes.php');
 
         // We're all finished, so we
@@ -149,12 +155,11 @@ class ResourceGeneratorCommand extends Command {
      */
    protected function generateController()
     {
-        $name = Pluralizer::plural($this->model);
 
         $this->call(
             'generate:controller',
             array(
-                'name' => "{$name}Controller",
+                'name' => $this->nameArgument,
                 '--template' => $this->getControllerTemplatePath()
             )
         );
@@ -175,7 +180,7 @@ class ResourceGeneratorCommand extends Command {
         $this->call(
             'generate:test',
             array(
-                'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
+                'name' => $this->nameArgument,
                 '--template' => $this->getTestTemplatePath(),
                 '--path' => app_path() . '/tests/controllers'
             )
@@ -190,7 +195,7 @@ class ResourceGeneratorCommand extends Command {
     protected function generateViews()
     {
         $viewsDir = app_path().'/views';
-        $container = $viewsDir . '/' . Pluralizer::plural($this->model);
+        $container = $viewsDir . '/' . Pluralizer::plural($this->nameArgument);
         $layouts = $viewsDir . '/layouts';
         $views = array('index', 'show', 'create', 'edit');
 
@@ -240,7 +245,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateMigration()
     {
-        $name = 'create_' . Pluralizer::plural($this->model) . '_table';
+        $name = 'create_' . Pluralizer::plural($this->nameArgument) . '_table';
 
         $this->call(
             'generate:migration',
@@ -256,7 +261,7 @@ class ResourceGeneratorCommand extends Command {
         $this->call(
             'generate:seed',
             array(
-                'name' => Pluralizer::plural(strtolower($this->model))
+                'name' => Pluralizer::plural(strtolower($this->nameArgument))
             )
         );
     }

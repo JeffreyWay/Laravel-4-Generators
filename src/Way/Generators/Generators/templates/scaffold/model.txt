@@ -1,4 +1,8 @@
-<?php
+<?php{{namespace}}
+
+{use}
+use Eloquent;
+{/use}
 
 class {{name}} extends Eloquent {
 	protected $guarded = array();

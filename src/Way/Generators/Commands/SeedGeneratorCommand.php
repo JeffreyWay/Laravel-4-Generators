@@ -4,6 +4,7 @@ use Way\Generators\Generators\SeedGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class SeedGeneratorCommand extends BaseGeneratorCommand {
 
@@ -47,11 +48,14 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
      */
     public function fire()
     {
-        $path = $this->getPath();
-        $className = basename($path, '.php');
+        $nameparser = new NameParser($this->argument('name'));
+        $path = $this->getPath($nameparser);
+        $className = $nameparser->get('controller') . 'TableSeeder';
+
+
         $template = $this->option('template');
 
-        $this->printResult($this->generator->make($path, $template), $path);
+        $this->printResult($this->generator->make($path, $template, $nameparser), $path);
 
         $this->generator->updateDatabaseSeederRunMethod($className);
         $this->info('Updated ' . app_path() . '/database/seeds/DatabaseSeeder.php');
@@ -62,12 +66,12 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-        $parts = pathinfo($this->argument('name'));
-        return $this->option('path') . '/' . ucwords($parts['basename']) . 'TableSeeder.php';
+        return $this->option('path') . '/' . $nameparser->get('controller') . 'TableSeeder.php';
     }
 
     /**

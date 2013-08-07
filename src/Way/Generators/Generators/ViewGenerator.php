@@ -2,7 +2,7 @@
 
 namespace Way\Generators\Generators;
 
-use Illuminate\Support\Pluralizer;
+use Way\Generators\NameParser;
 
 class ViewGenerator extends Generator {
 
@@ -10,39 +10,40 @@ class ViewGenerator extends Generator {
      * Fetch the compiled template for a view
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param  NameParser $nameparser
      * @return string Compiled template
      */
-    protected function getTemplate($template, $name)
+    protected function getTemplate($template, NameParser $nameparser)
     {
         $this->template = $this->file->get($template);
 
         if ($this->needsScaffolding($template))
         {
-            return $this->getScaffoldedTemplate($name);
+            return $this->getScaffoldedTemplate();
         }
 
         // Otherwise, just set the file
         // contents to the file name
-        return $name;
+        return $nameparser->get('basename');
     }
 
     /**
      * Get the scaffolded template for a view
      *
-     * @param  string $name
      * @return string Compiled template
      */
-    protected function getScaffoldedTemplate($name)
+    protected function getScaffoldedTemplate()
     {
-        $model = $this->cache->getModelName();
+        $nameparser = new NameParser($this->cache->getModelName());
 
-        $pluralModel = Pluralizer::plural($model); // posts
-        $formalModel = ucwords($pluralModel); // Posts
-        $className = Pluralizer::singular($formalModel);
+        $model = strtolower($nameparser->get('model')); //post
+        $pluralModel = strtolower($nameparser->get('controller')); // posts
+
+        $className = $nameparser->get('model'); //Post
+        $formalModel = $nameparser->get('controller'); // Posts
 
         // Create and Edit views require form elements
-        if ($name === 'create.blade' or $name === 'edit.blade')
+        if ($nameparser === 'create.blade' or $nameparser === 'edit.blade')
         {
             $formElements = $this->makeFormElements();
 
@@ -56,7 +57,7 @@ class ViewGenerator extends Generator {
         }
 
         // And finally create the table rows
-        list($headings, $fields, $editAndDeleteLinks) = $this->makeTableRows($model);
+        list($headings, $fields, $editAndDeleteLinks) = $this->makeTableRows($nameparser);
         $this->template = str_replace('{{headings}}', implode(PHP_EOL."\t\t\t\t", $headings), $this->template);
         $this->template = str_replace('{{fields}}', implode(PHP_EOL."\t\t\t\t\t", $fields) . PHP_EOL . $editAndDeleteLinks, $this->template);
 
@@ -66,12 +67,13 @@ class ViewGenerator extends Generator {
     /**
      * Create the table rows
      *
-     * @param  string $model
-     * @return Array
+     * @param NameParser $nameparser
+     * @return array
      */
-    protected function makeTableRows($model)
+    protected function makeTableRows(NameParser $nameparser)
     {
-        $pluralModel = Pluralizer::plural($model); // posts
+        $pluralModel = $nameparser->get('controller'); // posts
+        $model = strtolower($nameparser->get('model'));
 
         $fields = $this->cache->getFields();
 
