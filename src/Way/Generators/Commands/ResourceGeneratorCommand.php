@@ -44,7 +44,13 @@ class ResourceGeneratorCommand extends Command {
      * @var string
      */
     protected $nameArgument;
-    
+
+    /**
+     * Fields
+     * @var array
+     */
+    protected $fields;
+
     /**
      * Create a new command instance.
      *
@@ -67,7 +73,7 @@ class ResourceGeneratorCommand extends Command {
     {
         // Scaffolding should always begin with the singular
         // form of the now.
-        $this->model = Pluralizer::singular($this->argument('name'));
+        $this->nameArgument = Pluralizer::singular($this->argument('name'));
 
         $this->fields = $this->option('fields');
 
@@ -80,7 +86,7 @@ class ResourceGeneratorCommand extends Command {
         // within future commands. I'll save them
         // to temporary files to allow for that.
         $this->cache->fields($this->fields);
-        $this->cache->modelName($this->model);
+        $this->cache->modelName($this->nameArgument);
 
         $this->generateModel();
         $this->generateController();
@@ -142,7 +148,7 @@ class ResourceGeneratorCommand extends Command {
         $this->call(
             'generate:model',
             array(
-                'name' => $this->model,
+                'name' => $this->nameArgument,
                 '--template' => $this->getModelTemplatePath()
             )
         );

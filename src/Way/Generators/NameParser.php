@@ -23,6 +23,8 @@ class NameParser {
 
         $parts = pathinfo($name);
 
+        $parts['dirname'] = str_replace('\\', '/', $parts['dirname']);
+
         //Complete argument
         $parts['full'] = $name; // admin\dogs
 
