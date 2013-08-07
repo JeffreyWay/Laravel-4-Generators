@@ -63,7 +63,7 @@ class FormDumperGeneratorTest extends PHPUnit_Framework_TestCase {
         $form->shouldReceive('getTableInfo')
              ->once()
              ->with('dog')
-             ->andReturn(['name' => 'string']);
+             ->andReturn(array('name' => 'string'));
 
         return $form;
     }

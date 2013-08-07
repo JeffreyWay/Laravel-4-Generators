@@ -22,7 +22,7 @@ class ViewGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ViewGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'hello', '--template' => 'foo']);
+        $tester->execute(array('name' => 'hello', '--template' => 'foo'));
 
         $this->assertEquals("Created " . app_path() . "/views/hello.blade.php\n", $tester->getDisplay());
     }
