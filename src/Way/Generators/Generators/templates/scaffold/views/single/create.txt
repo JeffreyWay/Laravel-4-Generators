@@ -2,7 +2,7 @@
 
 <h1>Create {{className}}</h1>
 
-{{ Form::open(['route' => '{{pluralModel}}.store']) }}
+{{ Form::open(array('route' => '{{pluralModel}}.store')) }}
 	<ul>
 {{formElements}}
 		<li>

@@ -15,7 +15,7 @@ class {{className}} extends TestCase {
 	{
 		parent::setUp();
 
-		$this->attributes = Factory::{{model}}(['id' => 1]);
+		$this->attributes = Factory::{{model}}(array('id' => 1));
 		$this->app->instance('{{Model}}', $this->mock);
 	}
 
@@ -88,7 +88,7 @@ class {{className}} extends TestCase {
 	{
 		$this->mock->shouldReceive('find')
 				   ->with(1)
-				   ->andReturn(m::mock(['update' => true]));
+				   ->andReturn(m::mock(array('update' => true)));
 
 		$this->validate(true);
 		$this->call('PATCH', '{{pluralModel}}/1');
@@ -98,7 +98,7 @@ class {{className}} extends TestCase {
 
 	public function testUpdateFails()
 	{
-		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(['update' => true]));
+		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(array('update' => true)));
 		$this->validate(false);
 		$this->call('PATCH', '{{pluralModel}}/1');
 
@@ -109,7 +109,7 @@ class {{className}} extends TestCase {
 
 	public function testDestroy()
 	{
-		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(['delete' => true]));
+		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(array('delete' => true)));
 
 		$this->call('DELETE', '{{pluralModel}}/1');
 	}
@@ -118,6 +118,6 @@ class {{className}} extends TestCase {
 	{
 		Validator::shouldReceive('make')
 				->once()
-				->andReturn(m::mock(['passes' => $bool]));
+				->andReturn(m::mock(array('passes' => $bool)));
 	}
 }

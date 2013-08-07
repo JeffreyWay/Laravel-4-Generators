@@ -21,7 +21,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ControllerGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'FooController', '--template' => 'foo']);
+        $tester->execute(array('name' => 'FooController', '--template' => 'foo'));
 
         $this->assertEquals("Created " . app . "/controllers/FooController.php\n", $tester->getDisplay());
     }
@@ -34,7 +34,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ControllerGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'FooController', '--path' => 'app', '--template' => 'foo']);
+        $tester->execute(array('name' => 'FooController', '--path' => 'app', '--template' => 'foo'));
 
         $this->assertEquals("Created " . app . "/FooController.php\n", $tester->getDisplay());
     }
@@ -50,7 +50,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $command = new ControllerGeneratorCommand($gen);
 
         $tester = new CommandTester($command);
-        $tester->execute(['name' => 'FooController', '--template' => 'foo']);
+        $tester->execute(array('name' => 'FooController', '--template' => 'foo'));
     }
 
 }
