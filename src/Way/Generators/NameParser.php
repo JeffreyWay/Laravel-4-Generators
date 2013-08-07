@@ -31,7 +31,7 @@ class NameParser {
         $parts['controller'] = Pluralizer::plural(ucfirst($parts['filename'])); //Dogs
         $parts['model'] = Pluralizer::singular(ucfirst($parts['filename'])); //Dog
 
-        $parts['url'] = trim($parts['dirname'] . '/' . strtolower($parts['controller']), '/'); // admin/dogs
+        $parts['url'] = trim($parts['dirname'] . '/' . strtolower($parts['controller']), './'); // admin/dogs
         $parts['has_namespace'] = strstr($name, '\\') !== false; // true/false
 
         if($parts['has_namespace']) {
