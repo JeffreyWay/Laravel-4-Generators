@@ -19,7 +19,7 @@ class ViewGenerator extends Generator {
 
         if ($this->needsScaffolding($template))
         {
-            return $this->getScaffoldedTemplate();
+            return $this->getScaffoldedTemplate($nameparser->get('full'));
         }
 
         // Otherwise, just set the file
@@ -32,7 +32,7 @@ class ViewGenerator extends Generator {
      *
      * @return string Compiled template
      */
-    protected function getScaffoldedTemplate()
+    protected function getScaffoldedTemplate($view_name)
     {
         $nameparser = new NameParser($this->cache->getModelName());
 
@@ -45,7 +45,7 @@ class ViewGenerator extends Generator {
         $route = $nameparser->get('route'); //admin.posts
 
         // Create and Edit views require form elements
-        if ($nameparser === 'create.blade' or $nameparser === 'edit.blade')
+        if ($view_name === 'create' or $view_name === 'edit')
         {
             $formElements = $this->makeFormElements();
 
