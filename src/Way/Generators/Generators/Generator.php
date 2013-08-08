@@ -90,7 +90,7 @@ abstract class Generator {
             $this->template = preg_replace('#\n?{/?use}#', '', $this->template);
         }else {
             //remove {use}{/use} content
-            $this->template = preg_replace('#\n?{use}.*{/use}#', '', $this->template);
+            $this->template = preg_replace('#\n?{use}.*{/use}#s', '', $this->template);
         }
         $this->template = str_replace('{{namespace}}', $namespace, $this->template);
     }
