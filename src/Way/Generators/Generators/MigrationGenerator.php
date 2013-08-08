@@ -19,7 +19,7 @@ class MigrationGenerator extends Generator {
         $stub = $this->file->get(__DIR__.'/templates/migration/migration.txt');
 
         // Next, set the migration class name
-        $stub = str_replace('{{name}}', \Str::studly($nameparser->get('controller')), $stub);
+        $stub = str_replace('{{name}}', \Str::studly($nameparser->get('model')), $stub);
 
         // Now, we're going to handle the tricky
         // work of creating the Schema
