@@ -42,6 +42,8 @@ class ViewGenerator extends Generator {
         $className = $nameparser->get('model'); //Post
         $formalModel = $nameparser->get('controller'); // Posts
 
+        $route = $nameparser->get('route'); //admin.posts
+
         // Create and Edit views require form elements
         if ($nameparser === 'create.blade' or $nameparser === 'edit.blade')
         {
@@ -51,7 +53,7 @@ class ViewGenerator extends Generator {
         }
 
         // Replace template vars in view
-        foreach(array('model', 'pluralModel', 'formalModel', 'className') as $var)
+        foreach(array('model', 'pluralModel', 'formalModel', 'className', 'route') as $var)
         {
             $this->template = str_replace('{{'.$var.'}}', $$var, $this->template);
         }

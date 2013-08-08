@@ -32,6 +32,8 @@ class NameParser {
         $parts['model'] = Pluralizer::singular(ucfirst($parts['filename'])); //Dog
 
         $parts['url'] = trim($parts['dirname'] . '/' . strtolower($parts['controller']), './'); // admin/dogs
+        $parts['route'] = str_replace('/', '.', $parts['url']);
+
         $parts['has_namespace'] = strstr($name, '\\') !== false; // true/false
 
         if($parts['has_namespace']) {
