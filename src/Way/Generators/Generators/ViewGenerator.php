@@ -74,8 +74,8 @@ class ViewGenerator extends Generator {
      */
     protected function makeTableRows(NameParser $nameparser)
     {
-        $pluralModel = $nameparser->get('controller'); // posts
-        $model = strtolower($nameparser->get('model'));
+        $route = $nameparser->get('route'); // admin.posts
+        $model = strtolower($nameparser->get('model')); // post
 
         $fields = $this->cache->getFields();
 
@@ -91,9 +91,9 @@ class ViewGenerator extends Generator {
 
         // Now, we'll add the edit and delete buttons.
         $editAndDelete = <<<EOT
-                    <td>{{ link_to_route('{$pluralModel}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
+                    <td>{{ link_to_route('{$route}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$pluralModel}.destroy', \${$model}->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$route}.destroy', \${$model}->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
