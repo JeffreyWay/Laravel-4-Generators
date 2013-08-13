@@ -8,7 +8,7 @@
 	<ul>
 {{formElements}}
 		<li>
-			{{ Form::submit('Submit', array('class' => 'btn')) }}
+			{{ Form::submit('Submit', array('class' => 'btn btn-info')) }}
 		</li>
 	</ul>
 {{ Form::close() }}
