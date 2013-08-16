@@ -2,29 +2,34 @@
 
 namespace Way\Generators\Generators;
 
+use Way\Generators\NameParser;
+
 class TestGenerator extends Generator {
 
     /**
      * Fetch the compiled template for a test
      *
      * @param  string $template Path to template
-     * @param  string $className
+     * @param  NameParser $classNameparser
      * @return string Compiled template
      */
-    protected function getTemplate($template, $className)
+    protected function getTemplate($template, NameParser $nameparser)
     {
-        $pluralModel = strtolower(str_replace('Test', '', $className)); //  dogs
-        $model = str_singular($pluralModel); // dog
-        $Model = ucwords($model); // Dog
+        $pluralModel = strtolower($nameparser->get('controller')); // dogs
+        $model = str_singular($nameparser->get('model')); // dog
+        $Model = $nameparser->get('model'); // Dog
+        $className = $nameparser->get('controller') . 'Test'; // DogsTest
 
-        $template = $this->file->get($template);
+        $this->template = $this->file->get($template);
+
+        $this->getNamespaced($nameparser);
 
         foreach(array('pluralModel', 'model', 'Model', 'className') as $var)
         {
-            $template = str_replace('{{'.$var.'}}', $$var, $template);
+            $this->template = str_replace('{{'.$var.'}}', $$var, $this->template);
         }
 
-        return $template;
+        return $this->template;
     }
 
 }

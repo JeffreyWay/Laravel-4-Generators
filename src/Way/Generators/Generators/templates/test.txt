@@ -1,4 +1,8 @@
-<?php
+<?php{{namespace}}
+
+{use}
+use TestCase;
+{/use}
 
 class {{className}} extends TestCase {
 

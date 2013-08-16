@@ -1,5 +1,8 @@
-<?php
+<?php{{namespace}}
 
+{use}
+use TestCase, Validator;
+{/use}
 use Mockery as m;
 use Way\Tests\Factory;
 

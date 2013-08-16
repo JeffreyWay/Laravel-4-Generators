@@ -2,35 +2,39 @@
 
 namespace Way\Generators\Generators;
 
+use Way\Generators\NameParser;
+
 class ModelGenerator extends Generator {
 
     /**
      * Fetch the compiled template for a model
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param  NameParser $nameparser
      * @return string Compiled template
      */
-    protected function getTemplate($template, $name)
+    protected function getTemplate($template, NameParser $nameparser)
     {
         $this->template = $this->file->get($template);
 
         if ($this->needsScaffolding($template))
         {
-            $this->template = $this->getScaffoldedModel($name);
+            $this->template = $this->getScaffoldedModel($nameparser);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        $this->getNamespaced($nameparser);
+
+        return str_replace('{{name}}', $nameparser->get('model'), $this->template);
     }
 
     /**
      * Get template for a scaffold
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param  NameParser $name
      * @return string
      */
-    protected function getScaffoldedModel($name)
+    protected function getScaffoldedModel(NameParser $nameparser)
     {
         if (! $fields = $this->cache->getFields())
         {

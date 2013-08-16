@@ -2,7 +2,7 @@
 
 <h1>All {{formalModel}}</h1>
 
-<p>{{ link_to_route('{{pluralModel}}.create', 'Add new {{model}}') }}</p>
+<p>{{ link_to_route('{{route}}.create', 'Add new {{model}}') }}</p>
 
 @if (${{pluralModel}}->count())
 	<table class="table table-striped table-bordered">

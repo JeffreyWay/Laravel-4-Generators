@@ -4,6 +4,7 @@ use Way\Generators\Generators\ModelGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Way\Generators\NameParser;
 
 class ModelGeneratorCommand extends BaseGeneratorCommand {
 
@@ -43,11 +44,12 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Get the path to the file that should be generated.
      *
+     * @param NameParser $nameparser
      * @return string
      */
-    protected function getPath()
+    protected function getPath(NameParser $nameparser)
     {
-       return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
+        return $this->option('path') . '/' . $nameparser->get('dirname') . '/' . $nameparser->get('model') . '.php';
     }
 
 	/**

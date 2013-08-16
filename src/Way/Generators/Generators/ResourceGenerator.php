@@ -4,6 +4,7 @@ namespace Way\Generators\Generators;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Support\Pluralizer;
+use Way\Generators\NameParser;
 
 class ResourceGenerator {
 
@@ -32,11 +33,11 @@ class ResourceGenerator {
      */
     public function updateRoutesFile($name)
     {
-        $name = strtolower(Pluralizer::plural($name));
+        $name = new NameParser($name);
 
         $this->file->append(
             app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
+            "\n\nRoute::resource('" . $name->get('url') . "', '" . $name->get('full_controller') . "Controller');"
         );
     }
 
