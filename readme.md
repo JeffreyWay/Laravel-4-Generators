@@ -544,7 +544,7 @@ a tags table, and the connecting pivot table for the two. We can tackle
 this easily with the generators.
 
 ```bash
-php artisan generate:migration create_posts_table --fields="title:string, description:body"
+php artisan generate:migration create_posts_table --fields="title:string, description:text"
 
 php artisan generate:migration create_tags_table --fields="name:string"
 
