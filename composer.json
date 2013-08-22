@@ -1,6 +1,7 @@
 {
     "name": "way/generators",
-    "description": "",
+    "description": "Laravel 4 Generators",
+    "keywords": ["laravel", "generators", "artisan"],
     "authors": [
         {
             "name": "Jeffrey Way",
