@@ -10,14 +10,14 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "~4",
-        "illuminate/console": "~4",
-        "illuminate/filesystem": "~4",
         "mustache/mustache": "dev-master",
         "way/laravel-test-helpers": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"
+        "illuminate/support": "~4",
+        "illuminate/console": "~4",
+        "illuminate/filesystem": "~4",
     },
     "autoload": {
         "psr-0": {
