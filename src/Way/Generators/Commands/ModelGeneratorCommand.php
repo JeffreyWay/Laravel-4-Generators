@@ -40,15 +40,15 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 		$this->generator = $generator;
 	}
 
-    /**
-     * Get the path to the file that should be generated.
-     *
-     * @return string
-     */
-    protected function getPath()
-    {
-       return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
-    }
+	/**
+	 * Get the path to the file that should be generated.
+	 *
+	 * @return string
+	 */
+	protected function getPath()
+    	{
+		return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
+	}
 
 	/**
 	 * Get the console command arguments.
