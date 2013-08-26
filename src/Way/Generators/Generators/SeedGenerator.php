@@ -14,11 +14,11 @@ class SeedGenerator extends Generator {
     protected function getTemplate($template, $className)
     {
         $this->template = $this->file->get($template);
-        $pluralModel = strtolower(str_replace('TableSeeder', '', $className));
+        $models = strtolower(str_replace('TableSeeder', '', $className));
 
         $this->template = str_replace('{{className}}', $className, $this->template);
 
-        return str_replace('{{pluralModel}}', $pluralModel, $this->template);
+        return str_replace('{{models}}', $models, $this->template);
     }
 
     /**
