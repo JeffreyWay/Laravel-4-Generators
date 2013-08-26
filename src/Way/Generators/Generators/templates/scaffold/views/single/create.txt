@@ -1,8 +1,8 @@
 @section('main')
 
-<h1>Create {{className}}</h1>
+<h1>Create {{Model}}</h1>
 
-{{ Form::open(['route' => '{{pluralModel}}.store']) }}
+{{ Form::open(['route' => '{{models}}.store']) }}
 	<ul>
 {{formElements}}
 		<li>

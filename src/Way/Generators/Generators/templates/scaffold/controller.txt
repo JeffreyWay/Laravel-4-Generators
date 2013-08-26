@@ -1,17 +1,17 @@
 <?php
 
-class {{name}} extends BaseController {
+class {{className}} extends BaseController {
 
 	/**
-	 * {{modelClass}} Repository
+	 * {{Model}} Repository
 	 *
-	 * @var {{modelClass}}
+	 * @var {{Model}}
 	 */
-	protected ${{modelInstance}};
+	protected ${{model}};
 
-	public function __construct({{modelClass}} ${{modelInstance}})
+	public function __construct({{Model}} ${{model}})
 	{
-		$this->{{modelInstance}} = ${{modelInstance}};
+		$this->{{model}} = ${{model}};
 	}
 
 	/**
@@ -21,9 +21,9 @@ class {{name}} extends BaseController {
 	 */
 	public function index()
 	{
-		${{collection}} = $this->{{modelInstance}}->all();
+		${{models}} = $this->{{model}}->all();
 
-		return View::make('{{collection}}.index', compact('{{collection}}'));
+		return View::make('{{models}}.index', compact('{{models}}'));
 	}
 
 	/**
@@ -33,7 +33,7 @@ class {{name}} extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('{{collection}}.create');
+		return View::make('{{models}}.create');
 	}
 
 	/**
@@ -44,16 +44,16 @@ class {{name}} extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, {{modelClass}}::$rules);
+		$validation = Validator::make($input, {{Model}}::$rules);
 
 		if ($validation->passes())
 		{
-			$this->{{modelInstance}}->create($input);
+			$this->{{model}}->create($input);
 
-			return Redirect::route('{{collection}}.index');
+			return Redirect::route('{{models}}.index');
 		}
 
-		return Redirect::route('{{collection}}.create')
+		return Redirect::route('{{models}}.create')
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -67,9 +67,9 @@ class {{name}} extends BaseController {
 	 */
 	public function show($id)
 	{
-		${{modelInstance}} = $this->{{modelInstance}}->findOrFail($id);
+		${{model}} = $this->{{model}}->findOrFail($id);
 
-		return View::make('{{collection}}.show', compact('{{modelInstance}}'));
+		return View::make('{{models}}.show', compact('{{model}}'));
 	}
 
 	/**
@@ -80,14 +80,14 @@ class {{name}} extends BaseController {
 	 */
 	public function edit($id)
 	{
-		${{modelInstance}} = $this->{{modelInstance}}->find($id);
+		${{model}} = $this->{{model}}->find($id);
 
-		if (is_null(${{modelInstance}}))
+		if (is_null(${{model}}))
 		{
-			return Redirect::route('{{collection}}.index');
+			return Redirect::route('{{models}}.index');
 		}
 
-		return View::make('{{collection}}.edit', compact('{{modelInstance}}'));
+		return View::make('{{models}}.edit', compact('{{model}}'));
 	}
 
 	/**
@@ -99,17 +99,17 @@ class {{name}} extends BaseController {
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, {{modelClass}}::$rules);
+		$validation = Validator::make($input, {{Model}}::$rules);
 
 		if ($validation->passes())
 		{
-			${{modelInstance}} = $this->{{modelInstance}}->find($id);
-			${{modelInstance}}->update($input);
+			${{model}} = $this->{{model}}->find($id);
+			${{model}}->update($input);
 
-			return Redirect::route('{{collection}}.show', $id);
+			return Redirect::route('{{models}}.show', $id);
 		}
 
-		return Redirect::route('{{collection}}.edit', $id)
+		return Redirect::route('{{models}}.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -123,9 +123,9 @@ class {{name}} extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->{{modelInstance}}->find($id)->delete();
+		$this->{{model}}->find($id)->delete();
 
-		return Redirect::route('{{collection}}.index');
+		return Redirect::route('{{models}}.index');
 	}
 
 }

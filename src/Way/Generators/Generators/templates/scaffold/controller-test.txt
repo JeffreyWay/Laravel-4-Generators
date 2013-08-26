@@ -27,14 +27,14 @@ class {{className}} extends TestCase {
 	public function testIndex()
 	{
 		$this->mock->shouldReceive('all')->once()->andReturn($this->collection);
-		$this->call('GET', '{{pluralModel}}');
+		$this->call('GET', '{{models}}');
 
-		$this->assertViewHas('{{pluralModel}}');
+		$this->assertViewHas('{{models}}');
 	}
 
 	public function testCreate()
 	{
-		$this->call('GET', '{{pluralModel}}/create');
+		$this->call('GET', '{{models}}/create');
 
 		$this->assertResponseOk();
 	}
@@ -43,18 +43,18 @@ class {{className}} extends TestCase {
 	{
 		$this->mock->shouldReceive('create')->once();
 		$this->validate(true);
-		$this->call('POST', '{{pluralModel}}');
+		$this->call('POST', '{{models}}');
 
-		$this->assertRedirectedToRoute('{{pluralModel}}.index');
+		$this->assertRedirectedToRoute('{{models}}.index');
 	}
 
 	public function testStoreFails()
 	{
 		$this->mock->shouldReceive('create')->once();
 		$this->validate(false);
-		$this->call('POST', '{{pluralModel}}');
+		$this->call('POST', '{{models}}');
 
-		$this->assertRedirectedToRoute('{{pluralModel}}.create');
+		$this->assertRedirectedToRoute('{{models}}.create');
 		$this->assertSessionHasErrors();
 		$this->assertSessionHas('message');
 	}
@@ -66,7 +66,7 @@ class {{className}} extends TestCase {
 				   ->once()
 				   ->andReturn($this->attributes);
 
-		$this->call('GET', '{{pluralModel}}/1');
+		$this->call('GET', '{{models}}/1');
 
 		$this->assertViewHas('{{model}}');
 	}
@@ -79,7 +79,7 @@ class {{className}} extends TestCase {
 				   ->once()
 				   ->andReturn($this->collection);
 
-		$this->call('GET', '{{pluralModel}}/1/edit');
+		$this->call('GET', '{{models}}/1/edit');
 
 		$this->assertViewHas('{{model}}');
 	}
@@ -91,18 +91,18 @@ class {{className}} extends TestCase {
 				   ->andReturn(m::mock(['update' => true]));
 
 		$this->validate(true);
-		$this->call('PATCH', '{{pluralModel}}/1');
+		$this->call('PATCH', '{{models}}/1');
 
-		$this->assertRedirectedTo('{{pluralModel}}/1');
+		$this->assertRedirectedTo('{{models}}/1');
 	}
 
 	public function testUpdateFails()
 	{
 		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(['update' => true]));
 		$this->validate(false);
-		$this->call('PATCH', '{{pluralModel}}/1');
+		$this->call('PATCH', '{{models}}/1');
 
-		$this->assertRedirectedTo('{{pluralModel}}/1/edit');
+		$this->assertRedirectedTo('{{models}}/1/edit');
 		$this->assertSessionHasErrors();
 		$this->assertSessionHas('message');
 	}
@@ -111,7 +111,7 @@ class {{className}} extends TestCase {
 	{
 		$this->mock->shouldReceive('find')->with(1)->andReturn(m::mock(['delete' => true]));
 
-		$this->call('DELETE', '{{pluralModel}}/1');
+		$this->call('DELETE', '{{models}}/1');
 	}
 
 	protected function validate($bool)
