@@ -122,14 +122,14 @@ class FormDumperGenerator {
      */
     protected function getFormOpen($method, $model)
     {
-        $collection = Pluralizer::plural($model);
+        $models = Pluralizer::plural($model);
 
         if (preg_match('/edit|update|put|patch/i', $method))
         {
-            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$collection}.update', \${$model}->id))) }}";
+            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$models}.update', \${$model}->id))) }}";
         }
 
-        return "{{ Form::open(array('route' => '{$collection}.store')) }}";
+        return "{{ Form::open(array('route' => '{$models}.store')) }}";
     }
 
     /**

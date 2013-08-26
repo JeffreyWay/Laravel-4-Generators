@@ -5,14 +5,14 @@ class {{className}} extends Seeder {
 	public function run()
 	{
 		// Uncomment the below to wipe the table clean before populating
-		// DB::table('{{pluralModel}}')->truncate();
+		// DB::table('{{models}}')->truncate();
 
-		${{pluralModel}} = array(
+		${{models}} = array(
 
 		);
 
 		// Uncomment the below to run the seeder
-		// DB::table('{{pluralModel}}')->insert(${{pluralModel}});
+		// DB::table('{{models}}')->insert(${{models}});
 	}
 
 }

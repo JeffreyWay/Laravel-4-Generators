@@ -8,19 +8,19 @@ class ModelGenerator extends Generator {
      * Fetch the compiled template for a model
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param  string $className
      * @return string Compiled template
      */
-    protected function getTemplate($template, $name)
+    protected function getTemplate($template, $className)
     {
         $this->template = $this->file->get($template);
 
         if ($this->needsScaffolding($template))
         {
-            $this->template = $this->getScaffoldedModel($name);
+            $this->template = $this->getScaffoldedModel($className);
         }
 
-        return str_replace('{{name}}', $name, $this->template);
+        return str_replace('{{className}}', $className, $this->template);
     }
 
     /**
@@ -30,7 +30,7 @@ class ModelGenerator extends Generator {
      * @param  string $name
      * @return string
      */
-    protected function getScaffoldedModel($name)
+    protected function getScaffoldedModel($className)
     {
         if (! $fields = $this->cache->getFields())
         {

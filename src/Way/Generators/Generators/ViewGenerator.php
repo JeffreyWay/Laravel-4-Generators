@@ -35,11 +35,10 @@ class ViewGenerator extends Generator {
      */
     protected function getScaffoldedTemplate($name)
     {
-        $model = $this->cache->getModelName();
-
-        $pluralModel = Pluralizer::plural($model); // posts
-        $formalModel = ucwords($pluralModel); // Posts
-        $className = Pluralizer::singular($formalModel);
+        $model = $this->cache->getModelName();  // post
+        $models = Pluralizer::plural($model);   // posts
+        $Models = ucwords($models);             // Posts
+        $Model = Pluralizer::singular($Models); // Post
 
         // Create and Edit views require form elements
         if ($name === 'create.blade' or $name === 'edit.blade')
@@ -50,7 +49,7 @@ class ViewGenerator extends Generator {
         }
 
         // Replace template vars in view
-        foreach(array('model', 'pluralModel', 'formalModel', 'className') as $var)
+        foreach(array('model', 'models', 'Models', 'Model') as $var)
         {
             $this->template = str_replace('{{'.$var.'}}', $$var, $this->template);
         }
@@ -71,7 +70,7 @@ class ViewGenerator extends Generator {
      */
     protected function makeTableRows($model)
     {
-        $pluralModel = Pluralizer::plural($model); // posts
+        $models = Pluralizer::plural($model); // posts
 
         $fields = $this->cache->getFields();
 
@@ -87,9 +86,9 @@ class ViewGenerator extends Generator {
 
         // Now, we'll add the edit and delete buttons.
         $editAndDelete = <<<EOT
-                    <td>{{ link_to_route('{$pluralModel}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
+                    <td>{{ link_to_route('{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$pluralModel}.destroy', \${$model}->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$models}.destroy', \${$model}->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
