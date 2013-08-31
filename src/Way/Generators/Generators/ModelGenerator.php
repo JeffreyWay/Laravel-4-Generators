@@ -37,9 +37,28 @@ class ModelGenerator extends Generator {
             return str_replace('{{rules}}', '', $this->template);
         }
 
-        $rules = array_map(function($field) {
-            return "'$field' => 'required'";
-        }, array_keys($fields));
+        $rules = array();
+        array_walk($fields, function($type, $field) use (&$rules) {
+            $rule = 'required';
+            switch($type) {
+                case 'integer':
+                case 'bigInteger':
+                case 'smallInteger':
+                case 'boolean':
+                    $rule .= '|integer';
+                    break;
+                case 'float':
+                    $rule .= '|numeric';
+                    break;
+                case 'date':
+                case 'time':
+                case 'datetime':
+                case 'timestamp':
+                    $rule .= '|date';
+                    break;
+            }
+            $rules[] = "'$field' => '$rule'";
+        });
 
         return str_replace('{{rules}}', PHP_EOL."\t\t".implode(','.PHP_EOL."\t\t", $rules) . PHP_EOL."\t", $this->template);
     }

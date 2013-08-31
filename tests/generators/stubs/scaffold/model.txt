@@ -5,6 +5,6 @@ class Foo extends Eloquent {
 
     public static $rules = array(
 		'title' => 'required',
-		'age' => 'required'
+		'age' => 'required|integer'
 	);
 }
