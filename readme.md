@@ -315,7 +315,7 @@ To fully seed the `dogs` table:
 
 ### Resources
 
-Think of the resource generator as the big enchilda. It calls all of its sibling generate commands. Assuming the following command:
+Think of the resource generator as the big enchilada. It calls all of its sibling generate commands. Assuming the following command:
 
     php artisan generate:resource dog --fields="name:string"
 
