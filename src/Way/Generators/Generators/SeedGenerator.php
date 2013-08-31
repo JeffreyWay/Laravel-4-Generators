@@ -31,9 +31,14 @@ class SeedGenerator extends Generator {
         $databaseSeederPath = app_path() . '/database/seeds/DatabaseSeeder.php';
 
         $content = $this->file->get($databaseSeederPath);
-        $content = preg_replace("/(run\(\).+?)}/us", "$1\t\$this->call('{$className}');\n\t}", $content);
 
-        $this->file->put($databaseSeederPath, $content);
+        if ( ! strpos($content, "\$this->call('{$className}');"))
+        {
+            $content = preg_replace("/(run\(\).+?)}/us", "$1\t\$this->call('{$className}');\n\t}", $content);
+            return $this->file->put($databaseSeederPath, $content);
+        }
+
+        return false;
     }
 
 }

@@ -53,8 +53,14 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
 
         $this->printResult($this->generator->make($path, $template), $path);
 
-        $this->generator->updateDatabaseSeederRunMethod($className);
-        $this->info('Updated ' . app_path() . '/database/seeds/DatabaseSeeder.php');
+        if ($this->generator->updateDatabaseSeederRunMethod($className))
+        {
+            $this->info('Updated ' . app_path() . '/database/seeds/DatabaseSeeder.php');
+        }
+        else
+        {
+            $this->comment('Did not need to update ' . app_path() . '/database/seeds/DatabaseSeeder.php');
+        }
 
 
     }
