@@ -17,7 +17,7 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 
 ## Installation
 
-Begin by installing this package throcugh Composer. Edit your project's `composer.json` file to require `way/generators`.
+Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
 
 	"require": {
 		"laravel/framework": "4.0.*",
