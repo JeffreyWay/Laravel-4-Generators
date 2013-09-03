@@ -87,8 +87,14 @@ class ResourceGeneratorCommand extends Command {
             $this->generateTest();
         }
 
-        $this->generator->updateRoutesFile($this->model);
-        $this->info('Updated ' . app_path() . '/routes.php');
+        if ($this->generator->updateRoutesFile($this->model))
+        {
+            $this->info('Updated ' . app_path() . '/routes.php');
+        }
+        else
+        {
+            $this->comment('Did not need to update ' . app_path() . '/routes.php');
+        }
 
         // We're all finished, so we
         // can delete the cache.
