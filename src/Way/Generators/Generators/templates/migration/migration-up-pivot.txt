@@ -1,7 +1,7 @@
 	public function up()
 	{
 		Schema::create('{{tableName}}', function(Blueprint $table) {
-			$table->integer('id', true);
+			$table->increments('id');
 			{{methods}}
 		});
 	}
