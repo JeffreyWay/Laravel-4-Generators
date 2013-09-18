@@ -119,6 +119,13 @@ class MigrationGenerator extends Generator {
                 $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up-create.txt');
                 $fields = $this->fields ? $this->setFields('addColumn') : '';
                 break;
+
+            case 'destroy':
+            default:
+                $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up-drop.txt');
+                $fields = $this->fields ? $this->setFields('dropColumn') : '';
+                break;
+
         }
 
         // Replace the tableName in the template
@@ -158,6 +165,14 @@ class MigrationGenerator extends Generator {
             $downMethod = $this->file->get(__DIR__ . '/templates/migration/migration-down-drop.txt');
             $fields = $this->fields ? $this->setFields('dropColumn') : '';
             break;
+
+          case 'destroy':
+          default:
+            // then we need to create the table in reverse
+            $downMethod = $this->file->get(__DIR__ . '/templates/migration/migration-down-create.txt');
+            $fields = $this->fields ? $this->setFields('addColumn') : '';
+            break;
+
         }
 
         // Replace the tableName in the template

@@ -211,6 +211,14 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 
 Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
 
+It is possible to destroy the table by issuing:
+
+	php artisan generate:migration destroy_posts_table
+	
+If you'd like to have an accurate artisan rollback option set the `fields` option as well:
+
+	php artisan generate:migration destroy_posts_table --fields="title:string, body:text"
+
 As a final demonstration, let's run a migration to remove the `completed` field from a `tasks` table.
 
     php artisan generate:migration remove_completed_from_tasks_table --fields="completed:boolean"
