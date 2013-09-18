@@ -17,13 +17,18 @@ class ControllerGenerator extends Generator {
     protected function getTemplate($template, $className)
     {
         $this->template = $this->file->get($template);
+        $resource = strtolower(Pluralizer::plural(
+            str_ireplace('Controller', '', $className)
+        ));
 
         if ($this->needsScaffolding($template))
         {
             $this->template = $this->getScaffoldedController($template, $className);
         }
 
-        return str_replace('{{className}}', $className, $this->template);
+        $template = str_replace('{{className}}', $className, $this->template);
+
+        return str_replace('{{collection}}', $resource, $template);
     }
 
     /**

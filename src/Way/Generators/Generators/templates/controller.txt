@@ -9,7 +9,7 @@ class {{className}} extends BaseController {
 	 */
 	public function index()
 	{
-		//
+        return View::make('{{collection}}.index');
 	}
 
 	/**
@@ -19,7 +19,7 @@ class {{className}} extends BaseController {
 	 */
 	public function create()
 	{
-		//
+        return View::make('{{collection}}.create');
 	}
 
 	/**
@@ -40,7 +40,7 @@ class {{className}} extends BaseController {
 	 */
 	public function show($id)
 	{
-		//
+        return View::make('{{collection}}.show');
 	}
 
 	/**
@@ -51,7 +51,7 @@ class {{className}} extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+        return View::make('{{collection}}.edit');
 	}
 
 	/**
