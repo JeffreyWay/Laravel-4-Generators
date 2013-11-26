@@ -208,8 +208,9 @@ To declare fields, use a comma-separated list of key:value:option sets, where `k
 - `--fields="username:string:unique, age:integer:nullable"`
 - `--fields="name:string:default('John'), email:string:unique:nullable"`
 - `--fields="username:string[30]:unique, age:integer:nullable"`
+- `--fields="username:string, gender:enum[array('male'|'female')]"`
 
-Please make note of the last example, where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`
+Please make note of the last two examples; first where we specify a character limit: `string[30]`. This will produce `$table->string('username', 30)->unique();`. Second we specify an enum field with possible options: `enum[array('male'|'female')]`. This will produce `$table->enum('gender', array('male', 'female'));`
 
 It is possible to destroy the table by issuing:
 

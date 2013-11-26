@@ -102,7 +102,7 @@ EOT;
      * array('lab' | 'poodle '|' pit bull')
      * ->
      * array('lab' => 'Lab', 'poodle' => 'Poodle', 'pit bull' => 'Pit Bull')
-     * 
+     *
      * @param string $parameter
      *
      * @return string
