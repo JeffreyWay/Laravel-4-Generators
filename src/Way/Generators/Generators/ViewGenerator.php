@@ -97,6 +97,16 @@ EOT;
         return array($headings, $fields, $editAndDelete);
     }
 
+    /**
+     * Convert array parameter into an array string for creating a select in a form:
+     * array('lab' | 'poodle '|' pit bull')
+     * ->
+     * array('lab' => 'Lab', 'poodle' => 'Poodle', 'pit bull' => 'Pit Bull')
+     * 
+     * @param string $parameter
+     *
+     * @return string
+     */
     private function enumSelect($parameter)
     {
         $arrayInternals = '/
@@ -147,7 +157,7 @@ EOT;
         // [ "enum", "array('new'|'approved'|'denied')]" ]
         list($type, $parameter) = explode('[', $type);
 
-        //remove trailing ']'
+        // remove trailing ']' and anything that follows.
         $parameter = substr($parameter, 0, strpos($parameter, ']'));
 
         return [$type, $parameter];

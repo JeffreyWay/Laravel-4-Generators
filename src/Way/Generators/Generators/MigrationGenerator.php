@@ -255,7 +255,7 @@ class MigrationGenerator extends Generator {
             // anything within square brackets, but that would allow in
             // unexpected input which would not be handled properly.
             $extractTypeAndParameter = '/
-            ([^\[]+?)               # capture everything before opening [ (type)
+            ([^\[]+?)               # capture input type - everything before opening [, lazy
             \[                      # match opening [
             (                       # start capturing
               \d+                   # one or more digits (string limit case)
@@ -269,9 +269,7 @@ class MigrationGenerator extends Generator {
             \]                      # match closing ]
             /x';
 
-
             preg_match($extractTypeAndParameter, $field->type, $matches);
-//            preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
 
             if(strpos($matches[2], 'array') !== FALSE)
             {
