@@ -179,7 +179,6 @@ EOT;
                     $element = "{{ Form::textarea('$name') }}";
                     break;
 
-
                 case 'boolean':
                     $element = "{{ Form::checkbox('$name') }}";
                     break;

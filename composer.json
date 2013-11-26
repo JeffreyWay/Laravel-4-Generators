@@ -2,12 +2,6 @@
     "name": "way/generators",
     "description": "Laravel 4 Generators",
     "keywords": ["laravel", "generators", "artisan"],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/agroff/Laravel-4-Generators"
-        }
-    ],
     "authors": [
         {
             "name": "Jeffrey Way",

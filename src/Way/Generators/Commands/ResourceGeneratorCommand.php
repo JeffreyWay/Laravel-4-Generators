@@ -59,7 +59,6 @@ class ResourceGeneratorCommand extends Command {
      */
     public function fire()
     {
-
         // Scaffolding should always begin with the singular
         // form of the now.
         $this->model = Pluralizer::singular($this->argument('name'));
@@ -71,24 +70,17 @@ class ResourceGeneratorCommand extends Command {
             throw new MissingFieldsException('You must specify the fields option.');
         }
 
-
-
         // We're going to need access to these values
         // within future commands. I'll save them
         // to temporary files to allow for that.
-
         $this->cache->fields($this->fields);
         $this->cache->modelName($this->model);
-
-
 
         $this->generateModel();
         $this->generateController();
         $this->generateViews();
         $this->generateMigration();
         $this->generateSeed();
-
-
 
         if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
         {
