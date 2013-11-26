@@ -248,22 +248,26 @@ class MigrationGenerator extends Generator {
 
         // Let's see if they're setting
         // a limit, like: string[50]
-        // or an array, like: enum[array("one", "two", "three")]
+        // or an array, like: enum[array("one" | "two" | "three")]
         if ( str_contains($field->type, '[') )
         {
-            //not a literal `[`, one or more times, lazy
-            $matchFieldType = '[^\[]+?';
-
-            $matchDigitParameter = '\d+';
-
-            //literal `array(`, [-'",\w\s]+, literal `)`
-            $matchArrayParameter = 'array\([-\'"|\w\s]+\)';
-
-            //the full, cryptic regex
-            $extractTypeAndParameter = '([^\[]+?)\[(\d+|(?:array\([-\'"|\w\s]+\)))\]';
-
-            //same as above, composed with descriptive variables.
-            $extractTypeAndParameter = "/($matchFieldType)\\[($matchDigitParameter|(?:$matchArrayParameter))\\]/";
+            // this regex got pretty ugly. Alternatively we could capture
+            // anything within square brackets, but that would allow in
+            // unexpected input which would not be handled properly.
+            $extractTypeAndParameter = '/
+            ([^\[]+?)               # capture everything before opening [ (type)
+            \[                      # match opening [
+            (                       # start capturing
+              \d+                   # one or more digits (string limit case)
+              |                     # or
+              (?:                   # start non capturing group
+                array\(             # match literal: array(
+                  [-\'"|\w\s]+      # match one or more dash, single quote, double quote, pipe, word, space
+                \)                  # match closing array, literal: )
+              )                     # end non capturing
+            )                       # end capturing group
+            \]                      # match closing ]
+            /x';
 
 
             preg_match($extractTypeAndParameter, $field->type, $matches);
