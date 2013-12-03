@@ -187,11 +187,54 @@ class MigrationGenerator extends Generator {
     */
     protected function setFields($method = 'addColumn')
     {
+        $options = $this->extractOptions();
         $fields = $this->convertFieldsToArray();
 
-        $template = array_map(array($this, $method), $fields);
+        $template = array_merge(array_map(array($this, $method), $fields), $options);
 
         return implode("\n\t\t\t", $template);
+    }
+
+    /**
+    * If Schema fields are specified, parse
+     * the last that misses the name, this
+     * contains options of the table.
+     *
+     * So: :softdeletes becomes $table->softdeletes();
+     * Provide :notimestamps to skip $table->timestamps();
+     *
+     * @return array
+     */
+    private function extractOptions()
+    {
+        $fields = preg_split('/, ?/', $this->fields);
+        $options = array();
+
+        foreach($fields as $bit)
+        {
+            $columnInfo = preg_split('/ ?: ?/', $bit);
+
+            // If the field name is not set
+            if ($columnInfo && ! array_shift($columnInfo))
+            {
+                $options = $columnInfo;
+            }
+        }
+
+        if ( ($key = array_search('notimestamps', $options)) !== false)
+        {
+            unset($options[$key]);
+        }
+        else
+        {
+            $options[] = 'timestamps';
+        }
+
+        foreach ($options as $key => $option)
+        {
+            $options[$key] = "\$table->$option();";
+        }
+        return $options;
     }
 
     /**
@@ -211,26 +254,34 @@ class MigrationGenerator extends Generator {
 
         $fields = preg_split('/, ?/', $fields);
 
-        foreach($fields as &$bit)
+        foreach($fields as $key => &$bit)
         {
             $columnInfo = preg_split('/ ?: ?/', $bit);
 
-            $bit = new \StdClass;
-            $bit->name = array_shift($columnInfo);
-            $bit->type = array_shift($columnInfo);
-
-            // If there is a third key, then
-            // the user is setting any number
-            // of options
-            if ( isset($columnInfo[0]) )
+            // If the field name is set
+            if ($columnInfo && $columnInfo[0])
             {
-                $bit->options = '';
-                foreach($columnInfo as $option)
+                $bit = new \StdClass;
+                $bit->name = array_shift($columnInfo);
+                $bit->type = array_shift($columnInfo);
+
+                // If there is a third key, then
+                // the user is setting any number
+                // of options
+                if ( isset($columnInfo[0]) )
                 {
-                    $bit->options .= (str_contains($option, '('))
-                        ? "->{$option}"
-                        : "->{$option}()";
+                    $bit->options = '';
+                    foreach($columnInfo as $option)
+                    {
+                        $bit->options .= (str_contains($option, '('))
+                            ? "->{$option}"
+                            : "->{$option}()";
+                    }
                 }
+            }
+            else
+            {
+                unset ($fields[$key]);
             }
         }
 
