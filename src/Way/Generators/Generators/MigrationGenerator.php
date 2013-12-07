@@ -36,16 +36,18 @@ class MigrationGenerator extends Generator {
      *
      * @param  string $name
      * @param  array $fields
+     * @param  boolean $softDelete
      * @return MigrationGenerator
      */
-    public function parse($name, $fields)
+    public function parse($name, $fields, $softDelete)
     {
         list($action, $tableName) = $this->parseMigrationName($name);
 
         $this->action = $action;
         $this->tableName = $tableName;
         $this->fields = $fields;
-
+        $this->softDelete = $softDelete;
+        
         return $this;
     }
 
@@ -121,7 +123,12 @@ class MigrationGenerator extends Generator {
             case 'create':
             case 'make':
             default:
-                $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up-create.txt');
+                if($this->softDelete)
+                {
+                    $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up-create-softdelete.txt');
+                } else {
+                    $upMethod = $this->file->get(__DIR__ . '/templates/migration/migration-up-create.txt');
+                }
                 $fields = $this->fields ? $this->setFields('addColumn') : '';
                 break;
         }
