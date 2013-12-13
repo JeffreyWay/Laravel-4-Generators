@@ -84,11 +84,12 @@ class ViewGenerator extends Generator {
             return "<td>{{{ \$$model->$field }}}</td>";
         }, array_keys($fields));
 
-        // Now, we'll add the edit and delete buttons.
+        // Now, we'll add the show, edit and delete buttons.
         $editAndDelete = <<<EOT
-                    <td>{{ link_to_route('{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
                         {{ Form::open(array('method' => 'DELETE', 'route' => array('{$models}.destroy', \${$model}->id))) }}
+                            {{ link_to_route('{$models}.show', 'Show', array(\${$model}->id), array('class' => 'btn btn-info')) }}
+                            {{ link_to_route('{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
