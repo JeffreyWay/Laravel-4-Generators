@@ -98,6 +98,72 @@ EOT;
     }
 
     /**
+     * Convert array parameter into an array string for creating a select in a form:
+     * array('lab' | 'poodle '|' pit bull')
+     * ->
+     * array('lab' => 'Lab', 'poodle' => 'Poodle', 'pit bull' => 'Pit Bull')
+     *
+     * @param string $parameter
+     *
+     * @return string
+     */
+    private function enumSelect($parameter)
+    {
+        $arrayInternals = '/
+            array\(  # literal: array(
+            ([^)]+)  # capture anything except literal: )
+            \)       # closing )
+        /x';
+        preg_match($arrayInternals, $parameter, $matches);
+
+        //remove leading quote
+        $options = preg_replace('/^\s*[\'"]\s*/', '', $matches[1]);
+        //remove final quote
+        $options = preg_replace('/\s*[\'"]\s*$/', '', $options);
+
+        $inBetweenArrayItems = '/
+            \s*["\']\s*  # Optionally some spaces, a quote, optionally mores paces
+            \|           # Literal pipe as separator
+            \s*["\']\s*  # Same as above ^^
+        /x';
+        $options = preg_split($inBetweenArrayItems, $options);
+
+        $keyValues = array();
+        foreach($options as $option)
+        {
+            $ucOption = ucwords($option);
+            $keyValues[] = "'$option' => '$ucOption'";
+        }
+
+        return 'array(' . implode(", ", $keyValues) . ')';
+    }
+
+    /**
+     * Extract a type and optionally a parameter into an array of [type, parameter]
+     * @param $type
+     *
+     * @return array
+     */
+    private function extractParameterFromType($type)
+    {
+        //no parameter present
+        if(strpos($type, '[') === FALSE)
+        {
+            return [$type, ""];
+        }
+
+        // "enum[array('new'|'approved'|'denied')]"
+        // ->
+        // [ "enum", "array('new'|'approved'|'denied')]" ]
+        list($type, $parameter) = explode('[', $type);
+
+        // remove trailing ']' and anything that follows.
+        $parameter = substr($parameter, 0, strpos($parameter, ']'));
+
+        return [$type, $parameter];
+    }
+
+    /**
      * Add Laravel methods, as string,
      * for the fields
      *
@@ -109,6 +175,7 @@ EOT;
 
         foreach($this->cache->getFields() as $name => $type)
         {
+            list($type, $parameter) = $this->extractParameterFromType($type);
             $formalName = ucwords($name);
 
             // TODO: add remaining types
@@ -124,6 +191,11 @@ EOT;
 
                 case 'boolean':
                     $element = "{{ Form::checkbox('$name') }}";
+                    break;
+
+                case 'enum':
+                    $select = $this->enumSelect($parameter);
+                    $element = "{{ Form::select('$name', $select) }}";
                     break;
 
                 default:

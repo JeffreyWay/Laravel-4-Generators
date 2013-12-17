@@ -245,11 +245,37 @@ class MigrationGenerator extends Generator {
     */
     protected function addColumn($field)
     {
+
         // Let's see if they're setting
         // a limit, like: string[50]
+        // or an array, like: enum[array("one" | "two" | "three")]
         if ( str_contains($field->type, '[') )
         {
-            preg_match('/([^\[]+?)\[(\d+)\]/', $field->type, $matches);
+            // this regex got pretty ugly. Alternatively we could capture
+            // anything within square brackets, but that would allow in
+            // unexpected input which would not be handled properly.
+            $extractTypeAndParameter = '/
+            ([^\[]+?)               # capture input type - everything before opening [, lazy
+            \[                      # match opening [
+            (                       # start capturing
+              \d+                   # one or more digits (string limit case)
+              |                     # or
+              (?:                   # start non capturing group
+                array\(             # match literal: array(
+                  [-\'"|\w\s]+      # match one or more dash, single quote, double quote, pipe, word, space
+                \)                  # match closing array, literal: )
+              )                     # end non capturing
+            )                       # end capturing group
+            \]                      # match closing ]
+            /x';
+
+            preg_match($extractTypeAndParameter, $field->type, $matches);
+
+            if(strpos($matches[2], 'array') !== FALSE)
+            {
+                $matches[2] = str_replace("|", ",", $matches[2]);
+            }
+
             $field->type = $matches[1]; // string
             $field->limit = $matches[2]; // 50
         }
