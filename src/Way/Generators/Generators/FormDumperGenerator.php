@@ -54,9 +54,14 @@ class FormDumperGenerator {
      * @param  string $element
      * @return void
      */
-    public function make($model, $method, $element)
+    public function make($model, $method, $element, $table)
     {
-        $this->tableInfo = $this->getTableInfo($model);
+
+        if ($table) {
+            $this->tableInfo = $this->getTableInfo($table);
+        } else {
+            $this->tableInfo = $this->getTableInfoFromModel($model);
+        }
 
         $type = 'generic';
         if (preg_match('/^ul|li|ol$/i', $element))
@@ -133,14 +138,24 @@ class FormDumperGenerator {
     }
 
     /**
-     * Fetch Doctrine table info
+     * Fetch Doctrine table info from model
      * @param  string $model
      * @return object
      */
-    public function getTableInfo($model)
+    public function getTableInfoFromModel($model)
     {
         $table = Pluralizer::plural($model);
 
+        return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
+    }
+
+    /**
+     * Fetch Doctrine table info for a given table name
+     * @param  string $model
+     * @return object
+     */
+    public function getTableInfo($table)
+    {
         return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
     }
 
