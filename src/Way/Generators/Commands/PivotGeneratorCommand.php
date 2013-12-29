@@ -28,6 +28,7 @@ class PivotGeneratorCommand extends BaseGeneratorCommand {
             'generate:migration',
             array(
                 'name'      => "pivot_{$tables[0]}_{$tables[1]}_table",
+		'--path'    => $this->option('path'),
                 '--fields'  => implode(', ', array(
                     "{$tables[0]}_id:integer:unsigned:index",
                     "{$tables[1]}_id:integer:unsigned:index",
@@ -60,6 +61,19 @@ class PivotGeneratorCommand extends BaseGeneratorCommand {
             array('tableOne', InputArgument::REQUIRED, 'Name of the first table.'),
             array('tableTwo', InputArgument::REQUIRED, 'Name of the second table.')
         );
+    }
+
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+      return array(
+		   array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
+		   );
     }
 
 }
