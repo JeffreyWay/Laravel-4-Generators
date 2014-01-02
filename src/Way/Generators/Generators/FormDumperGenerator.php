@@ -54,7 +54,7 @@ class FormDumperGenerator {
      * @param  string $element
      * @return void
      */
-    public function make($model, $method, $element, $table)
+    public function make($model, $method, $element, $table, $route)
     {
 
         if ($table) {
@@ -70,7 +70,7 @@ class FormDumperGenerator {
             $type = 'list';
         }
 
-        $output = $this->render($type, $method, $model, $element);
+        $output = $this->render($type, $method, $model, $element, $route);
         $this->printOutput($output);
     }
 
@@ -108,14 +108,14 @@ class FormDumperGenerator {
      * @param  string $element [description]
      * @return string
      */
-    protected function render($type = 'list', $method, $model, $element)
+    protected function render($type = 'list', $method, $model, $element, $route)
     {
         $template = $this->getTemplate($type);
 
         return $this->mustache->render($template, array(
             'formElements' => $this->getFormElements($type, $element),
             'element'      => $element,
-            'formOpen'     => $this->getFormOpen($method, $model)
+            'formOpen'     => $this->getFormOpen($method, $model, $route)
         ));
     }
 
@@ -125,16 +125,16 @@ class FormDumperGenerator {
      * @param  string $model
      * @return string
      */
-    protected function getFormOpen($method, $model)
+    protected function getFormOpen($method, $model, $route)
     {
-        $models = Pluralizer::plural($model);
+        $route = (empty($route) ? Pluralizer::plural($model) : $route);
 
         if (preg_match('/edit|update|put|patch/i', $method))
         {
-            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$models}.update', \${$model}->id))) }}";
+            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$route}.update', \${$model}->id))) }}";
         }
 
-        return "{{ Form::open(array('route' => '{$models}.store')) }}";
+        return "{{ Form::open(array('route' => '{$route}.store')) }}";
     }
 
     /**
