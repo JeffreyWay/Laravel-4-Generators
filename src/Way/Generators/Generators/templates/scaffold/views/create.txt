@@ -9,6 +9,7 @@
 {{formElements}}
 		<li>
 			{{ Form::submit('Submit', array('class' => 'btn btn-info')) }}
+			{{ link_to_route('{{models}}.index', 'Cancel', null, array('class' => 'btn')) }}
 		</li>
 	</ul>
 {{ Form::close() }}
