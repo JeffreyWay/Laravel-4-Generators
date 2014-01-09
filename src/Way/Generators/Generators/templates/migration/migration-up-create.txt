@@ -3,6 +3,5 @@
 		Schema::create('{{tableName}}', function(Blueprint $table) {
 			$table->increments('id');
 			{{methods}}
-			$table->timestamps();
 		});
 	}
