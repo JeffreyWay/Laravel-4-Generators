@@ -139,7 +139,7 @@ class FormDumperGenerator {
      */
     public function getTableInfo($model)
     {
-        $table = Pluralizer::plural($model);
+        $table = strtolower(Pluralizer::plural($model));
 
         return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
     }
