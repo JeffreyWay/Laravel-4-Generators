@@ -15,6 +15,7 @@ class BaseGeneratorCommand extends Command {
     public function fire()
     {
         $path = $this->getPath();
+        
         $template = $this->option('template');
 
         $this->printResult($this->generator->make($path, $template), $path);
