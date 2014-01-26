@@ -54,14 +54,10 @@ class FormDumperGenerator {
      * @param  string $element
      * @return void
      */
-    public function make($model, $method, $element, $table, $route)
+    public function make($model, $method, $element)
     {
-
-        if ($table) {
-            $this->tableInfo = $this->getTableInfo($table);
-        } else {
-            $this->tableInfo = $this->getTableInfoFromModel($model);
-        }
+        $model = with(new $model)->getTable();
+        $this->tableInfo = $this->getTableInfo($model);
 
         $type = 'generic';
         if (preg_match('/^ul|li|ol$/i', $element))
@@ -70,7 +66,7 @@ class FormDumperGenerator {
             $type = 'list';
         }
 
-        $output = $this->render($type, $method, $model, $element, $route);
+        $output = $this->render($type, $method, $model, $element);
         $this->printOutput($output);
     }
 
@@ -108,14 +104,14 @@ class FormDumperGenerator {
      * @param  string $element [description]
      * @return string
      */
-    protected function render($type = 'list', $method, $model, $element, $route)
+    protected function render($type = 'list', $method, $model, $element)
     {
         $template = $this->getTemplate($type);
 
         return $this->mustache->render($template, array(
             'formElements' => $this->getFormElements($type, $element),
             'element'      => $element,
-            'formOpen'     => $this->getFormOpen($method, $model, $route)
+            'formOpen'     => $this->getFormOpen($method, $model)
         ));
     }
 
@@ -125,9 +121,9 @@ class FormDumperGenerator {
      * @param  string $model
      * @return string
      */
-    protected function getFormOpen($method, $model, $route)
+    protected function getFormOpen($method, $model)
     {
-        $route = (empty($route) ? Pluralizer::plural($model) : $route);
+        $route = Pluralizer::plural($model);
 
         if (preg_match('/edit|update|put|patch/i', $method))
         {
@@ -139,18 +135,6 @@ class FormDumperGenerator {
 
     /**
      * Fetch Doctrine table info from model
-     * @param  string $model
-     * @return object
-     */
-    public function getTableInfoFromModel($model)
-    {
-        $table = Pluralizer::plural($model);
-
-        return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
-    }
-
-    /**
-     * Fetch Doctrine table info for a given table name
      * @param  string $model
      * @return object
      */

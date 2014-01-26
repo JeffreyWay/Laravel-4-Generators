@@ -58,9 +58,7 @@ class FormDumperCommand extends BaseGeneratorCommand {
         $this->generator->make(
             $model,
             $this->option('method'),
-            $this->option('html'),
-            $this->option('table'),
-            $this->option('route')
+            $this->option('html')
         );
     }
 
@@ -85,9 +83,7 @@ class FormDumperCommand extends BaseGeneratorCommand {
     {
         return array(
             array('method', null, InputOption::VALUE_OPTIONAL, 'What operation are we doing? [create|edit]', 'create'),
-            array('html', null, InputOption::VALUE_OPTIONAL, 'Which HTML element should be used?', 'ul'),
-            array('table', null, InputOption::VALUE_OPTIONAL, 'The table name if you\'re using namespaces', false),
-            array('route', null, InputOption::VALUE_OPTIONAL, 'The route group name to be used instead of the model name (useful if you\'re using namespaces', false)
+            array('html', null, InputOption::VALUE_OPTIONAL, 'Which HTML element should be used?', 'ul')
         );
     }
 
