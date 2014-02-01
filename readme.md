@@ -397,6 +397,7 @@ Think of scaffolding as an extension of a resource. It has the exact same interf
 
 ```bash
 php artisan generate:scaffold tweet --fields="author:string, body:text"
+php artisan migrate
 ```
 
 The only difference is that it will handle all of the boilerplate. This can be particularly useful for prototyping - or even learning how to do basic things, such as delete a record from a database table, or build a form, or perform validation on that form.
