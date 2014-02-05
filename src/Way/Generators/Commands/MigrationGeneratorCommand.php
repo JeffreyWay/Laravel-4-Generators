@@ -55,6 +55,10 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
                         ->parse($name, $fields)
                         ->make($path, null);
 
+        if ($created) {
+            $path = $this->generator->path;
+        }
+
         $this->call('dump-autoload');
 
         $this->printResult($created, $path);
