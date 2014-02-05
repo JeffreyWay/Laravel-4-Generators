@@ -25,7 +25,7 @@ class ResourceGenerator {
     }
 
     /**
-     * Update app/routes.php
+     * Update app/routes.php if necessary
      *
      * @param  string $name
      * @return void
@@ -34,10 +34,17 @@ class ResourceGenerator {
     {
         $name = strtolower(Pluralizer::plural($name));
 
-        $this->file->append(
-            app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
-        );
+        $routesPath = app_path() . '/routes.php';
+        $routesContent = $this->file->get($routesPath);
+
+        $resourceRoute = "Route::resource('" . $name . "', '" . ucwords($name) . "Controller');";
+
+        if ( ! strpos($routesContent, $resourceRoute))
+        {
+            return $this->file->append($routesPath, "\n\n".$resourceRoute);
+        }
+
+        return false;
     }
 
     /**
