@@ -142,6 +142,8 @@ class AddUserIdToPostsTable extends Migration {
 
 Notice how, this time, we're not doing `Schema::create`.
 
+You can also specify the option `--softdelete` to get the `$table->softDeletes();` added to your migration.
+
 #### Keywords
 
 When writing migration names, use the following keywords to provide hints for the generator.

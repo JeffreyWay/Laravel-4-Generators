@@ -50,9 +50,10 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
         $name = $this->argument('name');
         $path = $this->getPath();
         $fields = $this->option('fields');
+        $softDelete = $this->option('softdelete');
 
         $created = $this->generator
-                        ->parse($name, $fields)
+                        ->parse($name, $fields, $softDelete)
                         ->make($path, null);
 
         $this->call('dump-autoload');
@@ -78,7 +79,7 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     protected function getArguments()
     {
         return array(
-            array('name', InputArgument::REQUIRED, 'Name of the migration to generate.'),
+            array('name', InputArgument::REQUIRED, 'Name of the migration to generate.')
         );
     }
 
@@ -91,7 +92,8 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     {
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null)
+            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
+            array('softdelete', 'sd', InputOption::VALUE_NONE, 'Whether or not to add softDeletes() statement to the migration')
         );
     }
 
