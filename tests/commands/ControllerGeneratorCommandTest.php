@@ -23,7 +23,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'FooController', '--template' => 'foo']);
 
-        $this->assertEquals("Created " . app . "/controllers/FooController.php\n", $tester->getDisplay());
+        $this->assertEquals("Created " . app_path() . "/controllers/FooController.php\n", $tester->getDisplay());
     }
 
     public function testCanSetCustomPath()
@@ -36,7 +36,7 @@ class ControllerGeneratorCommandTest extends PHPUnit_Framework_TestCase {
         $tester = new CommandTester($command);
         $tester->execute(['name' => 'FooController', '--path' => 'app', '--template' => 'foo']);
 
-        $this->assertEquals("Created " . app . "/FooController.php\n", $tester->getDisplay());
+        $this->assertEquals("Created " . app_path() . "/FooController.php\n", $tester->getDisplay());
     }
 
     public function testCanSetCustomStub()
