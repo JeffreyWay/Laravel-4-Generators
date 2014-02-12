@@ -209,11 +209,11 @@ class MigrationGenerator extends Generator {
 
         if ( !$fields ) return;
 
-        $fields = preg_split('/, ?/', $fields);
+        $fields = preg_split('/, */', $fields);
 
         foreach($fields as &$bit)
         {
-            $columnInfo = preg_split('/ ?: ?/', $bit);
+            $columnInfo = preg_split('/ *: */', $bit);
 
             $bit = new \StdClass;
             $bit->name = array_shift($columnInfo);
