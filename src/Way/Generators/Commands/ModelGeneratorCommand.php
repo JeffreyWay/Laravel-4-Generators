@@ -29,6 +29,20 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 	protected $generator;
 
 	/**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function fire()
+    {
+    	if($this->option('ardent'))
+    	{
+    		$this->input->setOption('template', __DIR__.'/../Generators/templates/model-ardent.txt');
+    	}
+    	parent::fire();
+    }
+
+	/**
 	 * Create a new command instance.
 	 *
 	 * @return void
@@ -71,6 +85,7 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 	{
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to the models directory.', app_path() . '/models'),
+			array('ardent', null, InputOption::VALUE_OPTIONAL, 'Generate an Ardent model (true or false)', false),
 			array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/model.txt')
 		);
 	}

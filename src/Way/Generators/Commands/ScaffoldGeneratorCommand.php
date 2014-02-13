@@ -32,7 +32,14 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
      */
     protected function getModelTemplatePath()
     {
-        return __DIR__.'/../Generators/templates/scaffold/model.txt';
+        if($this->option('ardent'))
+        {
+            return __DIR__.'/../Generators/templates/scaffold/model-ardent.txt';
+        }
+        else
+        {
+            return __DIR__.'/../Generators/templates/scaffold/model.txt';
+        }
     }
 
     /**

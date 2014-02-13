@@ -1,0 +1,11 @@
+<?php
+
+use LaravelBook\Ardent\Ardent;
+
+class {{className}} extends Ardent {
+	protected $guarded = array();
+
+	public static $rules = array();
+
+	public static $customMessages = array();
+}

@@ -102,7 +102,14 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getModelTemplatePath()
     {
-        return __DIR__.'/../Generators/templates/model.txt';
+        if($this->option('ardent'))
+        {
+            return __DIR__.'/../Generators/templates/model-ardent.txt';
+        }
+        else
+        {
+            return __DIR__.'/../Generators/templates/model.txt';
+        }
     }
 
     /**
@@ -137,7 +144,8 @@ class ResourceGeneratorCommand extends Command {
             'generate:model',
             array(
                 'name' => $this->model,
-                '--template' => $this->getModelTemplatePath()
+                '--template' => $this->getModelTemplatePath(),
+                '--ardent' => $this->option('ardent')
             )
         );
     }
@@ -282,7 +290,8 @@ class ResourceGeneratorCommand extends Command {
     {
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null)
+            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
+            array('ardent', null, InputOption::VALUE_OPTIONAL, 'Generate an Ardent model (true or false)', false),
         );
     }
 
