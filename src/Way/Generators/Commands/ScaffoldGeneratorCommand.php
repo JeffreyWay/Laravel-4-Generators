@@ -34,7 +34,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
     {
         if($this->option('ardent'))
         {
-            __DIR__.'/../Generators/templates/scaffold/model-ardent.txt';
+            return __DIR__.'/../Generators/templates/scaffold/model-ardent.txt';
         }
         else
         {
