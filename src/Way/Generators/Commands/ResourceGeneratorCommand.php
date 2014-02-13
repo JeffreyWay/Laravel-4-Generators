@@ -104,7 +104,7 @@ class ResourceGeneratorCommand extends Command {
     {
         if($this->option('ardent'))
         {
-            __DIR__.'/../Generators/templates/model-ardent.txt';
+            return __DIR__.'/../Generators/templates/model-ardent.txt';
         }
         else
         {
