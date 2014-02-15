@@ -50,7 +50,8 @@ class FormDumperCommand extends BaseGeneratorCommand {
      */
     public function fire()
     {
-        if (! class_exists($model = $this->argument('model')))
+        $model = $this->argument('model');
+        if (! class_exists(ucfirst($model)))
         {
             throw new \InvalidArgumentException('Model does not exist!');
         }
