@@ -21,7 +21,7 @@ class {{className}} extends BaseController {
 	 */
 	public function index()
 	{
-		${{models}} = $this->{{model}}->all();
+		${{models}} = $this->{{model}}->paginate(10);
 
 		return View::make('{{models}}.index', compact('{{models}}'));
 	}

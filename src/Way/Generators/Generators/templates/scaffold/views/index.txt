@@ -22,6 +22,7 @@
         @endforeach
     </tbody>
 </table>
+{{ ${{models}}->links() }}
 @else
 There are no {{models}}
 @endif
