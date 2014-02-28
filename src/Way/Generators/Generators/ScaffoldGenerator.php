@@ -34,10 +34,12 @@ class ScaffoldGenerator {
     {
         $name = strtolower(Pluralizer::plural($name));
 
-        $this->file->append(
-            app_path() . '/routes.php',
-            "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');"
-        );
+        $resourceRoute  = "\n\nRoute::resource('" . $name . "', '" . ucwords($name) . "Controller');";
+        $routesFilePath =  app_path() . '/routes.php';
+
+        if (strpos(file_get_contents($routesFilePath),$resourceRoute) === false) {
+            $this->file->append($routesFilePath, $resourceRoute);
+	}
     }
 
     /**
