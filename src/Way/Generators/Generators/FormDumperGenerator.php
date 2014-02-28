@@ -56,6 +56,7 @@ class FormDumperGenerator {
      */
     public function make($model, $method, $element)
     {
+        $model = with(new $model)->getTable();
         $this->tableInfo = $this->getTableInfo($model);
 
         $type = 'generic';
@@ -122,25 +123,23 @@ class FormDumperGenerator {
      */
     protected function getFormOpen($method, $model)
     {
-        $models = Pluralizer::plural($model);
+        $route = Pluralizer::plural($model);
 
         if (preg_match('/edit|update|put|patch/i', $method))
         {
-            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$models}.update', \${$model}->id))) }}";
+            return "{{ Form::model(\${$model}, array('method' => 'PATCH', 'route' => array('{$route}.update', \${$model}->id))) }}";
         }
 
-        return "{{ Form::open(array('route' => '{$models}.store')) }}";
+        return "{{ Form::open(array('route' => '{$route}.store')) }}";
     }
 
     /**
-     * Fetch Doctrine table info
+     * Fetch Doctrine table info from model
      * @param  string $model
      * @return object
      */
-    public function getTableInfo($model)
+    public function getTableInfo($table)
     {
-        $table = Pluralizer::plural($model);
-
         return \DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
     }
 
