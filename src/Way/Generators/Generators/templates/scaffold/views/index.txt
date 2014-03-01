@@ -7,23 +7,24 @@
 <p>{{ link_to_route('{{models}}.create', 'Add new {{model}}') }}</p>
 
 @if (${{models}}->count())
-	<table class="table table-striped table-bordered">
-		<thead>
-			<tr>
-				{{headings}}
-			</tr>
-		</thead>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            {{headings}}
+        </tr>
+    </thead>
 
-		<tbody>
-			@foreach (${{models}} as ${{model}})
-				<tr>
-					{{fields}}
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
+    <tbody>
+        @foreach (${{models}} as ${{model}})
+        <tr>
+            {{fields}}
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+{{ ${{models}}->links() }}
 @else
-	There are no {{models}}
+There are no {{models}}
 @endif
 
 @stop
