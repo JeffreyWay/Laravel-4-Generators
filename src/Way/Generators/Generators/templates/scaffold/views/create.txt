@@ -14,7 +14,7 @@
 <form role="form">
     {{formElements}}
     {{ Form::submit('Submit', array('class' => 'btn btn-info')) }}
-    {{ link_to_route('diaries.index', 'Cancel', null, array('class' => 'btn btn-default')) }}
+    {{ link_to_route('{{models}}.index', 'Cancel', null, array('class' => 'btn btn-default')) }}
 </form>
 {{ Form::close() }}
 
