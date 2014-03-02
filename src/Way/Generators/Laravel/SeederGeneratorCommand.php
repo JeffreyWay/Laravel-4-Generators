@@ -3,9 +3,6 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Way\Generators\Compilers\TemplateCompiler;
-use Way\Generators\Filesystem\FileAlreadyExists;
-use Way\Generators\Generator;
 
 class SeederGeneratorCommand extends GeneratorCommand {
 
@@ -22,48 +19,6 @@ class SeederGeneratorCommand extends GeneratorCommand {
      * @var string
      */
     protected $description = 'Generate a database table seeder';
-
-    /**
-     * @var \Way\Generators\ModelGenerator
-     */
-    private $generator;
-
-    /**
-     * @param Generator $generator
-     */
-    public function __construct(Generator $generator)
-    {
-        $this->generator = $generator;
-
-        parent::__construct();
-    }
-
-    /**
-     * Generate the seeder class
-     *
-     * @return mixed
-     */
-    public function fire()
-    {
-        $templateData = $this->getTemplateData();
-        $filePathToGenerate = $this->getFileGenerationPath($this->argument('tableName'));
-
-        try
-        {
-            // This section is what actually compiles the template, and generates the file
-            $this->generator->setTemplatePath($this->option('templatePath'));
-            $compiledTemplate = $this->generator->compile($templateData, new TemplateCompiler);
-            $this->generator->generate($filePathToGenerate, $compiledTemplate);
-
-            // Alert user of file creation
-            $this->info("Created: {$filePathToGenerate}");
-        }
-
-        catch (FileAlreadyExists $e)
-        {
-            return $this->error("The file, {$filePathToGenerate}, already exists! I don't want to overwrite it.");
-        }
-    }
 
     /**
      * The path where the file will be created
