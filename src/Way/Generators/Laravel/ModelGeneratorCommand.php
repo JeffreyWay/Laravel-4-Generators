@@ -5,7 +5,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Way\Generators\Compilers\TemplateCompiler;
 use Way\Generators\Filesystem\FileAlreadyExists;
-use Way\Generators\ModelGenerator;
+use Way\Generators\Generator;
 
 class ModelGeneratorCommand extends GeneratorCommand {
 
@@ -29,9 +29,9 @@ class ModelGeneratorCommand extends GeneratorCommand {
     private $generator;
 
     /**
-     * @param ModelGenerator $generator
+     * @param Generator $generator
      */
-    public function __construct(ModelGenerator $generator)
+    public function __construct(Generator $generator)
 	{
         $this->generator = $generator;
 
@@ -46,7 +46,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
 	public function fire()
 	{
         $templateData = $this->getTemplateData();
-        $filePathToGenerate = $this->getFileGenerationPath($this->argument('nameOfModel'));
+        $filePathToGenerate = $this->getFileGenerationPath($this->argument('modelName'));
 
         try
         {
@@ -73,7 +73,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        return $this->option('path') . '/' . ucwords($this->argument('nameOfModel')) . '.php';
+        return $this->option('path') . '/' . ucwords($this->argument('modelName')) . '.php';
     }
 
     /**
@@ -84,7 +84,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getTemplateData()
     {
         return [
-            'NAME' => ucwords($this->argument('nameOfModel'))
+            'NAME' => ucwords($this->argument('modelName'))
         ];
     }
 
@@ -96,7 +96,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
 	protected function getArguments()
 	{
 		return array(
-			array('nameOfModel', InputArgument::REQUIRED, 'The name of the desired Eloquent model')
+			array('modelName', InputArgument::REQUIRED, 'The name of the desired Eloquent model')
 		);
 	}
 
