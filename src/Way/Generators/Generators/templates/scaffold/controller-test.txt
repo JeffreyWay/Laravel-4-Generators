@@ -50,7 +50,7 @@ class {{className}} extends TestCase {
 
 	public function testStoreFails()
 	{
-		$this->mock->shouldReceive('create')->once();
+		$this->mock->shouldReceive('create')->never();
 		$this->validate(false);
 		$this->call('POST', '{{models}}');
 
