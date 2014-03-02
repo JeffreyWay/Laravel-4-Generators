@@ -48,9 +48,9 @@ class ModelGeneratorCommand extends GeneratorCommand {
         $templateData = $this->getTemplateData();
         $filePathToGenerate = $this->getFileGenerationPath($this->argument('nameOfModel'));
 
-        // Compile and generate
         try
         {
+            // This section is what actually compiles the template, and generates the file
             $this->generator->setTemplatePath($this->option('templatePath'));
             $compiledTemplate = $this->generator->compile($templateData, new TemplateCompiler);
             $this->generator->generate($filePathToGenerate, $compiledTemplate);
