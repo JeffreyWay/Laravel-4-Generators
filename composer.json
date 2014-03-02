@@ -12,7 +12,12 @@
         "illuminate/support": "4.1.*"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/phpspec": "2.0.*@dev",
+        "behat/behat": "v2.5.1",
+        "behat/mink": "v1.5.0",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*"
     },
     "autoload": {
         "psr-0": {
