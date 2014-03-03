@@ -8,9 +8,6 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use Symfony\Component\Console\Tester\CommandTester;
-use Way\Generators\Filesystem\Filesystem;
-use Way\Generators\Generator;
-use Way\Generators\Laravel\ModelGeneratorCommand;
 use Symfony\Component\Console\Application;
 
 require_once __DIR__.'/../../../vendor/phpunit/phpunit/PHPUnit/Framework/Assert/Functions.php';
