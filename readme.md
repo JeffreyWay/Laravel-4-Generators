@@ -313,4 +313,4 @@ If you say yes to each confirmation, this single command will give you boilerpla
 - app/models/Post.php
 - app/controllers/PostsController.php
 - app/database/migrations/timestamp-create_posts_table.php (including the schema)
-- app/database/seeds/PostsTableSeeder.php'
+- app/database/seeds/PostsTableSeeder.php
