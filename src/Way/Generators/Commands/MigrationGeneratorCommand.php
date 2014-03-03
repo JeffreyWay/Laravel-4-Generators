@@ -109,10 +109,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
         $migrationData = $this->migrationNameParser->parse($migrationName);
 
         // We also need to parse the migration fields, if provided
-        if ($fields = $this->option('fields'))
-        {
-            $fields = $this->migrationFieldsParser->parse($fields);
-        }
+        $fields = $this->migrationFieldsParser->parse($this->option('fields'));
 
         return [
             'CLASS' => ucwords(camel_case($migrationName)),
