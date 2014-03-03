@@ -70,9 +70,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldSee($output)
     {
-        $display = $this->tester->getDisplay();
-
-        assertContains($output, $display);
+        assertContains($output, $this->tester->getDisplay());
     }
 
     /**
