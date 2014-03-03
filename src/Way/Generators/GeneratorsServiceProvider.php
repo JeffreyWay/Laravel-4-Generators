@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Way\Generators\Commands\ControllerGeneratorCommand;
 use Way\Generators\Commands\ModelGeneratorCommand;
+use Way\Generators\Commands\ResourceGeneratorCommand;
 use Way\Generators\Commands\SeederGeneratorCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
@@ -21,7 +22,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        foreach(['Model', 'Controller', 'Migration', 'Seeder'] as $command)
+        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource'] as $command)
         {
             $this->{"register$command"}();
         }
@@ -83,6 +84,21 @@ class GeneratorsServiceProvider extends ServiceProvider {
         });
 
         $this->commands('generate.seeder');
+    }
+
+    /**
+     * Register the resource generator
+     */
+    protected function registerResource()
+    {
+        $this->app['generate.resource'] = $this->app->share(function($app)
+        {
+            $generator = $this->app->make('Way\Generators\Generator');
+
+            return new ResourceGeneratorCommand($generator);
+        });
+
+        $this->commands('generate.resource');
     }
 
 	/**
