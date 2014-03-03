@@ -35,13 +35,7 @@ class GeneratorSpec extends ObjectBehavior {
         // When we call compile, we expect the method to
         // fetch the given template, compile it down,
         // and return the results
-        $this->setTemplatePath('template.txt');
-        $this->compile($data, $compiler)->shouldBe($compiledTemplate);
-    }
-
-    function it_must_receive_a_template_path_in_order_to_compile(TemplateCompiler $compiler)
-    {
-        $this->shouldThrow('Way\Generators\UndefinedTemplate')->duringCompile([], $compiler);
+        $this->compile('template.txt', $data, $compiler)->shouldBe($compiledTemplate);
     }
 
 }

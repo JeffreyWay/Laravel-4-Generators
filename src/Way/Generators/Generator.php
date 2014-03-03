@@ -12,36 +12,11 @@ class Generator {
     protected $file;
 
     /**
-     * @var string
-     */
-    protected $templatePath;
-
-    /**
      * @param Filesystem $file
      */
     public function __construct(Filesystem $file)
     {
         $this->file = $file;
-    }
-
-    /**
-     * Set the path to the template
-     *
-     * @param $templatePath
-     */
-    public function setTemplatePath($templatePath)
-    {
-        $this->templatePath = $templatePath;
-    }
-
-    /**
-     * Get the path to the template
-     *
-     * @return mixed
-     */
-    public function getTemplatePath()
-    {
-        return $this->templatePath;
     }
 
     /**
@@ -53,13 +28,10 @@ class Generator {
      */
     public function make($templatePath, $templateData, $filePathToGenerate)
     {
-        // We'll begin by setting the location
-        // of the template for this file generation
-        $this->setTemplatePath($templatePath);
 
         // Next, we need to compile the template, according
         // to the data that we provide it with.
-        $template = $this->compile($templateData, new TemplateCompiler);
+        $template = $this->compile($templatePath, $templateData, new TemplateCompiler);
 
         // Now that we have the compiled template,
         // we can actually generate the file
@@ -69,16 +41,17 @@ class Generator {
     /**
      * Compile the file
      *
+     * @param $templatePath
      * @param array $data
      * @param TemplateCompiler $compiler
-     * @return mixed
      * @throws UndefinedTemplate
+     * @return mixed
      */
-    public function compile(array $data, TemplateCompiler $compiler)
+    public function compile($templatePath, array $data, TemplateCompiler $compiler)
     {
-        if ( ! $this->templatePath) throw new UndefinedTemplate;
+        $template = $this->file->get($templatePath);
 
-        $template = $this->file->get($this->templatePath);
+        if ( ! $templatePath) throw new UndefinedTemplate;
 
         return $compiler->compile($template, $data);
     }
