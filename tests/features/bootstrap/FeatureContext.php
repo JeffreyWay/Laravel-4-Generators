@@ -6,39 +6,84 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Behat\MinkExtension\Context\MinkContext;
+use Symfony\Component\Console\Tester\CommandTester;
+use Way\Generators\Filesystem\Filesystem;
+use Way\Generators\Generator;
+use Way\Generators\Laravel\ModelGeneratorCommand;
+use Symfony\Component\Console\Application;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+require_once __DIR__.'/../../../vendor/phpunit/phpunit/PHPUnit/Framework/Assert/Functions.php';
 
 /**
  * Features context.
  */
 class FeatureContext extends BehatContext
 {
+    protected $tester;
+
     /**
-     * Initializes context.
-     * Every scenario gets its own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * @beforeSuite
      */
-    public function __construct(array $parameters)
+    public static function bootstrapLaravel()
     {
-        // Initialize your context here
+        require __DIR__.'/../../../../../../vendor/autoload.php';
+        require __DIR__.'/../../../../../../bootstrap/start.php';
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+    /**
+     * @AfterScenario
+     */
+    public function tearDown()
+    {
+        @unlink(app_path('models/Order.php'));
+        @unlink(app_path('database/seeds/OrdersTableSeeder.php'));
+
+        $this->tester = null;
+    }
+
+    /**
+     * @When /^I generate a model with "([^"]*)"$/
+     */
+    public function iGenerateAModelWith($name)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Laravel\ModelGeneratorCommand'));
+        $this->tester->execute(['modelName' => $name]);
+    }
+
+    /**
+     * @When /^I generate a seed with "([^"]*)"$/
+     */
+    public function iGenerateASeedWith($tableName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Laravel\SeederGeneratorCommand'));
+        $this->tester->execute(['tableName' => $tableName]);
+    }
+
+    /**
+     * @Then /^I should see "([^"]*)"$/
+     */
+    public function iShouldSee($output)
+    {
+        $display = $this->tester->getDisplay();
+
+        assertContains($output, $display);
+    }
+
+    /**
+     * @Given /^"([^"]*)" should match my stub$/
+     */
+    public function shouldMatchMyStub($generatedFilePath)
+    {
+        // We'll use the name of the generated file as
+        // the basic for our stub lookup.
+        $stubName = pathinfo($generatedFilePath)['filename'];
+
+        $expected = file_get_contents(__DIR__."/../../stubs/{$stubName}.txt");
+        $actual = file_get_contents(base_path($generatedFilePath));
+
+        // Let's compare the stub against what was actually generated.
+        assertEquals($expected, $actual);
+    }
+
 }
