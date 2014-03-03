@@ -20,6 +20,11 @@ require_once __DIR__.'/../../../vendor/phpunit/phpunit/PHPUnit/Framework/Assert/
  */
 class FeatureContext extends BehatContext
 {
+    /**
+     * The command that we're testing
+     *
+     * @var CommandTester
+     */
     protected $tester;
 
     /**
@@ -45,10 +50,10 @@ class FeatureContext extends BehatContext
     /**
      * @When /^I generate a model with "([^"]*)"$/
      */
-    public function iGenerateAModelWith($name)
+    public function iGenerateAModelWith($modelName)
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Laravel\ModelGeneratorCommand'));
-        $this->tester->execute(['modelName' => $name]);
+        $this->tester->execute(compact('modelName'));
     }
 
     /**
@@ -57,7 +62,7 @@ class FeatureContext extends BehatContext
     public function iGenerateASeedWith($tableName)
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Laravel\SeederGeneratorCommand'));
-        $this->tester->execute(['tableName' => $tableName]);
+        $this->tester->execute(compact('tableName'));
     }
 
     /**
