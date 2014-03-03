@@ -46,6 +46,19 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @When /^I generate a migration with name \'([^\']*)\' and fields \'([^\']*)\'$/
+     */
+    public function iGenerateAMigrationWithNameAndFields($migrationName, $fields)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\MigrationGeneratorCommand'));
+        $this->tester->execute([
+            'migrationName' => $migrationName,
+            '--fields' => $fields,
+            '--testing' => true
+        ]);
+    }
+
+    /**
      * @When /^I generate a model with "([^"]*)"$/
      */
     public function iGenerateAModelWith($modelName)
@@ -70,6 +83,18 @@ class FeatureContext extends BehatContext
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Commands\MigrationGeneratorCommand'));
         $this->tester->execute(compact('migrationName'));
+    }
+
+    /**
+     * @Given /^the generated migration should match my \'([^\']*)\' stub$/
+     */
+    public function theGeneratedMigrationShouldMatchMyStub($stubName)
+    {
+        $expected = file_get_contents(__DIR__."/../../stubs/{$stubName}.txt");
+        $actual = file_get_contents(glob(base_path('app/database/migrations/*'))[0]);
+
+        // Let's compare the stub against what was actually generated.
+        assertEquals($expected, $actual);
     }
 
     /**

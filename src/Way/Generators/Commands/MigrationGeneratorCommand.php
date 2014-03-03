@@ -68,7 +68,10 @@ class MigrationGeneratorCommand extends GeneratorCommand {
 
         // Now that the file has been generated,
         // let's run dump-autoload to refresh everything
-        $this->call('dump-autoload');
+        if ( ! $this->option('testing'))
+        {
+            $this->call('dump-autoload');
+        }
     }
 
     /**
@@ -101,8 +104,15 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     protected function getTemplateData()
     {
         $migrationName = $this->argument('migrationName');
+
+        // This will tell us the table name and action that we'll be performing
         $migrationData = $this->migrationNameParser->parse($migrationName);
-        $fields = $this->migrationFieldsParser->parse($this->option('fields'));
+
+        // We also need to parse the migration fields, if provided
+        if ($fields = $this->option('fields'))
+        {
+            $fields = $this->migrationFieldsParser->parse($fields);
+        }
 
         return [
             'CLASS' => ucwords(camel_case($migrationName)),
@@ -133,7 +143,8 @@ class MigrationGeneratorCommand extends GeneratorCommand {
         return array(
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'),
             array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/migrations')),
-            array('templatePath', null, InputOption::VALUE_OPTIONAL, 'What is the path to the template for this generator?', __DIR__.'/../templates/migration.txt')
+            array('templatePath', null, InputOption::VALUE_OPTIONAL, 'What is the path to the template for this generator?', __DIR__.'/../templates/migration.txt'),
+            array('testing', null, InputOption::VALUE_OPTIONAL, 'For internal use only.')
         );
     }
 
