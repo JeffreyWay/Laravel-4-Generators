@@ -58,6 +58,18 @@ class MigrationGeneratorCommand extends GeneratorCommand {
         parent::__construct($generator);
     }
 
+    /**
+     * Execute the console command
+     */
+    public function fire()
+    {
+        parent::fire();
+
+        // Now that the file has been generated,
+        // let's run dump-autoload to refresh everything
+        $this->call('dump-autoload');
+    }
+
 
     /**
      * The path where the file will be created
