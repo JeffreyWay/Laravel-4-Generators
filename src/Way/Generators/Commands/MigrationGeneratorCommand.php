@@ -7,7 +7,6 @@ use Way\Generators\Parsers\MigrationFieldsParser;
 use Way\Generators\Generator;
 use Way\Generators\SchemaCreator;
 
-
 class MigrationGeneratorCommand extends GeneratorCommand {
 
     /**
@@ -28,10 +27,12 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      * @var \Way\Generators\ModelGenerator
      */
     protected $generator;
+
     /**
      * @var MigrationNameParser
      */
     private $migrationNameParser;
+
     /**
      * @var SchemaWriter
      */
