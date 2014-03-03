@@ -49,11 +49,7 @@ class Generator {
      */
     public function compile($templatePath, array $data, TemplateCompiler $compiler)
     {
-        $template = $this->file->get($templatePath);
-
-        if ( ! $templatePath) throw new UndefinedTemplate;
-
-        return $compiler->compile($template, $data);
+        return $compiler->compile($this->file->get($templatePath), $data);
     }
 
 }

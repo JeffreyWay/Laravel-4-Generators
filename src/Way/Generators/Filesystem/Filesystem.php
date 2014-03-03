@@ -35,10 +35,16 @@ class Filesystem {
      * Fetch the contents of a file
      *
      * @param $file
+     * @throws FileNotFound
      * @return string
      */
     public function get($file)
     {
+        if ( ! $this->exists($file))
+        {
+            throw new FileNotFound;
+        }
+
         return file_get_contents($file);
     }
 
