@@ -127,7 +127,7 @@ class ResourceGeneratorCommand extends Command {
     {
         $migrationName = $this->getMigrationName($resource);
 
-        if ($this->confirm("Do you want me to create a '$migrationName' and schema for this resource? [yes|no]"))
+        if ($this->confirm("Do you want me to create a '$migrationName' migration and schema for this resource? [yes|no]"))
         {
             $this->call('generate:migration', [
                 'migrationName' => $migrationName,
