@@ -54,7 +54,7 @@ class ControllerGeneratorCommand extends Command {
     protected function getOptions()
     {
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('controllers')),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'),
         );
     }
 
