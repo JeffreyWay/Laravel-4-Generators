@@ -6,6 +6,7 @@ use Way\Generators\Syntax\AddToTable;
 use Way\Generators\Syntax\CreateTable;
 use Way\Generators\Syntax\DroppedTable;
 use Way\Generators\Syntax\RemoveFromTable;
+use Exception;
 
 class SchemaCreator {
 
