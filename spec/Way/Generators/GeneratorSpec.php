@@ -30,14 +30,6 @@ class GeneratorSpec extends ObjectBehavior {
         $this->generate('foo.txt', 'bar');
     }
 
-    function it_will_not_overwrite_existing_files($file)
-    {
-        $file->exists('foo.txt')->willReturn(true);
-        $file->make()->shouldNotBeCalled();
-
-        $this->shouldThrow('Way\Generators\Filesystem\FileAlreadyExists')->duringGenerate('foo.txt', 'bar');
-    }
-
     function it_compiles_a_template(Filesystem $file, TemplateCompiler $compiler)
     {
         $template = 'class $NAME$ {}';

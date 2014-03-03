@@ -1,5 +1,3 @@
 <?php namespace Way\Generators\Filesystem;
 
-class FileAlreadyExists extends \Exception {
-
-} 
+class FileAlreadyExists extends \Exception {}

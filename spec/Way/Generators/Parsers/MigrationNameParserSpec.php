@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Way\Generators;
+namespace spec\Way\Generators\Parsers;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,14 +9,14 @@ class MigrationNameParserSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Way\Generators\MigrationNameParser');
+        $this->shouldHaveType('Way\Generators\Parsers\MigrationNameParser');
     }
 
     function it_parses_a_basic_migration_name()
     {
         $this->parse('create_orders_table')->shouldBe([
             'action' => 'create',
-            'tableName' => 'orders'
+            'table' => 'orders'
         ]);
     }
 
@@ -24,13 +24,13 @@ class MigrationNameParserSpec extends ObjectBehavior
     {
         $this->parse('add_first_name_and_last_name_to_recent_orders_table')->shouldBe([
             'action' => 'add',
-            'tableName' => 'recent_orders'
+            'table' => 'recent_orders'
         ]);
-    }
 
-    function it_requires_a_valid_crud_action_name()
-    {
-        $this->shouldThrow('Way\Generators\InvalidActionType')->duringParse('foo_orders_table');
+        $this->parse('remove_first_name_from_users_table')->shouldBe([
+            'action' => 'remove',
+            'table' => 'users'
+        ]);
     }
 
 }

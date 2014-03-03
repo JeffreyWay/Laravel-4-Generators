@@ -1,4 +1,4 @@
-<?php namespace Way\Generators\Laravel;
+<?php namespace Way\Generators\Commands;
 
 use Illuminate\Console\Command;
 use Way\Generators\Compilers\TemplateCompiler;

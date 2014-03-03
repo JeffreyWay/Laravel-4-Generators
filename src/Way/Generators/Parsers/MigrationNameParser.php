@@ -1,15 +1,6 @@
-<?php namespace Way\Generators;
+<?php namespace Way\Generators\Parsers;
 
 class MigrationNameParser {
-
-    /**
-     * Recognized CRUD types
-     *
-     * @var array
-     */
-    public static $acceptableTypes = [
-        'create', 'add', 'update', 'delete', 'destroy'
-    ];
 
     /**
      * Parse a migration name, like:
@@ -27,13 +18,7 @@ class MigrationNameParser {
         $pieces = explode('_', $migrationName);
 
         // We'll start by fetching the CRUD action type
-        $action = array_shift($pieces);
-
-        // This action type must be something we understand
-        if ( ! in_array($action, self::$acceptableTypes))
-        {
-            throw new InvalidActionType;
-        }
+        $action = $this->normalizeActionName(array_shift($pieces));
 
         // Next, we can remove any "table" string at
         // the end of the migration name, like:
@@ -41,9 +26,9 @@ class MigrationNameParser {
         if (end($pieces) == 'table') array_pop($pieces);
 
         // Now, we need to figure out the table name
-        $tableName = $this->getTableName($pieces);
+        $table = $this->getTableName($pieces);
 
-        return compact('action', 'tableName');
+        return compact('action', 'table');
     }
 
     /**
@@ -66,13 +51,40 @@ class MigrationNameParser {
             // will signal the end of our search. So, for
             // add_name_to_archived_lessons, "archived_lessons"
             // would be the table name
-            if (in_array($piece, ['to', 'for', 'on'])) break;
+            if (in_array($piece, ['to', 'for', 'on', 'from'])) break;
 
             $tableName[] = $piece;
         }
 
         // We can't forget to reverse it back again!
         return implode('_', array_reverse($tableName));
+    }
+
+    /**
+     * Try to mold user's input
+     * to one of the CRUD operations
+     *
+     * @param $action
+     * @return string
+     */
+    protected function normalizeActionName($action)
+    {
+        switch ($action)
+        {
+            case 'create':
+            case 'make':
+                return 'create';
+            case 'delete':
+            case 'destroy':
+            case 'drop':
+                return 'delete';
+            case 'add':
+            case 'append':
+            case 'update':
+                return 'add';
+            default:
+                return $action;
+        }
     }
 
 }

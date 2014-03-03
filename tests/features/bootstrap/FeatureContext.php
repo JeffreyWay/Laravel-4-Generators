@@ -38,8 +38,9 @@ class FeatureContext extends BehatContext
      */
     public function tearDown()
     {
-        @unlink(app_path('models/Order.php'));
-        @unlink(app_path('database/seeds/OrdersTableSeeder.php'));
+        array_map('unlink', glob(app_path('database/migrations/*')));
+        array_map('unlink', glob(app_path('database/seeds/*')));
+        array_map('unlink', glob(app_path('models/*')));
 
         $this->tester = null;
     }
@@ -49,7 +50,7 @@ class FeatureContext extends BehatContext
      */
     public function iGenerateAModelWith($modelName)
     {
-        $this->tester = new CommandTester(App::make('Way\Generators\Laravel\ModelGeneratorCommand'));
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\ModelGeneratorCommand'));
         $this->tester->execute(compact('modelName'));
     }
 
@@ -58,8 +59,17 @@ class FeatureContext extends BehatContext
      */
     public function iGenerateASeedWith($tableName)
     {
-        $this->tester = new CommandTester(App::make('Way\Generators\Laravel\SeederGeneratorCommand'));
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\SeederGeneratorCommand'));
         $this->tester->execute(compact('tableName'));
+    }
+
+    /**
+     * @When /^I generate a migration with "([^"]*)"$/
+     */
+    public function iGenerateAMigrationWith($migrationName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\MigrationGeneratorCommand'));
+        $this->tester->execute(compact('migrationName'));
     }
 
     /**
@@ -85,5 +95,4 @@ class FeatureContext extends BehatContext
         // Let's compare the stub against what was actually generated.
         assertEquals($expected, $actual);
     }
-
 }
