@@ -19,18 +19,4 @@ class SchemaCreatorSpec extends ObjectBehavior {
         $this->shouldHaveType('Way\Generators\SchemaCreator');
     }
 
-    function it_creates_the_code_for_a_migration_up_method($file, $compiler)
-    {
-        $migrationData = [
-            'action' => 'create',
-            'table'  => 'orders',
-            'method' => 'create'
-        ];
-
-        $file->get(Argument::any())->shouldBeCalled()->willReturn('foo template');
-        $compiler->compile('foo template', $migrationData)->shouldBeCalled();
-
-        $this->up($migrationData);
-    }
-
 }

@@ -2,6 +2,10 @@
 
 use Way\Generators\Filesystem\Filesystem;
 use Way\Generators\Compilers\TemplateCompiler;
+use Way\Generators\Syntax\AddToTable;
+use Way\Generators\Syntax\CreateTable;
+use Way\Generators\Syntax\DroppedTable;
+use Way\Generators\Syntax\RemoveFromTable;
 
 class SchemaCreator {
 
@@ -30,24 +34,16 @@ class SchemaCreator {
      *
      * @param array $migrationData
      * @param array $fields
+     * @throws Exception
      * @return mixed|string
      */
     public function up(array $migrationData, array $fields = [])
     {
-        // If the client wants to delete the table,
-        // then...let's delete it!
-        if ($migrationData['action'] == 'delete')
-        {
-            return $this->dropTable($migrationData['table']);
-        }
+        $this->guardAction($migrationData['action']);
 
-        $migrationData['method'] = $migrationData['action'] == 'create' ? 'create' : 'table';
+        $method = $migrationData['action'] . 'Factory';
 
-        return $this->updateTable(
-            $migrationData,
-            $fields,
-            $migrationData['action'] == 'remove' ? 'dropColumns' : 'addColumns'
-        );
+        return $this->$method($migrationData, $fields);
     }
 
     /**
@@ -55,158 +51,76 @@ class SchemaCreator {
      *
      * @param array $migrationData
      * @param array $fields
+     * @throws Exception
      * @return array|mixed|string
      */
     public function down(array $migrationData, $fields = [])
     {
-        // If the user wanted to create a new table
-        // Then we should drop it on the down
-        if ($migrationData['action'] == 'create')
-        {
-            return $this->dropTable($migrationData['table']);
-        }
+        $this->guardAction($migrationData['action']);
 
-        // If they wanted to drop the table, then
-        // we should add it back on the down
-        if ($migrationData['action'] == 'delete')
-        {
-           return $this->createTable($migrationData['table']);
-        }
+        $opposites = [
+            'delete' => 'create',
+            'create' => 'delete',
+            'remove' => 'add',
+            'add'    => 'remove'
+        ];
 
-        $migrationData['method'] = 'table';
+        $method = $opposites[$migrationData['action']] . 'Factory';
 
-        return $this->updateTable(
-            $migrationData,
-            $fields,
-            $migrationData['action'] == 'add' ? 'dropColumns' : 'addColumns'
-        );
+        return $this->$method($migrationData, $fields);
     }
 
     /**
-     * Return string for creating a table
-     *
-     * @param $table
-     * @return mixed
+     * @param $action
+     * @throws Exception
+     * @internal param array $migrationData
      */
-    protected function createTable($table)
+    protected function guardAction($action)
     {
-        $migrationData = ['method' => 'create', 'table' => $table];
-
-        $compiled = $this->compiler->compile($this->getTemplate(), $migrationData);
-
-        // There's no way to know what the original fields were
-        // So we'll apply no fields in this particular case...
-        return $this->replaceFieldsWith([], $compiled);
-    }
-
-
-    /**
-     * Return string for dropping a table
-     *
-     * @param $table
-     * @return string
-     */
-    protected function dropTable($table)
-    {
-        return "Schema::drop('$table');";
+        if (!in_array($action, ['create', 'add', 'remove', 'delete']))
+        {
+            throw new Exception;
+        }
     }
 
     /**
-     * Create string to update table
-     *
      * @param $migrationData
      * @param $fields
-     * @param string $method
-     * @internal param $table
      * @return mixed
      */
-    protected function updateTable($migrationData, $fields, $method = 'addColumns')
+    protected function createFactory($migrationData, $fields)
     {
-        $compiled = $this->compiler->compile($this->getTemplate(), $migrationData);
-
-        return $this->replaceFieldsWith($this->$method($fields), $compiled);
+        return (new CreateTable($this->file, $this->compiler))->create($migrationData, $fields);
     }
 
     /**
-     * Replace $FIELDS$ in the given template
-     * with the provided schema
-     *
-     * @param $schema
-     * @param $template
-     * @return mixed
-     */
-    protected function replaceFieldsWith($schema, $template)
-    {
-        return str_replace('$FIELDS$', implode(PHP_EOL."\t\t\t", $schema), $template);
-    }
-
-    /**
-     * Fetch the template for a schema block
-     *
-     * @return string
-     */
-    protected function getTemplate()
-    {
-        return $this->file->get(__DIR__.'/templates/schema.txt');
-    }
-
-    /**
-     * Return string for adding all columns
-     *
+     * @param $migrationData
      * @param $fields
-     * @return array
+     * @return mixed
      */
-    protected function addColumns($fields)
+    protected function addFactory($migrationData, $fields)
     {
-        $schema = [];
-
-        foreach($fields as $property => $type)
-        {
-            $schema[] = $this->addColumn($property, $type);
-        }
-
-        return $schema;
+        return (new AddToTable($this->file, $this->compiler))->add($migrationData, $fields);
     }
 
     /**
-     * Return string for adding a column
-     *
-     * @param $property
-     * @param $type
+     * @param $migrationData
+     * @param $fields
+     * @return mixed
+     */
+    protected function removeFactory($migrationData, $fields)
+    {
+        return (new RemoveFromTable($this->file, $this->compiler))->remove($migrationData, $fields);
+    }
+
+    /**
+     * @param $migrationData
+     * @param $fields
      * @return string
      */
-    private function addColumn($property, $type)
+    protected function deleteFactory($migrationData, $fields)
     {
-        return "\$table->$type('$property');";
-    }
-
-    /**
-     * Return string for dropping all columns
-     *
-     * @param array $fields
-     * @return array
-     */
-    protected function dropColumns(array $fields)
-    {
-        $schema = [];
-
-        foreach($fields as $property => $type)
-        {
-            $schema[] = $this->dropColumn($property);
-        }
-
-        return $schema;
-    }
-
-    /**
-     * Return string for dropping a column
-     *
-     * @param $property
-     * @return string
-     */
-    private function dropColumn($property)
-    {
-        return "\$table->dropColumn('$property');";
+        return (new DroppedTable)->drop($migrationData['table']);
     }
 
 }
