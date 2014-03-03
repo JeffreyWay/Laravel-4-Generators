@@ -19,6 +19,9 @@ class CreateTable extends Table {
         $primaryKey['id'] = ['type' => 'increments'];
         $fields = $primaryKey + $fields;
 
+        // We'll also add timestamps to new tables for convenience
+        $fields[''] = ['type' => 'timestamps'];
+
         return (new AddToTable($this->file, $this->compiler))->add($migrationData, $fields);
     }
 
