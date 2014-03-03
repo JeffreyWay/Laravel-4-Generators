@@ -14,6 +14,11 @@ class CreateTable extends Table {
     {
         $migrationData = ['method' => 'create', 'table' => $migrationData['table']];
 
+        // All new tables should have an identifier
+        // Let's add that for the user automatically
+        $primaryKey['id'] = ['type' => 'increments'];
+        $fields = $primaryKey + $fields;
+
         return (new AddToTable($this->file, $this->compiler))->add($migrationData, $fields);
     }
 
