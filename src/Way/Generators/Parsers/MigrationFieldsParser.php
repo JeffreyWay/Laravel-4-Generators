@@ -33,7 +33,7 @@ class MigrationFieldsParser {
 
             $args = null;
 
-            // Sett if args were provided, like:
+            // See if args were provided, like:
             // name:string(10)
             if (preg_match('/(.+?)\(([^)]+)\)/', $type, $matches))
             {
