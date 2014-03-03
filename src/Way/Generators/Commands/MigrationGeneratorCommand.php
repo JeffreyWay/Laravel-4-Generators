@@ -66,7 +66,19 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        return $this->option('path') . '/' . ucwords(camel_case($this->argument('migrationName'))) . '.php';
+        $fileName = $this->getDatePrefix() . '_' . $this->argument('migrationName') . '.php';
+
+        return $this->option('path') . "/$fileName";
+    }
+
+    /**
+     * Get the date prefix for the migration.
+     *
+     * @return string
+     */
+    protected function getDatePrefix()
+    {
+        return date('Y_m_d_His');
     }
 
     /**
