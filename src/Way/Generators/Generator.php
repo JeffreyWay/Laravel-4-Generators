@@ -28,12 +28,12 @@ class Generator {
      */
     public function make($templatePath, $templateData, $filePathToGenerate)
     {
-        // Next, we need to compile the template, according
-        // to the data that we provide it with.
+        // We first need to compile the template,
+        // according to the data that we provide.
         $template = $this->compile($templatePath, $templateData, new TemplateCompiler);
 
         // Now that we have the compiled template,
-        // we can actually generate the file
+        // we can actually generate the file.
         $this->file->make($filePathToGenerate, $template);
     }
 
