@@ -51,7 +51,7 @@ class MigrationNameParser {
             // will signal the end of our search. So, for
             // add_name_to_archived_lessons, "archived_lessons"
             // would be the table name
-            if (in_array($piece, ['to', 'for', 'on', 'from'])) break;
+            if (in_array($piece, ['to', 'for', 'on', 'from', 'into'])) break;
 
             $tableName[] = $piece;
         }
@@ -81,6 +81,7 @@ class MigrationNameParser {
             case 'add':
             case 'append':
             case 'update':
+            case 'insert':
                 return 'add';
             default:
                 return $action;
