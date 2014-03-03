@@ -41,9 +41,6 @@ class MigrationFieldsParserSpec extends ObjectBehavior {
             'column' => ['type' => 'double', 'args' => '15,8', 'decorators' => ['nullable', 'default(10)']],
             'age'  => ['type' => 'integer']
         ]);
-
-
-
     }
 
 }
