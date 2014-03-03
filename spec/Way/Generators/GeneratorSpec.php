@@ -23,13 +23,6 @@ class GeneratorSpec extends ObjectBehavior {
         $this->shouldHaveType('Way\Generators\Generator');
     }
 
-    function it_creates_a_file_with_given_text($file)
-    {
-        $file->make('foo.txt', 'bar')->shouldBeCalled();
-
-        $this->generate('foo.txt', 'bar');
-    }
-
     function it_compiles_a_template(Filesystem $file, TemplateCompiler $compiler)
     {
         $template = 'class $NAME$ {}';

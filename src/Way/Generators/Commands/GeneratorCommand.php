@@ -41,23 +41,22 @@ abstract class GeneratorCommand extends Command {
      */
     public function fire()
     {
-        $templateData = $this->getTemplateData();
         $filePathToGenerate = $this->getFileGenerationPath();
 
         try
         {
-            // This section is what actually compiles the template, and generates the file
-            $this->generator->setTemplatePath($this->option('templatePath'));
-            $compiledTemplate = $this->generator->compile($templateData, new TemplateCompiler);
-            $this->generator->generate($filePathToGenerate, $compiledTemplate);
+            $this->generator->make(
+                $this->option('templatePath'),
+                $this->getTemplateData(),
+                $filePathToGenerate
+            );
 
-            // Alert user of file creation
             $this->info("Created: {$filePathToGenerate}");
         }
 
         catch (FileAlreadyExists $e)
         {
-            return $this->error("The file, {$filePathToGenerate}, already exists! I don't want to overwrite it.");
+            $this->error("The file, {$filePathToGenerate}, already exists! I don't want to overwrite it.");
         }
     }
 

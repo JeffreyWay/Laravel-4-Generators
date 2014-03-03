@@ -70,7 +70,6 @@ class MigrationGeneratorCommand extends GeneratorCommand {
         $this->call('dump-autoload');
     }
 
-
     /**
      * The path where the file will be created
      *
