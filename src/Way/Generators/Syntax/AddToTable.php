@@ -51,6 +51,11 @@ class AddToTable extends Table {
         $type = $details['type'];
         $output = "\$table->$type('$property')";
 
+        if (isset($details['args']))
+        {
+            $output = "\$table->$type('$property', " . $details['args'] . ")";
+        }
+
         if (isset($details['decorators']))
         {
             $output .= $this->addDecorators($details['decorators']);
