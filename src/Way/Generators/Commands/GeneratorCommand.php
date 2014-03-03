@@ -1,7 +1,6 @@
 <?php namespace Way\Generators\Commands;
 
 use Illuminate\Console\Command;
-use Way\Generators\Compilers\TemplateCompiler;
 use Way\Generators\Filesystem\FileAlreadyExists;
 use Way\Generators\Generator;
 
