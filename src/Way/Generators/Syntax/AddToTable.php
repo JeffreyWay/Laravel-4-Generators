@@ -31,9 +31,9 @@ class AddToTable extends Table {
     {
         $schema = [];
 
-        foreach($fields as $property => $type)
+        foreach($fields as $property => $details)
         {
-            $schema[] = $this->addColumn($property, $type);
+            $schema[] = $this->addColumn($property, $details);
         }
 
         return $schema;
@@ -43,12 +43,40 @@ class AddToTable extends Table {
      * Return string for adding a column
      *
      * @param $property
-     * @param $type
+     * @param $details
      * @return string
      */
-    private function addColumn($property, $type)
+    private function addColumn($property, $details)
     {
-        return "\$table->$type('$property');";
+        $type = $details['type'];
+        $output = "\$table->$type('$property')";
+
+        if (isset($details['decorators']))
+        {
+            $output .= $this->addDecorators($details['decorators']);
+        }
+
+        return $output . ';';
+    }
+
+    /**
+     * @param $decorators
+     * @return string
+     */
+    protected function addDecorators($decorators)
+    {
+        $output = '';
+
+        foreach ($decorators as $decorator) {
+            $output .= "->$decorator";
+
+            // Do we need to tack on the parens?
+            if (strpos($decorator, '(') === false) {
+                $output .= '()';
+            }
+        }
+
+        return $output;
     }
 
 } 
