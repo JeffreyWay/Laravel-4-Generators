@@ -14,6 +14,8 @@ Begin by installing this package through Composer. Edit your project's `composer
 		"way/generators": "2.*"
 	}
 
+> Please note that version 2 of this package removed support for a few generators, such as `generate:scaffold` and `generate:form`. If you'd like to continue using those, stick with version `1.1`.
+
 Next, update Composer from the Terminal:
 
     composer update --dev
