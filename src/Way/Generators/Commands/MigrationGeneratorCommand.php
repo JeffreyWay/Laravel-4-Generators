@@ -82,9 +82,10 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
+        $path = $this->getTargetPathByOptionOrConfig('model_target_path');
         $fileName = $this->getDatePrefix() . '_' . $this->argument('migrationName') . '.php';
 
-        return $this->option('path') . "/$fileName";
+        return "{$path}/{$fileName}";
     }
 
     /**

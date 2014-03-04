@@ -27,9 +27,10 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
+        $path = $this->getTargetPathByOptionOrConfig('model_target_path');
         $tableName = ucwords($this->argument('tableName'));
 
-        return $this->option('path') . "/{$tableName}TableSeeder.php";
+        return "{$path}/{$tableName}TableSeeder.php";
     }
 
     /**

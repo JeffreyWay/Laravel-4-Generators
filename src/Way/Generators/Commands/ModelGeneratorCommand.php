@@ -27,7 +27,9 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        return $this->option('path') . '/' . ucwords($this->argument('modelName')) . '.php';
+        $path = $this->getTargetPathByOptionOrConfig('model_target_path');
+
+        return $path. '/' . ucwords($this->argument('modelName')) . '.php';
     }
 
     /**
@@ -72,7 +74,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('models')]
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?']
         ];
     }
 
