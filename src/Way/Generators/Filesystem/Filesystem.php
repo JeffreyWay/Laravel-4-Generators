@@ -42,7 +42,7 @@ class Filesystem {
     {
         if ( ! $this->exists($file))
         {
-            throw new FileNotFound;
+            throw new FileNotFound($file);
         }
 
         return file_get_contents($file);
