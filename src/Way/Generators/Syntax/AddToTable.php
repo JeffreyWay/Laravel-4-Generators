@@ -49,7 +49,15 @@ class AddToTable extends Table {
     private function addColumn($property, $details)
     {
         $type = $details['type'];
-        $output = "\$table->$type('$property')";
+
+        if (empty($property))
+        {
+            $output = "\$table->$type()";
+        }
+        else
+        {
+            $output = "\$table->$type('$property')";
+        }
 
         if (isset($details['args']))
         {
