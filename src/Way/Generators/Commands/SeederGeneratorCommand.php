@@ -27,7 +27,7 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getTargetPathByOptionOrConfig('model_target_path');
+        $path = $this->getPathByOptionOrConfig('path', 'model_target_path');
         $tableName = ucwords($this->argument('tableName'));
 
         return "{$path}/{$tableName}TableSeeder.php";
@@ -55,7 +55,7 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplatePath()
     {
-        return Config::get('generators::config.seed_template_path');
+        return $this->getPathByOptionOrConfig('templatePath', 'seed_template_path');
     }
 
     /**
@@ -78,7 +78,8 @@ class SeederGeneratorCommand extends GeneratorCommand {
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/seeds')]
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/seeds')],
+            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator']
         ];
     }
 

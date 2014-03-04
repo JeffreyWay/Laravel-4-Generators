@@ -68,18 +68,21 @@ abstract class GeneratorCommand extends Command {
     }
 
     /**
-     * Get the path to the target directory
-     * either through a command option, or
-     * from the configuration
+     * Get a directory path either through a
+     * command option, or from the configuration
      *
+     * @param $option
      * @param $configName
-     * @return array|string
+     * @return string
      */
-    protected function getTargetPathByOptionOrConfig($configName)
+    protected function getPathByOptionOrConfig($option, $configName)
     {
-        return $this->option('path')
-            ? $this->option('path')
-            : Config::get("generators::config.{$configName}");
+        if ($path = $this->option($option))
+        {
+            return $path;
+        }
+
+        return Config::get("generators::config.{$configName}");
     }
 
 } 

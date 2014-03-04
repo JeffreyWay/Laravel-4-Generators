@@ -38,9 +38,7 @@ class FeatureContext extends BehatContext
      */
     public function tearDown()
     {
-        array_map('unlink', glob(app_path('database/migrations/*')));
-        array_map('unlink', glob(app_path('database/seeds/*')));
-        array_map('unlink', glob(app_path('models/*')));
+        array_map('unlink', glob(base_path('workbench/way/generators/tests/tmp/*')));
 
         $this->tester = null;
     }
@@ -51,10 +49,13 @@ class FeatureContext extends BehatContext
     public function iGenerateAMigrationWithNameAndFields($migrationName, $fields)
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Commands\MigrationGeneratorCommand'));
+
         $this->tester->execute([
             'migrationName' => $migrationName,
             '--fields' => $fields,
-            '--testing' => true
+            '--testing' => true,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/migration.txt'
         ]);
     }
 
@@ -64,7 +65,12 @@ class FeatureContext extends BehatContext
     public function iGenerateAModelWith($modelName)
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Commands\ModelGeneratorCommand'));
-        $this->tester->execute(compact('modelName'));
+
+        $this->tester->execute([
+            'modelName' => $modelName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/model.txt'
+        ]);
     }
 
     /**
@@ -73,16 +79,13 @@ class FeatureContext extends BehatContext
     public function iGenerateASeedWith($tableName)
     {
         $this->tester = new CommandTester(App::make('Way\Generators\Commands\SeederGeneratorCommand'));
-        $this->tester->execute(compact('tableName'));
-    }
 
-    /**
-     * @When /^I generate a migration with "([^"]*)"$/
-     */
-    public function iGenerateAMigrationWith($migrationName)
-    {
-        $this->tester = new CommandTester(App::make('Way\Generators\Commands\MigrationGeneratorCommand'));
-        $this->tester->execute(compact('migrationName'));
+        $this->tester->execute([
+            'tableName' => $tableName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/seed.txt'
+        ]);
+
     }
 
     /**
@@ -91,7 +94,7 @@ class FeatureContext extends BehatContext
     public function theGeneratedMigrationShouldMatchMyStub($stubName)
     {
         $expected = file_get_contents(__DIR__."/../../stubs/{$stubName}.txt");
-        $actual = file_get_contents(glob(base_path('app/database/migrations/*'))[0]);
+        $actual = file_get_contents(glob(__DIR__."/../../tmp/*")[0]);
 
         // Let's compare the stub against what was actually generated.
         assertEquals($expected, $actual);

@@ -7,5 +7,5 @@ Feature: Generators
 
     Examples:
       | command   | argument                  | generatedFilePath                                 |
-      | model     | Order                     | app/models/Order.php                              |
-      | seed      | orders                    | app/database/seeds/OrdersTableSeeder.php          |
+      | model     | Order                     | workbench/way/generators/tests/tmp/Order.php                              |
+      | seed      | orders                    | workbench/way/generators/tests/tmp/OrdersTableSeeder.php          |
