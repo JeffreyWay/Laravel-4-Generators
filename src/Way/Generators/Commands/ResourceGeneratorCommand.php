@@ -52,7 +52,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getModelName($resource)
     {
-        return ucwords(str_singular($resource));
+        return ucwords(str_singular(camel_case($resource)));
     }
 
     /**
@@ -63,7 +63,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getControllerName($resource)
     {
-        return ucwords(str_plural($resource)) . 'Controller';
+        return ucwords(str_plural(camel_case($resource))) . 'Controller';
     }
 
     /**
@@ -85,7 +85,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getMigrationName($resource)
     {
-        return "create_{$this->getTableName($resource)}_table";
+        return "create_" . str_plural($resource) . "_table";
     }
 
     /**
@@ -143,7 +143,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function callSeeder($resource)
     {
-        $tableName = $this->getTableName($resource);
+        $tableName = str_plural($this->getModelName($resource));
 
         if ($this->confirm("Would you like a '$tableName' table seeder?"))
         {
