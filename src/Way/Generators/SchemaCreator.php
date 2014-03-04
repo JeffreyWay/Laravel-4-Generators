@@ -80,7 +80,7 @@ class SchemaCreator {
     {
         if (!in_array($action, ['create', 'add', 'remove', 'delete']))
         {
-            throw new Exception;
+            throw new InvalidMigrationName('Please rewrite your migration name to begin with "create", "add", "remove", or "delete."');
         }
     }
 
