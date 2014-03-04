@@ -5,7 +5,7 @@ return [
     /**
      * Where is the template for a model?
      */
-    'model_template_path' => 'workbench/way/generators/src/Way/Generators/templates/model.txt',
+    'model_template_path' => 'vendor/way/generators/src/Way/Generators/templates/model.txt',
 
     /**
      * Where do you put your models?
@@ -15,7 +15,7 @@ return [
     /**
      * Where is the template for a migration?
      */
-    'migration_template_path' => 'workbench/way/generators/src/Way/Generators/templates/migration.txt',
+    'migration_template_path' => 'vendor/way/generators/src/Way/Generators/templates/migration.txt',
 
     /**
      * Where do you put your migrations?
@@ -25,7 +25,7 @@ return [
     /**
      * Where is the template for a database seeder?
      */
-    'seed_template_path' => 'workbench/way/generators/src/Way/Generators/templates/seed.txt',
+    'seed_template_path' => 'vendor/way/generators/src/Way/Generators/templates/seed.txt',
 
     /**
      * Where do you put your database table seeders?
