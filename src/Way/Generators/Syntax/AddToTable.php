@@ -51,8 +51,7 @@ class AddToTable extends Table {
         $type = $details['type'];
 
         $output = sprintf(
-            "%s->%s(%s)",
-            '$table',
+            "\$table->%s(%s)",
             $type,
             $property ? "'$property'" : null
         );
@@ -62,8 +61,7 @@ class AddToTable extends Table {
         if (isset($details['args']))
         {
             $output = sprintf(
-                "%s->%s('%s', %s)",
-                '$table',
+                "\$table->%s('%s', %s)",
                 $type,
                 $property,
                 $details['args']

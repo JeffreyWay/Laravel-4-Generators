@@ -44,7 +44,7 @@ class RemoveFromTable extends Table {
      */
     private function dropColumn($property)
     {
-        return "\$table->dropColumn('$property');";
+        return sprintf("\$table->dropColumn('%s');", $property);
     }
 
 }
