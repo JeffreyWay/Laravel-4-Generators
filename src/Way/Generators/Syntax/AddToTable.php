@@ -50,18 +50,24 @@ class AddToTable extends Table {
     {
         $type = $details['type'];
 
-        if (empty($property))
-        {
-            $output = "\$table->$type()";
-        }
-        else
-        {
-            $output = "\$table->$type('$property')";
-        }
+        $output = sprintf(
+            "%s->%s(%s)",
+            '$table',
+            $type,
+            $property ? "'$property'" : null
+        );
 
+        // If we have args, then it needs
+        // to be formatted a bit differently
         if (isset($details['args']))
         {
-            $output = "\$table->$type('$property', " . $details['args'] . ")";
+            $output = sprintf(
+                "%s->%s('%s', %s)",
+                '$table',
+                $type,
+                $property,
+                $details['args']
+            );
         }
 
         if (isset($details['decorators']))
@@ -81,7 +87,7 @@ class AddToTable extends Table {
         $output = '';
 
         foreach ($decorators as $decorator) {
-            $output .= "->$decorator";
+            $output .= sprintf("->%s", $decorator);
 
             // Do we need to tack on the parens?
             if (strpos($decorator, '(') === false) {
