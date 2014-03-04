@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Config;
 
 class SeederGeneratorCommand extends GeneratorCommand {
 
@@ -47,6 +48,16 @@ class SeederGeneratorCommand extends GeneratorCommand {
     }
 
     /**
+     * Get path to template for generator
+     *
+     * @return mixed
+     */
+    protected function getTemplatePath()
+    {
+        return Config::get('generators::config.seed_template_path');
+    }
+
+    /**
      * Get the console command arguments.
      *
      * @return array
@@ -65,10 +76,9 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getOptions()
     {
-        return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/seeds')),
-            array('templatePath', null, InputOption::VALUE_OPTIONAL, 'What is the path to the template for this generator?', __DIR__.'/../templates/seed.txt')
-        );
+        return [
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/seeds')]
+        ];
     }
 
 }

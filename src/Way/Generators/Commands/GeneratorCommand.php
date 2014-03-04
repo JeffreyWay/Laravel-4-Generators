@@ -36,6 +36,13 @@ abstract class GeneratorCommand extends Command {
     protected abstract function getFileGenerationPath();
 
     /**
+     * Get the path to the generator template
+     *
+     * @return mixed
+     */
+    protected abstract function getTemplatePath();
+
+    /**
      * Compile and generate the file
      */
     public function fire()
@@ -45,7 +52,7 @@ abstract class GeneratorCommand extends Command {
         try
         {
             $this->generator->make(
-                $this->option('templatePath'),
+                $this->getTemplatePath(),
                 $this->getTemplateData(),
                 $filePathToGenerate
             );

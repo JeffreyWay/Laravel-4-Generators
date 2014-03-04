@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Config;
 
 class ModelGeneratorCommand extends GeneratorCommand {
 
@@ -42,6 +43,16 @@ class ModelGeneratorCommand extends GeneratorCommand {
     }
 
     /**
+     * Get path to the template for the generator
+     *
+     * @return mixed
+     */
+    protected function getTemplatePath()
+    {
+        return Config::get('generators::config.model_template_path');
+    }
+
+    /**
      * Get the console command arguments.
      *
      * @return array
@@ -61,8 +72,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('models')],
-            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'What is the path to the template for this generator?', __DIR__ . '/../templates/model.txt']
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('models')]
         ];
     }
 

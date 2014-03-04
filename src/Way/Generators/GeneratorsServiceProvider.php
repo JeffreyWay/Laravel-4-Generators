@@ -5,6 +5,7 @@ use Way\Generators\Commands\ControllerGeneratorCommand;
 use Way\Generators\Commands\ModelGeneratorCommand;
 use Way\Generators\Commands\ResourceGeneratorCommand;
 use Way\Generators\Commands\SeederGeneratorCommand;
+use Way\Generators\Commands\PublishTemplatesCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
 
@@ -15,6 +16,15 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	protected $defer = false;
 
+
+    /**
+     * Booting
+     */
+    public function boot()
+    {
+        $this->package('way/generators');
+    }
+
 	/**
 	 * Register the commands
 	 *
@@ -22,7 +32,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource'] as $command)
+        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Publisher'] as $command)
         {
             $this->{"register$command"}();
         }
@@ -99,6 +109,19 @@ class GeneratorsServiceProvider extends ServiceProvider {
         });
 
         $this->commands('generate.resource');
+    }
+
+    /**
+     * Register command for publish templates
+     */
+    public function registerPublisher()
+    {
+        $this->app['generate.publish-templates'] = $this->app->share(function($app)
+        {
+            return new PublishTemplatesCommand;
+        });
+
+        $this->commands('generate.publish-templates');
     }
 
 	/**
