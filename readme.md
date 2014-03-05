@@ -326,7 +326,7 @@ need to publish the templates that, behind the scenes, the generators will refer
 php artisan generate:publish-templates
 ```
 
-This will copy, by default, all templates to your `app/templates` directory. You can modify these however you wish to fit your desired formatting. If you'd prefer a different directory:
+This will copy all templates to your `app/templates` directory. You can modify these however you wish to fit your desired formatting. If you'd prefer a different directory:
 
 ```bash
 php artisan generate:publish-templates --path=app/foo/bar/templates
