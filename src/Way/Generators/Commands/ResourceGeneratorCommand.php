@@ -169,9 +169,9 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getArguments()
     {
-        return array(
-            array('resource', InputArgument::REQUIRED, 'Singular resource name')
-        );
+        return [
+            ['resource', InputArgument::REQUIRED, 'Singular resource name']
+        ];
     }
 
     /**
