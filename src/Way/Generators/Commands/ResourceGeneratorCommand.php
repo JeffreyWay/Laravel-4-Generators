@@ -25,7 +25,7 @@ class ResourceGeneratorCommand extends Command {
      *
      * @return mixed
      */
-    protected function fire()
+    public function fire()
     {
         $resource = $this->argument('resource');
 
