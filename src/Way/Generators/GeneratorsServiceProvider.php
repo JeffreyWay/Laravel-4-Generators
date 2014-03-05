@@ -32,7 +32,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Publisher'] as $command)
+        foreach(array('Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Publisher') as $command)
         {
             $this->{"register$command"}();
         }
