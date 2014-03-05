@@ -181,9 +181,10 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getOptions()
     {
-        return array(
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration')
-        );
+        return [
+            ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'],
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Path for all generated files?']
+        ];
     }
 
 }
