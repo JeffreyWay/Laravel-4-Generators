@@ -11,4 +11,3 @@ before_script:
 
 script:
   - vendor/bin/phpspec run
-  - vendor/bin/behat
