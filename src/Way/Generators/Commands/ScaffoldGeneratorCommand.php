@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Config;
 
 class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
 
@@ -33,7 +34,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:model', [
                 'modelName' => $modelName,
-                '--templatePath' => $this->getPathByOptionOrConfig('templatePath', 'scaffold_model_template_path')
+                '--templatePath' => Config::get("generators::config.scaffold_model_template_path")
             ]);
         }
     }
@@ -51,7 +52,7 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:controller', [
                 'controllerName' => $controllerName,
-                '--templatePath' => $this->getPathByOptionOrConfig('templatePath', 'scaffold_controller_template_path')
+                '--templatePath' => Config::get("generators::config.scaffold_controller_template_path")
             ]);
         }
     }
