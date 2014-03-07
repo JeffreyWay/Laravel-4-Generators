@@ -74,6 +74,34 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @When /^I generate a controller with "([^"]*)"$/
+     */
+    public function iGenerateAControllerWith($controllerName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\ControllerGeneratorCommand'));
+
+        $this->tester->execute([
+            'controllerName' => $controllerName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/controller.txt'
+        ]);
+    }
+
+    /**
+     * @When /^I generate a view with "([^"]*)"$/
+     */
+    public function iGenerateAViewWith($viewName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\ViewGeneratorCommand'));
+
+        $this->tester->execute([
+            'viewName' => $viewName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/view.txt'
+        ]);
+    }
+
+    /**
      * @When /^I generate a seed with "([^"]*)"$/
      */
     public function iGenerateASeedWith($tableName)
