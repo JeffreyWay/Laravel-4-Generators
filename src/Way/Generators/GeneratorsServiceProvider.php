@@ -6,6 +6,7 @@ use Way\Generators\Commands\ModelGeneratorCommand;
 use Way\Generators\Commands\ResourceGeneratorCommand;
 use Way\Generators\Commands\SeederGeneratorCommand;
 use Way\Generators\Commands\PublishTemplatesCommand;
+use Way\Generators\Commands\ScaffoldGeneratorCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
 
@@ -32,7 +33,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Publisher'] as $command)
+        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Scaffold', 'Publisher'] as $command)
         {
             $this->{"register$command"}();
         }
@@ -112,17 +113,32 @@ class GeneratorsServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Register command for publish templates
+     * register command for publish templates
      */
-    public function registerPublisher()
+    public function registerpublisher()
     {
         $this->app['generate.publish-templates'] = $this->app->share(function($app)
         {
-            return new PublishTemplatesCommand;
+            return new publishtemplatescommand;
         });
 
         $this->commands('generate.publish-templates');
     }
+
+    /**
+     * register scaffold command
+     */
+    public function registerScaffold()
+    {
+        $this->app['generate.scaffold'] = $this->app->share(function($app)
+        {
+            return new ScaffoldGeneratorCommand;
+        });
+
+        $this->commands('generate.scaffold');
+    }
+
+
 
 	/**
 	 * Get the services provided by the provider.

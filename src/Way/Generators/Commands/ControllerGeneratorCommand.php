@@ -38,9 +38,19 @@ class ControllerGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
-        return [
-            'NAME' => ucwords($this->argument('controllerName'))
-        ];
+        // LessonsController
+        $name = ucwords($this->argument('controllerName'));
+
+        // lessons
+        $collection = strtolower(str_replace('Controller', '', $name));
+
+        // lesson
+        $resource = str_singular($collection);
+
+        // Lesson
+        $model = ucwords($resource);
+
+        return compact('name', 'collection', 'resource', 'model');
     }
 
     /**
