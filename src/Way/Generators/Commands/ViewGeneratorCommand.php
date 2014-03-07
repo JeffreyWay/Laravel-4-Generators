@@ -48,11 +48,8 @@ class ViewGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'view_target_path');
-        $viewName = $this->argument('viewName');
-
         return [
-            'PATH' => sprintf('%s/%s.php', $path, $viewName)
+            'PATH' => $this->getFileGenerationPath()
         ];
     }
 
