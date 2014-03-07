@@ -34,9 +34,9 @@ class PublishTemplatesCommand extends Command {
         $this->pointConfigFileTemplatesToNewLocation();
 
         $this->info(
-            "The templates have been copied to '{$this->option('path')}'. Modify templates " .
-            "however you wish. Don't forget to also update the template paths within " .
-            "'app/config/packages/way/generators/config.php'"
+            "The templates have been copied to '{$this->option('path')}'. " .
+            "Modify these templates however you wish, and they'll be referenced " .
+            "when you execute the associated generator command."
         );
     }
 
