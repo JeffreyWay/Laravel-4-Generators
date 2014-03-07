@@ -38,7 +38,7 @@ class FeatureContext extends BehatContext
      */
     public function tearDown()
     {
-        array_map('unlink', glob(base_path('workbench/way/generators/tests/tmp/*')));
+        \Illuminate\Support\Facades\File::deleteDirectory(base_path('workbench/way/generators/tests/tmp'), true);
 
         $this->tester = null;
     }
