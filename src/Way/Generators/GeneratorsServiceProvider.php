@@ -7,6 +7,7 @@ use Way\Generators\Commands\ResourceGeneratorCommand;
 use Way\Generators\Commands\SeederGeneratorCommand;
 use Way\Generators\Commands\PublishTemplatesCommand;
 use Way\Generators\Commands\ScaffoldGeneratorCommand;
+use Way\Generators\Commands\ViewGeneratorCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
 
@@ -33,7 +34,15 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        foreach(['Model', 'Controller', 'Migration', 'Seeder', 'Resource', 'Scaffold', 'Publisher'] as $command)
+        foreach([
+            'Model',
+            'View',
+            'Controller',
+            'Migration',
+            'Seeder',
+            'Resource',
+            'Scaffold',
+            'Publisher'] as $command)
         {
             $this->{"register$command"}();
         }
@@ -52,6 +61,21 @@ class GeneratorsServiceProvider extends ServiceProvider {
         });
 
         $this->commands('generate.model');
+    }
+
+    /**
+     * Register the view generator
+     */
+    protected function registerView()
+    {
+        $this->app['generate.view'] = $this->app->share(function($app)
+        {
+            $generator = $this->app->make('Way\Generators\Generator');
+
+            return new ViewGeneratorCommand($generator);
+        });
+
+        $this->commands('generate.view');
     }
 
     /**

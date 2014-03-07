@@ -40,6 +40,15 @@ return [
     /**
      * Where do you put your database table seeders?
      */
-    'seed_target_path'   => app_path('database/seeds')
+    'seed_target_path'   => app_path('database/seeds'),
 
+    /**
+     * Where is the template for a view?
+     */
+    'view_template_path' => 'vendor/way/generators/src/Way/Generators/templates/view.txt',
+
+    /**
+     * Where do you put your views?
+     */
+    'view_target_path'   => app_path('views')
 ];
