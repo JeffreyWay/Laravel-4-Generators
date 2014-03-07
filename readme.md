@@ -312,6 +312,7 @@ This will give you a basic bit of boilerplate, using the popular Faker library. 
 The `generate:resource` command will do a number of things for you:
 
 - Generate a model
+- Generate index, show, create, and edit views
 - Generate a controller
 - Generate a migration with schema
 - Generate a table seeder
