@@ -2,7 +2,6 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Config;
 
 class ModelGeneratorCommand extends GeneratorCommand {
 
