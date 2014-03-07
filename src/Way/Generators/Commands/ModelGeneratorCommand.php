@@ -65,17 +65,4 @@ class ModelGeneratorCommand extends GeneratorCommand {
         ];
     }
 
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'],
-            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator']
-        ];
-    }
-
 }

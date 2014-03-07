@@ -1,5 +1,7 @@
 <?php namespace Way\Generators\Commands;
 
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Console\Command;
 use Way\Generators\Filesystem\FileAlreadyExists;
 use Way\Generators\Generator;
@@ -83,6 +85,19 @@ abstract class GeneratorCommand extends Command {
         }
 
         return Config::get("generators::config.{$configName}");
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'],
+            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator']
+        ];
     }
 
 } 

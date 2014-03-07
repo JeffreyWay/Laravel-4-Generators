@@ -70,17 +70,4 @@ class SeederGeneratorCommand extends GeneratorCommand {
         );
     }
 
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/seeds')],
-            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator']
-        ];
-    }
-
 }
