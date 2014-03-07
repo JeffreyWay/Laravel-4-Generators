@@ -20,6 +20,10 @@ class ViewGeneratorCommand extends GeneratorCommand {
      */
     protected $description = 'Generate a view';
 
+    /**
+     * Create directory tree for views,
+     * and fire generator
+     */
     public function fire()
     {
         $directoryPath = dirname($this->getFileGenerationPath());
