@@ -515,3 +515,19 @@ For any template that you modify, update its respective `*_template_path` value.
 ```
 
 Also, while you're in this file, note that you can also update the default target directory for each generator.
+
+### Shortcuts
+
+Because you'll likely type these commands over and over, it makes sense to create aliases.
+
+```bash
+# Generator Stuff
+alias g:m="php artisan generate:model"
+alias g:c="php artisan generate:controller"
+alias g:v="php artisan generate:view"
+alias g:s="php artisan generate:seed"
+alias g:mig="php artisan generate:migration"
+alias g:r="php artisan generate:resource"
+```
+
+These can be stored in, for example, your `~/.bash_profile` or `~/.bashrc` files.
