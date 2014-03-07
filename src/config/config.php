@@ -2,53 +2,36 @@
 
 return [
 
-    /**
-     * Where is the template for a model?
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Where the templates for the generators are stored...
+    |--------------------------------------------------------------------------
+    |
+    */
     'model_template_path' => 'vendor/way/generators/src/Way/Generators/templates/model.txt',
 
-    /**
-     * Where do you put your models?
-     */
-    'model_target_path'   => app_path('models'),
-
-    /**
-     * Where is the template for a controller?
-     */
     'controller_template_path' => 'vendor/way/generators/src/Way/Generators/templates/controller.txt',
 
-    /**
-     * Where do you put your controllers?
-     */
-    'controller_target_path'   => app_path('controllers'),
-
-    /**
-     * Where is the template for a migration?
-     */
     'migration_template_path' => 'vendor/way/generators/src/Way/Generators/templates/migration.txt',
 
-    /**
-     * Where do you put your migrations?
-     */
-    'migration_target_path'   => app_path('database/migrations'),
-
-    /**
-     * Where is the template for a database seeder?
-     */
     'seed_template_path' => 'vendor/way/generators/src/Way/Generators/templates/seed.txt',
 
-    /**
-     * Where do you put your database table seeders?
-     */
-    'seed_target_path'   => app_path('database/seeds'),
-
-    /**
-     * Where is the template for a view?
-     */
     'view_template_path' => 'vendor/way/generators/src/Way/Generators/templates/view.txt',
 
-    /**
-     * Where do you put your views?
-     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Where the generated files will be saved...
+    |--------------------------------------------------------------------------
+    |
+    */
+    'model_target_path'   => app_path('models'),
+
+    'controller_target_path'   => app_path('controllers'),
+
+    'migration_target_path'   => app_path('database/migrations'),
+
+    'seed_target_path'   => app_path('database/seeds'),
+    
     'view_target_path'   => app_path('views')
 ];
