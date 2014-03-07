@@ -14,6 +14,8 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 
 ## Installation
 
+> [Want a 5-minute video overview?](https://dl.dropboxusercontent.com/u/774859/Work/Laravel-4-Generators/Get-Started-With-Laravel-Custom-Generators.mp4)
+
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
 
 	"require-dev": {
