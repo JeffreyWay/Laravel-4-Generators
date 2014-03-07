@@ -1,6 +1,7 @@
 {
     "name": "way/generators",
     "description": "",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jeffrey Way",
