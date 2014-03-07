@@ -22,8 +22,12 @@ class ViewGeneratorCommand extends GeneratorCommand {
 
     public function fire()
     {
-        // create the directories if not exist
-        File::makeDirectory(dirname($this->getFileGenerationPath()), 0777, true);
+        $directoryPath = dirname($this->getFileGenerationPath());
+
+        if ( ! File::exists($directoryPath))
+        {
+            File::makeDirectory($directoryPath, 0777, true);
+        }
 
         parent::fire();
     }
