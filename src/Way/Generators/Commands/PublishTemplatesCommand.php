@@ -61,7 +61,7 @@ class PublishTemplatesCommand extends Command {
     protected function pointConfigFileTemplatesToNewLocation()
     {
         $configPath = app_path('config/packages/way/generators/config.php');
-        $updated = str_replace('vendor/way/generators/src/Way/Generators/templates/', $this->option('path'), File::get($configPath));
+        $updated = str_replace('vendor/way/generators/src/Way/Generators/templates', $this->option('path'), File::get($configPath));
 
         File::put($configPath, $updated);
     }
