@@ -479,7 +479,7 @@ return [
     /**
      * Where is the template for a model?
      */
-    'model_template_path' => 'vendor/way/generators/src/Way/Generators/templates/model.txt',
+    'model_template_path' => 'app/templates/model.txt',
 
     /**
      * Where do you put your models?
@@ -489,7 +489,7 @@ return [
     /**
      * Where is the template for a migration?
      */
-    'migration_template_path' => 'vendor/way/generators/src/Way/Generators/templates/migration.txt',
+    'migration_template_path' => 'app/templates/templates/migration.txt',
 
     /**
      * Where do you put your migrations?
@@ -499,7 +499,7 @@ return [
     /**
      * Where is the template for a database seeder?
      */
-    'seed_template_path' => 'vendor/way/generators/src/Way/Generators/templates/seed.txt',
+    'seed_template_path' => 'app/templates/templates/seed.txt',
 
     /**
      * Where do you put your database table seeders?
@@ -507,12 +507,6 @@ return [
     'seed_target_path'   => app_path('database/seeds')
 
 ];
-```
-
-For any template that you modify, update its respective `*_template_path` value. For instance:
-
-```php
-'model_template_path' => app_path('templates/model.txt')
 ```
 
 Also, while you're in this file, note that you can also update the default target directory for each generator.
