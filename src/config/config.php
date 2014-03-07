@@ -13,6 +13,16 @@ return [
     'model_target_path'   => app_path('models'),
 
     /**
+     * Where is the template for a controller?
+     */
+    'controller_template_path' => 'vendor/way/generators/src/Way/Generators/templates/controller.txt',
+
+    /**
+     * Where do you put your controllers?
+     */
+    'controller_target_path'   => app_path('controllers'),
+
+    /**
      * Where is the template for a migration?
      */
     'migration_template_path' => 'vendor/way/generators/src/Way/Generators/templates/migration.txt',
