@@ -5,10 +5,12 @@
 This Laravel 4 package provides a variety of generators to speed up your development process. These generators include:
 
 - `generate:model`
+- `generate:view`
 - `generate:controller`
 - `generate:seed`
 - `generate:migration`
 - `generate:resource`
+- `generate:scaffold`
 
 ## Installation
 
@@ -40,8 +42,11 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 
 - [Migrations](#migrations)
 - [Models](#models)
+- [Views](#views)
 - [Seeds](#seeds)
 - [Resources](#resources)
+- [Scaffolding](#scaffolding)
+- [Configuration](#configuration)
 
 ### Migrations
 
@@ -261,6 +266,16 @@ class Post extends \Eloquent {
 }
 ```
 
+### Views
+
+The view generator is fairly simple.
+
+```bash
+php artisan generate:view admin.reports.index
+```
+
+This command will create an empty view, `/app/views/admin/reports/index.blade.php`. If the provided directory tree does not exist, it will be created for you.
+
 ### Seeds
 
 Laravel 4 provides us with a flexible way to seed new tables.
@@ -320,6 +335,124 @@ If you say yes to each confirmation, this single command will give you boilerpla
 - app/controllers/PostsController.php
 - app/database/migrations/timestamp-create_posts_table.php (including the schema)
 - app/database/seeds/PostsTableSeeder.php
+
+### Scaffolding
+
+The scaffolding generator is similar to `generate:resource`, except it will add some beginning boilerplate to these files, as a convenience.
+
+For instance, when running `generate:scaffold post`, your controller boilerplate will be:
+
+```php
+<?php
+
+class PostsController extends \BaseController {
+
+	/**
+	 * Display a listing of posts
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+	    $posts = Post::all();
+
+	    return View::make('posts.index', compact('posts'));
+	}
+
+	/**
+	 * Show the form for creating a new post
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+        return View::make('posts.create');
+	}
+
+	/**
+	 * Store a newly created post in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+	    $validator = Validator::make($data = Input::all(), Post::$rules);
+
+	    if ($validator->fails())
+	    {
+	        return Redirect::back()->withErrors($validator)->withInput();
+	    }
+
+	    Post::create($data);
+
+	    return Redirect::route('posts.index');
+	}
+
+	/**
+	 * Display the specified post.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+	    $post = Post::findOrFail($id);
+
+	    return View::make('posts.show', compact('post'));
+	}
+
+	/**
+	 * Show the form for editing the specified post.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		$post = Post::find($id);
+
+		return View::make('posts.edit', compact('post'));
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		$post = Post::findOrFail($id);
+
+		$validator = Validator::make($data = Input::all(), Post::$rules);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+
+		$post->update($data);
+
+		return Redirect::route('posts.index');
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		Post::destroy($id);
+
+		return Redirect::route('posts.index');
+	}
+
+}
+```
+
+Please note that you're encouraged to modify this generated controller. It simply provides a starting point.
 
 ### Configuration
 
