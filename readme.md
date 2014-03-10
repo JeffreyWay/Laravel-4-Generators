@@ -23,7 +23,7 @@ Begin by installing this package through Composer. Edit your project's `composer
 		"way/generators": "2.*"
 	}
 
-> Please note that version 2 of this package removed support for a few generators, such as `generate:scaffold` and `generate:form`. If you'd like to continue using those, stick with version `1.1`.
+> Please note that version 2 of this package removed support for a couple of generators, such as `generate:form`. If you'd like to continue using them, stick with version `1.1`.
 
 Next, update Composer from the Terminal:
 
@@ -314,7 +314,7 @@ This will give you a basic bit of boilerplate, using the popular Faker library. 
 
 When you require a new pivot table, the `generate:pivot` table expedites the process of creating the appropriate migration.
 
-Simply pass the table of the two tables that require a join pivot table. For `orders` and `users`, you might do:
+Simply pass the name of the two tables that require a joining pivot table. For `orders` and `users`, you might do:
 
 ```bash
 php artisan generate:pivot orders users
