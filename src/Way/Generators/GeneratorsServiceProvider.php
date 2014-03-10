@@ -8,6 +8,7 @@ use Way\Generators\Commands\SeederGeneratorCommand;
 use Way\Generators\Commands\PublishTemplatesCommand;
 use Way\Generators\Commands\ScaffoldGeneratorCommand;
 use Way\Generators\Commands\ViewGeneratorCommand;
+use Way\Generators\Commands\PivotGeneratorCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
 
@@ -40,6 +41,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
             'Controller',
             'Migration',
             'Seeder',
+            'Pivot',
             'Resource',
             'Scaffold',
             'Publisher'] as $command)
@@ -119,6 +121,19 @@ class GeneratorsServiceProvider extends ServiceProvider {
         });
 
         $this->commands('generate.seeder');
+    }
+
+    /**
+     * Register the pivot generator
+     */
+    protected function registerPivot()
+    {
+        $this->app['generate.pivot'] = $this->app->share(function($app)
+        {
+            return new PivotGeneratorCommand;
+        });
+
+        $this->commands('generate.pivot');
     }
 
     /**

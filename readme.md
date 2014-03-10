@@ -9,6 +9,7 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 - `generate:controller`
 - `generate:seed`
 - `generate:migration`
+- `generate:pivot`
 - `generate:resource`
 - `generate:scaffold`
 
@@ -308,6 +309,56 @@ class UsersTableSeeder extends Seeder {
 ```
 
 This will give you a basic bit of boilerplate, using the popular Faker library. This is a nice way to seed your DB tables. Don't forget to pull in Faker through Composer!
+
+### Pivot Tables
+
+When you require a new pivot table, the `generate:pivot` table expedites the process of creating the appropriate migration.
+
+Simply pass the table of the two tables that require a join pivot table. For `orders` and `users`, you might do:
+
+```bash
+php artisan generate:pivot orders users
+```
+
+This will create the following migration:
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+class CreateOrderUserTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+        Schema::create('order_user', function(Blueprint $table) {
+            $table->increments('id');
+			$table->integer('order_id')->unsigned()->index();
+			$table->integer('user_id')->unsigned()->index();
+			$table->timestamps();
+        });
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+	    Schema::drop('order_user');
+	}
+
+}
+```
+
+Notice that it correctly sets the table name according to your two provided tables, in alphabetical order. Now, run `php artisan migrate` to create your pivot table!
 
 ### Resources
 
