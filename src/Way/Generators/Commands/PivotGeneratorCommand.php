@@ -27,13 +27,10 @@ class PivotGeneratorCommand extends Command {
     {
         list($tableOne, $tableTwo) = $this->sortDesiredTables();
 
-        $this->call(
-            'generate:migration',
-            [
-                'migrationName' => "create_{$tableOne}_{$tableTwo}_table",
-                '--fields' => $this->getMigrationFields($tableOne, $tableTwo)
-            ]
-        );
+        $this->call('generate:migration', [
+            'migrationName' => "create_{$tableOne}_{$tableTwo}_table",
+            '--fields' => $this->getMigrationFields($tableOne, $tableTwo)
+        ]);
     }
 
     /**
