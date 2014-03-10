@@ -45,6 +45,7 @@ Think of generators as an easy way to speed up your workflow. Rather than openin
 - [Models](#models)
 - [Views](#views)
 - [Seeds](#seeds)
+- [Pivot](#pivot)
 - [Resources](#resources)
 - [Scaffolding](#scaffolding)
 - [Configuration](#configuration)
@@ -310,7 +311,7 @@ class UsersTableSeeder extends Seeder {
 
 This will give you a basic bit of boilerplate, using the popular Faker library. This is a nice way to seed your DB tables. Don't forget to pull in Faker through Composer!
 
-### Pivot Tables
+### Pivot
 
 When you require a new pivot table, the `generate:pivot` table expedites the process of creating the appropriate migration.
 
