@@ -58,7 +58,9 @@ class PivotGeneratorCommand extends Command {
     {
         return implode(', ', [
             "{$tableOne}_id:integer:unsigned:index",
-            "{$tableTwo}_id:integer:unsigned:index"
+            "{$tableOne}_id:foreign:references('id'):on('" . str_plural($tableOne) . "'):onDelete('cascade')",
+            "{$tableTwo}_id:integer:unsigned:index",
+            "{$tableTwo}_id:foreign:references('id'):on('" . str_plural($tableTwo) . "'):onDelete('cascade')",
         ]);
     }
 
