@@ -341,10 +341,13 @@ class CreateOrderUserTable extends Migration {
         Schema::create('order_user', function(Blueprint $table) {
             $table->increments('id');
 			$table->integer('order_id')->unsigned()->index();
+			$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 			$table->integer('user_id')->unsigned()->index();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->timestamps();
         });
 	}
+
 
 	/**
 	 * Reverse the migrations.
