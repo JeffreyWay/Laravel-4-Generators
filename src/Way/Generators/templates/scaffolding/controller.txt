@@ -9,9 +9,9 @@ class $NAME$ extends \BaseController {
 	 */
 	public function index()
 	{
-	    $$COLLECTION$ = $MODEL$::all();
+		$$COLLECTION$ = $MODEL$::all();
 
-	    return View::make('$COLLECTION$.index', compact('$COLLECTION$'));
+		return View::make('$COLLECTION$.index', compact('$COLLECTION$'));
 	}
 
 	/**
@@ -21,7 +21,7 @@ class $NAME$ extends \BaseController {
 	 */
 	public function create()
 	{
-        return View::make('$COLLECTION$.create');
+		return View::make('$COLLECTION$.create');
 	}
 
 	/**
@@ -31,16 +31,16 @@ class $NAME$ extends \BaseController {
 	 */
 	public function store()
 	{
-	    $validator = Validator::make($data = Input::all(), $MODEL$::$rules);
+		$validator = Validator::make($data = Input::all(), $MODEL$::$rules);
 
-	    if ($validator->fails())
-	    {
-	        return Redirect::back()->withErrors($validator)->withInput();
-	    }
+		if ($validator->fails())
+		{
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
 
-	    $MODEL$::create($data);
+		$MODEL$::create($data);
 
-	    return Redirect::route('$COLLECTION$.index');
+		return Redirect::route('$COLLECTION$.index');
 	}
 
 	/**
@@ -51,9 +51,9 @@ class $NAME$ extends \BaseController {
 	 */
 	public function show($id)
 	{
-	    $$RESOURCE$ = $MODEL$::findOrFail($id);
+		$$RESOURCE$ = $MODEL$::findOrFail($id);
 
-	    return View::make('$COLLECTION$.show', compact('$RESOURCE$'));
+		return View::make('$COLLECTION$.show', compact('$RESOURCE$'));
 	}
 
 	/**
@@ -81,10 +81,10 @@ class $NAME$ extends \BaseController {
 
 		$validator = Validator::make($data = Input::all(), $MODEL$::$rules);
 
-        if ($validator->fails())
-        {
-            return Redirect::back()->withErrors($validator)->withInput();
-        }
+		if ($validator->fails())
+		{
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
 
 		$$RESOURCE$->update($data);
 

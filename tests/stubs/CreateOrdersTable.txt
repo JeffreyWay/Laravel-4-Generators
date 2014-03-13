@@ -12,11 +12,11 @@ class CreateOrdersTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('orders', function(Blueprint $table) {
-            $table->increments('id');
+		Schema::create('orders', function(Blueprint $table) {
+			$table->increments('id');
 			$table->string('name');
 			$table->timestamps();
-        });
+		});
 	}
 
 
@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration {
 	 */
 	public function down()
 	{
-	    Schema::drop('orders');
+		Schema::drop('orders');
 	}
 
 }

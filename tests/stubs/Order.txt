@@ -1,5 +1,5 @@
 <?php
 
 class Order extends \Eloquent {
-    protected $fillable = [];
+	protected $fillable = [];
 }
