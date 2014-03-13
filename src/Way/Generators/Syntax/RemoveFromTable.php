@@ -40,7 +40,6 @@ class RemoveFromTable extends Table {
      * Return string for dropping a column
      *
      * @param $field
-     * @internal param $property
      * @return string
      */
     private function dropColumn($field)
