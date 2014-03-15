@@ -36,6 +36,9 @@ class MigrationFieldsParserSpec extends ObjectBehavior {
             ['field' => 'name', 'type' => 'double', 'args' => '15,8', 'decorators' => ['nullable', 'default(10)']],
             ['field' => 'age', 'type' => 'integer']
         ]);
+        $this->parse('name:decimal(1, 2)')->shouldReturn([
+            ['field' => 'name', 'type' => 'decimal', 'args' => '1, 2']
+        ]);
 
     }
 

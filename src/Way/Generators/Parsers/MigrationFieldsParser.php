@@ -13,9 +13,7 @@ class MigrationFieldsParser {
     {
         if ( ! $fields) return [];
 
-        // name:string, age:integer
-        // name:string(10,2), age:integer
-        $fields = preg_split('/\s?,\s/', $fields);
+        $fields = $this->separate_into_fields($fields);
 
         $parsed = [];
 
@@ -53,6 +51,28 @@ class MigrationFieldsParser {
         }
 
         return $parsed;
+    }
+
+    private function separate_into_fields($fields) {
+        // name:string, age:integer
+        // name:string(10,2), age:integer
+        // name:string(10, 2), age:integer
+        // name:string(10), age:integer
+        $firstFields = preg_split('/\s?,\s(\D)/', $fields, null, PREG_SPLIT_DELIM_CAPTURE);
+        $singleChars = [];
+        $fields = [];
+
+        foreach($firstFields as $key => $value) {
+            if (strlen($value) == 1) {
+                $singleChars[] = $key + 1;
+            } elseif(in_array($key, $singleChars)) {
+                $fields[] = $firstFields[$key - 1] . $value;
+            } else {
+                $fields[] = $value;
+            }
+        }
+
+        return $fields;
     }
 
 }
