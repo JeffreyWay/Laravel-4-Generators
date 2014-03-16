@@ -167,7 +167,7 @@ class ResourceGeneratorCommand extends Command {
     {
         $tableName = str_plural($this->getModelName($resource));
 
-        if ($this->confirm("Would you like a '$tableName' table seeder?"))
+        if ($this->confirm("Would you like a '$tableName' table seeder? [yes|no]"))
         {
             $this->call('generate:seed', compact('tableName'));
         }
