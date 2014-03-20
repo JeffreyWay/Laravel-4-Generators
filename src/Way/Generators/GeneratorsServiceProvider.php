@@ -12,12 +12,12 @@ use Way\Generators\Commands\PivotGeneratorCommand;
 
 class GeneratorsServiceProvider extends ServiceProvider {
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
 
     /**
@@ -28,13 +28,13 @@ class GeneratorsServiceProvider extends ServiceProvider {
         $this->package('way/generators');
     }
 
-	/**
-	 * Register the commands
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the commands
+     *
+     * @return void
+     */
+    public function register()
+    {
         foreach([
             'Model',
             'View',
@@ -48,7 +48,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
         {
             $this->{"register$command"}();
         }
-	}
+    }
 
     /**
      * Register the model generator
@@ -179,14 +179,14 @@ class GeneratorsServiceProvider extends ServiceProvider {
 
 
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+	return array();
+    }
 
 }
