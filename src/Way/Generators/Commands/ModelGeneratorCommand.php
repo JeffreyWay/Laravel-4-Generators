@@ -3,7 +3,8 @@
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ModelGeneratorCommand extends GeneratorCommand {
+class ModelGeneratorCommand extends GeneratorCommand
+{
 
     /**
      * The console command name.
@@ -26,9 +27,9 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'model_target_path');
-
-        return $path. '/' . ucwords($this->argument('modelName')) . '.php';
+        $path = $this->getNamespacePath() ? : $this->getPathByOptionOrConfig('path', 'model_target_path');
+        $this->createFolderForModel($path);
+        return $path . '/' . ucwords($this->argument('modelName')) . '.php';
     }
 
     /**
@@ -39,7 +40,8 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getTemplateData()
     {
         return [
-            'NAME' => ucwords($this->argument('modelName'))
+            'NAME' => ucwords($this->argument('modelName')),
+            'NAMESPACE' => $this->getNamespaceParam()
         ];
     }
 
@@ -61,8 +63,52 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getArguments()
     {
         return [
-            ['modelName', InputArgument::REQUIRED, 'The name of the desired Eloquent model']
+            ['modelName', InputArgument::REQUIRED, 'The name of the desired Eloquent model'],
+            ['modelNamespace', InputArgument::OPTIONAL, 'The namespace of the desired Eloquent model'],
         ];
+    }
+
+    /**
+     * Create namespace param for template
+     *
+     * @return string
+     */
+    protected function getNamespaceParam()
+    {
+        if (!empty($this->argument('modelNamespace'))) {
+            $namespace = 'namespace ' . $this->argument('modelNamespace') . ';';
+            return $namespace;
+        }
+        return '';
+    }
+
+    /**
+     * Get path from namespace starting with be app_path
+     *
+     * @return string
+     */
+    protected function getNamespacePath()
+    {
+        $namespace = $this->argument('modelNamespace');
+        if (!empty($namespace)) {
+            return app_path() . '/' . str_replace('\\', '/', $namespace);
+        }
+        return '';
+    }
+
+    /**
+     * Check if path where we save model exists if not, create path folders
+     *
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function createFolderForModel($path)
+    {
+        if (realpath($path) === false) {
+            return mkdir($path, 0777, true);
+        }
+        return true;
     }
 
 }
