@@ -31,9 +31,9 @@ class AddToTable extends Table {
     {
         $schema = [];
 
-        foreach($fields as $property => $details)
+        foreach($fields as $field)
         {
-            $schema[] = $this->addColumn($property, $details);
+            $schema[] = $this->addColumn($field);
         }
 
         return $schema;
@@ -42,13 +42,13 @@ class AddToTable extends Table {
     /**
      * Return string for adding a column
      *
-     * @param $property
-     * @param $details
+     * @param $field
      * @return string
      */
-    private function addColumn($property, $details)
+    private function addColumn($field)
     {
-        $type = $details['type'];
+        $property = $field['field'];
+        $type = $field['type'];
 
         $output = sprintf(
             "\$table->%s(%s)",
@@ -58,19 +58,19 @@ class AddToTable extends Table {
 
         // If we have args, then it needs
         // to be formatted a bit differently
-        if (isset($details['args']))
+        if (isset($field['args']))
         {
             $output = sprintf(
                 "\$table->%s('%s', %s)",
                 $type,
                 $property,
-                $details['args']
+                $field['args']
             );
         }
 
-        if (isset($details['decorators']))
+        if (isset($field['decorators']))
         {
-            $output .= $this->addDecorators($details['decorators']);
+            $output .= $this->addDecorators($field['decorators']);
         }
 
         return $output . ';';

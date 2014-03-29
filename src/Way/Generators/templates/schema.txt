@@ -1,3 +1,4 @@
-Schema::$METHOD$('$TABLE$', function(Blueprint $table) {
-            $FIELDS$
-        });
+Schema::$METHOD$('$TABLE$', function(Blueprint $table)
+		{
+			$FIELDS$
+		});

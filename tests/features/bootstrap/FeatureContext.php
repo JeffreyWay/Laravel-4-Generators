@@ -38,7 +38,7 @@ class FeatureContext extends BehatContext
      */
     public function tearDown()
     {
-        array_map('unlink', glob(base_path('workbench/way/generators/tests/tmp/*')));
+        \Illuminate\Support\Facades\File::deleteDirectory(base_path('workbench/way/generators/tests/tmp'), true);
 
         $this->tester = null;
     }
@@ -70,6 +70,34 @@ class FeatureContext extends BehatContext
             'modelName' => $modelName,
             '--path' => __DIR__.'/../../tmp',
             '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/model.txt'
+        ]);
+    }
+
+    /**
+     * @When /^I generate a controller with "([^"]*)"$/
+     */
+    public function iGenerateAControllerWith($controllerName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\ControllerGeneratorCommand'));
+
+        $this->tester->execute([
+            'controllerName' => $controllerName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/controller.txt'
+        ]);
+    }
+
+    /**
+     * @When /^I generate a view with "([^"]*)"$/
+     */
+    public function iGenerateAViewWith($viewName)
+    {
+        $this->tester = new CommandTester(App::make('Way\Generators\Commands\ViewGeneratorCommand'));
+
+        $this->tester->execute([
+            'viewName' => $viewName,
+            '--path' => __DIR__.'/../../tmp',
+            '--templatePath' => __DIR__.'/../../../src/Way/Generators/templates/view.txt'
         ]);
     }
 

@@ -1,10 +1,9 @@
 <?php namespace Way\Generators\Commands;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ControllerGeneratorCommand extends Command {
+class ControllerGeneratorCommand extends GeneratorCommand {
 
     /**
      * The console command name.
@@ -18,20 +17,50 @@ class ControllerGeneratorCommand extends Command {
      *
      * @var string
      */
-    protected $description = 'Generate a resourceful controller';
+    protected $description = 'Generate a controller';
 
     /**
-     * Generate the controller
+     * The path where the file will be created
+     *
+     * @return mixed
      */
-    public function fire()
+    protected function getFileGenerationPath()
     {
-        // This command is nothing more than a helper,
-        // that points directly to Laravel's
-        // controller:make command
-        $this->call('controller:make', [
-            'name' => $this->argument('controllerName'),
-            '--path' => $this->option('path')
-        ]);
+        $path = $this->getPathByOptionOrConfig('path', 'controller_target_path');
+
+        return $path. '/' . $this->argument('controllerName') . '.php';
+    }
+
+    /**
+     * Fetch the template data
+     *
+     * @return array
+     */
+    protected function getTemplateData()
+    {
+        // LessonsController
+        $name = ucwords($this->argument('controllerName'));
+
+        // lessons
+        $collection = strtolower(str_replace('Controller', '', $name));
+
+        // lesson
+        $resource = str_singular($collection);
+
+        // Lesson
+        $model = ucwords($resource);
+
+        return compact('name', 'collection', 'resource', 'model');
+    }
+
+    /**
+     * Get path to the template for the generator
+     *
+     * @return mixed
+     */
+    protected function getTemplatePath()
+    {
+        return $this->getPathByOptionOrConfig('templatePath', 'controller_template_path');
     }
 
     /**
@@ -41,21 +70,9 @@ class ControllerGeneratorCommand extends Command {
      */
     protected function getArguments()
     {
-        return array(
-            array('controllerName', InputArgument::REQUIRED, 'The name of the desired controller')
-        );
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'),
-        );
+        return [
+            ['controllerName', InputArgument::REQUIRED, 'The name of the desired controller.']
+        ];
     }
 
 }

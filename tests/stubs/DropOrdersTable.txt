@@ -12,7 +12,7 @@ class DropOrdersTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::drop('orders');
+		Schema::drop('orders');
 	}
 
 
@@ -23,11 +23,11 @@ class DropOrdersTable extends Migration {
 	 */
 	public function down()
 	{
-	    Schema::create('orders', function(Blueprint $table) {
-            $table->increments('id');
+		Schema::create('orders', function(Blueprint $table) {
+			$table->increments('id');
 			$table->string('title');
 			$table->timestamps();
-        });
+		});
 	}
 
 }

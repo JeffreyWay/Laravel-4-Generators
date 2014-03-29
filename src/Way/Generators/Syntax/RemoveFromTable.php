@@ -28,9 +28,9 @@ class RemoveFromTable extends Table {
     {
         $schema = [];
 
-        foreach($fields as $property => $type)
+        foreach($fields as $field)
         {
-            $schema[] = $this->dropColumn($property);
+            $schema[] = $this->dropColumn($field);
         }
 
         return $schema;
@@ -39,12 +39,12 @@ class RemoveFromTable extends Table {
     /**
      * Return string for dropping a column
      *
-     * @param $property
+     * @param $field
      * @return string
      */
-    private function dropColumn($property)
+    private function dropColumn($field)
     {
-        return sprintf("\$table->dropColumn('%s');", $property);
+        return sprintf("\$table->dropColumn('%s');", $field['field']);
     }
 
 }

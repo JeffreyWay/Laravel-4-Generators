@@ -26,6 +26,26 @@ class PublishTemplatesCommand extends Command {
      */
     public function fire()
     {
+        $this->copyTemplatesDirectoryForEditing();
+
+        // We also will publish the configuration
+        $this->call('config:publish', ['package' => 'way/generators']);
+
+        $this->pointConfigFileTemplatesToNewLocation();
+
+        $this->info(
+            "The templates have been copied to '{$this->option('path')}'. " .
+            "Modify these templates however you wish, and they'll be referenced " .
+            "when you execute the associated generator command."
+        );
+    }
+
+    /**
+     * Copy the default templates, so that the user
+     * may modify them how they wish.
+     */
+    protected function copyTemplatesDirectoryForEditing()
+    {
         // We'll copy the generator templates
         // to a place where the user can edit
         // them how they wish.
@@ -33,15 +53,17 @@ class PublishTemplatesCommand extends Command {
             __DIR__.'/../templates',
             $this->option('path')
         );
+    }
 
-        // We also will publish the configuration
-        $this->call('config:publish', ['package' => 'way/generators']);
+    /**
+     * Update config file to point to the new templates directory
+     */
+    protected function pointConfigFileTemplatesToNewLocation()
+    {
+        $configPath = app_path('config/packages/way/generators/config.php');
+        $updated = str_replace('vendor/way/generators/src/Way/Generators/templates', $this->option('path'), File::get($configPath));
 
-        $this->info(
-            "The templates have been copied to '{$this->option('path')}'. Modify templates " .
-            "however you wish. Don't forget to also update the template paths within " .
-            "'app/config/packages/way/generators/config.php'"
-        );
+        File::put($configPath, $updated);
     }
 
     /**

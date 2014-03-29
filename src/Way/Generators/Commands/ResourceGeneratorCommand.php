@@ -30,6 +30,7 @@ class ResourceGeneratorCommand extends Command {
         $resource = $this->argument('resource');
 
         $this->callModel($resource);
+        $this->callView($resource);
         $this->callController($resource);
         $this->callMigration($resource);
         $this->callSeeder($resource);
@@ -104,6 +105,27 @@ class ResourceGeneratorCommand extends Command {
     }
 
     /**
+     * Call view generator if user confirms
+     *
+     * @param $resource
+     */
+    protected function callView($resource)
+    {
+        $collection = $this->getTableName($resource);
+        $modelName = $this->getModelName($resource);
+
+        if ($this->confirm("Do you want me to create views for this $modelName resource? [yes|no]"))
+        {
+            foreach(['index', 'show', 'create', 'edit'] as $viewName)
+            {
+                $viewName = "{$collection}.{$viewName}";
+
+                $this->call('generate:view', compact('viewName'));
+            }
+        }
+    }
+
+    /**
      * Call controller generator if user confirms
      *
      * @param $resource
@@ -145,7 +167,7 @@ class ResourceGeneratorCommand extends Command {
     {
         $tableName = str_plural($this->getModelName($resource));
 
-        if ($this->confirm("Would you like a '$tableName' table seeder?"))
+        if ($this->confirm("Would you like a '$tableName' table seeder? [yes|no]"))
         {
             $this->call('generate:seed', compact('tableName'));
         }

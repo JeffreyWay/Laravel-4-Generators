@@ -16,9 +16,10 @@ class MigrationFieldsParser {
         // name:string, age:integer
         // name:string(10,2), age:integer
         $fields = preg_split('/\s?,\s/', $fields);
+
         $parsed = [];
 
-        foreach($fields as $field)
+        foreach($fields as $index => $field)
         {
             // Example:
             // name:string:nullable => ['name', 'string', 'nullable']
@@ -45,10 +46,10 @@ class MigrationFieldsParser {
             // be our decorators
             $decorators = $chunks;
 
-            $parsed[$property] = ['type' => $type];
+            $parsed[$index] = ['field' => $property, 'type' => $type];
 
-            if (isset($args)) $parsed[$property]['args'] = $args;
-            if ($decorators) $parsed[$property]['decorators'] = $decorators;
+            if (isset($args)) $parsed[$index]['args'] = $args;
+            if ($decorators) $parsed[$index]['decorators'] = $decorators;
         }
 
         return $parsed;

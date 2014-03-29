@@ -12,7 +12,7 @@ class $CLASS$ extends Migration {
 	 */
 	public function up()
 	{
-        $UP$
+		$UP$
 	}
 
 
@@ -23,7 +23,7 @@ class $CLASS$ extends Migration {
 	 */
 	public function down()
 	{
-	    $DOWN$
+		$DOWN$
 	}
 
 }

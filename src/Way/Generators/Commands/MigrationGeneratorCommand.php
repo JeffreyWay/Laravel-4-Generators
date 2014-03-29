@@ -82,7 +82,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'model_target_path');
+        $path = $this->getPathByOptionOrConfig('path', 'migration_target_path');
         $fileName = $this->getDatePrefix() . '_' . $this->argument('migrationName') . '.php';
 
         return "{$path}/{$fileName}";
@@ -151,7 +151,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     {
         return array(
             ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'],
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', app_path('database/migrations')],
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'],
             ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator'],
             ['testing', null, InputOption::VALUE_OPTIONAL, 'For internal use only.']
         );
