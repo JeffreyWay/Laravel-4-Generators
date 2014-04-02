@@ -77,7 +77,7 @@ abstract class GeneratorCommand extends Command {
      * @param $configName
      * @return string
      */
-    protected function getPathByOptionOrConfig($option, $configName)
+    protected function getValueByOptionOrConfig($option, $configName)
     {
         if ($path = $this->option($option))
         {
