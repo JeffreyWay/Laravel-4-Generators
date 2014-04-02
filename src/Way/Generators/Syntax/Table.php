@@ -32,7 +32,7 @@ abstract class Table {
      */
     protected function getTemplate()
     {
-        return $this->file->get(__DIR__.'/../templates/schema.txt');
+        return $this->file->get(\Config::get("generators::config.schema_template_path"));
     }
 
 
