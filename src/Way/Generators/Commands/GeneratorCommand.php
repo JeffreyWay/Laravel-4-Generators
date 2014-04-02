@@ -95,8 +95,8 @@ abstract class GeneratorCommand extends Command {
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'],
-            ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator']
+            ['path', null, InputOption::VALUE_REQUIRED, 'Where should the file be created?'],
+            ['templatePath', null, InputOption::VALUE_REQUIRED, 'The location of the template for this generator']
         ];
     }
 
