@@ -37,6 +37,14 @@ return [
 
     'seed_target_path'   => app_path('database/seeds'),
 
-    'view_target_path'   => app_path('views')
+    'view_target_path'   => app_path('views'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model configuration
+    |--------------------------------------------------------------------------
+    |
+    */
+    'model_parent_class' => '\Eloquent',
 
 ];

@@ -38,8 +38,20 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
+        $optionParentClass = $this->getValueByOptionOrConfig('parentClass', 'model_parent_class');
+        $optionTable = $this->option('table');
+
+        $tableLine = "\n";
+        if (!empty($optionTable))
+        {
+            $tableLine = sprintf("protected \$table = '%s';\n\n", $optionTable);
+        }
+
         return [
-            'NAME' => ucwords($this->argument('modelName'))
+            'NAME' => ucwords($this->argument('modelName')),
+            'PARENT_CLASS' => $optionParentClass,
+            'TABLE' => $optionTable,
+            'TABLE_LINE' => $tableLine,
         ];
     }
 
@@ -65,4 +77,18 @@ class ModelGeneratorCommand extends GeneratorCommand {
         ];
     }
 
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        $options = parent::getOptions();
+
+        $options[] = ['parentClass', 'parent-class', InputOption::VALUE_REQUIRED, 'The class that model extends from'];
+        $options[] = ['table', null, InputOption::VALUE_REQUIRED, 'The name of model\'s table'];
+
+        return $options;
+    }
 }
