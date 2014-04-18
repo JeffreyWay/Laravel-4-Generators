@@ -28,21 +28,31 @@ class ResourceGeneratorCommand extends Command {
     public function fire()
     {
         $resource = $this->argument('resource');
+        
+        $wants = array(
+            'model'       => $this->callModel($resource),
+            'view'        => $thi->callView($resource),
+            'controller'  => $this->callController($resource),
+            'migration'   => $this->callMigration($resource),
+            'seeder'      => $this->callSeeder($resource)
+        );
 
-        $this->callModel($resource);
-        $this->callView($resource);
-        $this->callController($resource);
-        $this->callMigration($resource);
-        $this->callSeeder($resource);
-        $this->callMigrate();
+        if ($wants['migration'])
+        {
+            $this->callMigrate();
+        }
 
         // All done!
-        $this->info(sprintf(
-            "All done! Don't forget to add '%s` to %s." . PHP_EOL,
-            "Route::resource('{$this->getTableName($resource)}', '{$this->getControllerName($resource)}');",
-            "app/routes.php"
-        ));
+        $this->info("All done!");
 
+        if ($wants['model'] && $wants['controller'])
+        {
+            $this->info(sprintf(
+                'Don\'t forget to add "Route::resource(\'%s\', \'%s\');" to "app/routes.php"',
+                $this->getTableName($resource),
+                $this->getControllerName($resource)
+            ));
+        }
     }
 
     /**
@@ -101,7 +111,11 @@ class ResourceGeneratorCommand extends Command {
         if ($this->confirm("Do you want me to create a $modelName model? [yes|no]"))
         {
             $this->call('generate:model', compact('modelName'));
+            
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -122,7 +136,11 @@ class ResourceGeneratorCommand extends Command {
 
                 $this->call('generate:view', compact('viewName'));
             }
+            
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -137,7 +155,11 @@ class ResourceGeneratorCommand extends Command {
         if ($this->confirm("Do you want me to create a $controllerName controller? [yes|no]"))
         {
             $this->call('generate:controller', compact('controllerName'));
+            
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -154,8 +176,12 @@ class ResourceGeneratorCommand extends Command {
             $this->call('generate:migration', [
                 'migrationName' => $migrationName,
                 '--fields' => $this->option('fields')
-            ]);
+                ]);
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -170,7 +196,11 @@ class ResourceGeneratorCommand extends Command {
         if ($this->confirm("Would you like a '$tableName' table seeder? [yes|no]"))
         {
             $this->call('generate:seed', compact('tableName'));
+
+            return true;
         }
+
+        return false;
     }
 
     /**
