@@ -70,7 +70,7 @@ class $NAME$ extends \BaseController {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified $RESOURCE$ in storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -92,7 +92,7 @@ class $NAME$ extends \BaseController {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified $RESOURCE$ from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
