@@ -43,7 +43,7 @@ class ViewGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'view_target_path');
+        $path = $this->getValueByOptionOrConfig('path', 'view_target_path');
         $viewName = str_replace('.', '/', $this->argument('viewName'));
 
         return sprintf('%s/%s.blade.php', $path, $viewName);
@@ -68,7 +68,7 @@ class ViewGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplatePath()
     {
-        return $this->getPathByOptionOrConfig('templatePath', 'view_template_path');
+        return $this->getValueByOptionOrConfig('templatePath', 'view_template_path');
     }
 
     /**

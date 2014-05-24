@@ -26,7 +26,7 @@ class ControllerGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'controller_target_path');
+        $path = $this->getValueByOptionOrConfig('path', 'controller_target_path');
 
         return $path. '/' . $this->argument('controllerName') . '.php';
     }
@@ -60,7 +60,7 @@ class ControllerGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplatePath()
     {
-        return $this->getPathByOptionOrConfig('templatePath', 'controller_template_path');
+        return $this->getValueByOptionOrConfig('templatePath', 'controller_template_path');
     }
 
     /**

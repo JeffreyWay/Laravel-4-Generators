@@ -1,5 +1,6 @@
 <?php
 
-class $NAME$ extends \Eloquent {
+class $NAME$ extends $PARENT_CLASS$ {
+    $TABLE_LINE$
 	protected $fillable = [];
 }
