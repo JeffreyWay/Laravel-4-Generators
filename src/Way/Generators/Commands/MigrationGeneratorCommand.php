@@ -82,7 +82,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getFileGenerationPath()
     {
-        $path = $this->getPathByOptionOrConfig('path', 'migration_target_path');
+        $path = $this->getValueByOptionOrConfig('path', 'migration_target_path');
         $fileName = $this->getDatePrefix() . '_' . $this->argument('migrationName') . '.php';
 
         return "{$path}/{$fileName}";
@@ -127,7 +127,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplatePath()
     {
-        return $this->getPathByOptionOrConfig('templatePath', 'migration_template_path');
+        return $this->getValueByOptionOrConfig('templatePath', 'migration_template_path');
     }
 
     /**
