@@ -23,7 +23,8 @@ class DropOrdersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::create('orders', function(Blueprint $table) {
+		Schema::create('orders', function(Blueprint $table)
+		{
 			$table->increments('id');
 			$table->string('title');
 			$table->timestamps();
