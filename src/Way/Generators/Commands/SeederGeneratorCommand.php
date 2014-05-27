@@ -1,5 +1,6 @@
 <?php namespace Way\Generators\Commands;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Config;
@@ -28,7 +29,7 @@ class SeederGeneratorCommand extends GeneratorCommand {
     protected function getFileGenerationPath()
     {
         $path = $this->getPathByOptionOrConfig('path', 'seed_target_path');
-        $tableName = ucwords($this->argument('tableName'));
+        $tableName = $this->getTableName();
 
         return "{$path}/{$tableName}TableSeeder.php";
     }
@@ -40,7 +41,7 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
-        $tableName = ucwords($this->argument('tableName'));
+        $tableName = $this->getTableName();
 
         return [
             'CLASS' => "{$tableName}TableSeeder",
@@ -68,6 +69,14 @@ class SeederGeneratorCommand extends GeneratorCommand {
         return array(
             array('tableName', InputArgument::REQUIRED, 'The name of the table to seed')
         );
+    }
+
+    /**
+     * Format the table name
+     */
+    protected function getTableName()
+    {
+        return Str::studly($this->argument('tableName'));
     }
 
 }

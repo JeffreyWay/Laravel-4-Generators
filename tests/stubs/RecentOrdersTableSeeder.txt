@@ -3,7 +3,7 @@
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
 
-class OrdersTableSeeder extends Seeder {
+class RecentOrdersTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -11,7 +11,7 @@ class OrdersTableSeeder extends Seeder {
 
 		foreach(range(1, 10) as $index)
 		{
-			Order::create([
+			RecentOrder::create([
 
 			]);
 		}
