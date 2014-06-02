@@ -198,7 +198,7 @@ Nice! A few things to notice here:
 - It parsed the `fields` options, and added those fields.
 - The drop method is smart enough to realize that, in reverse, the table should be dropped entirely.
 
-To declare fields, use a comma+space-separated list of key:value:option sets, where `key` is the name of the field, `value` is the [column type](http://four.laravel.com/docs/schema#adding-columns), and `option` is a way to specify indexes and such, like `unique` or `nullable`. Here are some examples:
+To declare fields, use a comma+space-separated list of key:value:option sets, where `key` is the name of the field, `value` is the [column type](http://laravel.com/docs/schema#adding-columns), and `option` is a way to specify indexes and such, like `unique` or `nullable`. Here are some examples:
 
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
