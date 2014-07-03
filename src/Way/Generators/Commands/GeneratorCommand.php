@@ -10,7 +10,7 @@ use Config;
 abstract class GeneratorCommand extends Command {
 
     /**
-     * @var \Way\Generators\ModelGenerator
+     * @var \Way\Generators\Generator
      */
     protected $generator;
 
