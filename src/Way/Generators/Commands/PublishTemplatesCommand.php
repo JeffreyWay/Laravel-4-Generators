@@ -74,7 +74,7 @@ class PublishTemplatesCommand extends Command {
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Which directory should the templates be copied to?', app_path('templates')]
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Which directory should the templates be copied to?', 'app/templates']
         ];
     }
 
