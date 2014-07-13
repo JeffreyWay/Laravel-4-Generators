@@ -27,11 +27,17 @@ class PivotGeneratorCommand extends Command {
     {
         list($tableOne, $tableTwo) = $this->sortDesiredTables();
 
-        $this->call('generate:migration', [
+        $opts = array(
             'migrationName' => "create_{$tableOne}_{$tableTwo}_table",
-            '--fields' => $this->getMigrationFields($tableOne, $tableTwo),
-            '--path'    => $this->option('path')
-        ]);
+            '--fields' => $this->getMigrationFields($tableOne, $tableTwo)
+            );
+            
+        if ($this->option('path'))
+        {
+            $opts['--path'] = $this->option('path');
+        }
+
+        $this->call('generate:migration', $opts);
     }
 
     /**
@@ -86,7 +92,7 @@ class PivotGeneratorCommand extends Command {
     protected function getOptions()
     {
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', null),
         );
     }
 
