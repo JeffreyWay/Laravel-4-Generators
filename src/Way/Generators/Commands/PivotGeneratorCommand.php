@@ -92,7 +92,7 @@ class PivotGeneratorCommand extends Command {
     protected function getOptions()
     {
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', null),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?', null),
         );
     }
 
