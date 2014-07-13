@@ -29,7 +29,8 @@ class PivotGeneratorCommand extends Command {
 
         $this->call('generate:migration', [
             'migrationName' => "create_{$tableOne}_{$tableTwo}_table",
-            '--fields' => $this->getMigrationFields($tableOne, $tableTwo)
+            '--fields' => $this->getMigrationFields($tableOne, $tableTwo),
+            '--path'    => $this->option('path')
         ]);
     }
 
@@ -75,6 +76,18 @@ class PivotGeneratorCommand extends Command {
             ['tableOne', InputArgument::REQUIRED, 'Name of the first table'],
             ['tableTwo', InputArgument::REQUIRED, 'Name of the second table']
         ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array(
+            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
+        );
     }
 
 }
