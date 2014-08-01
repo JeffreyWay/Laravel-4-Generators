@@ -100,7 +100,9 @@ class ResourceGeneratorCommand extends Command {
 
         if ($this->confirm("Do you want me to create a $modelName model? [yes|no]"))
         {
-            $this->call('generate:model', compact('modelName'));
+            $ns = $this->option('model-namespace');
+            $path = $this->option('model-path');
+            $this->call('generate:model', ['modelName' => $modelName, '--namespace' => $ns, '--path' => $path]);
         }
     }
 
@@ -136,7 +138,9 @@ class ResourceGeneratorCommand extends Command {
 
         if ($this->confirm("Do you want me to create a $controllerName controller? [yes|no]"))
         {
-            $this->call('generate:controller', compact('controllerName'));
+            $ns = $this->option('controller-namespace');
+            $path = $this->option('controller-path');
+            $this->call('generate:controller', ['controllerName' => $controllerName, '--namespace' => $ns, '--path' => $path]);
         }
     }
 
@@ -204,7 +208,11 @@ class ResourceGeneratorCommand extends Command {
     protected function getOptions()
     {
         return [
-            ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration']
+            ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'],
+            ['controller-namespace', null, InputOption::VALUE_REQUIRED, 'Namespace for the controller'],
+            ['controller-path', null, InputOption::VALUE_REQUIRED, 'Where should the controller file be created?'],
+            ['model-namespace', null, InputOption::VALUE_REQUIRED, 'Namespace for the model'],
+            ['model-path', null, InputOption::VALUE_REQUIRED, 'Where should the model file be created?'],
         ];
     }
 
