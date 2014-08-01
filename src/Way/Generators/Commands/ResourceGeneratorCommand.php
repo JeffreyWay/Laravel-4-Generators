@@ -217,7 +217,7 @@ class ResourceGeneratorCommand extends Command {
             ['controller-path', null, InputOption::VALUE_REQUIRED, 'Where should the controller file be created?'],
             ['model-namespace', null, InputOption::VALUE_REQUIRED, 'Namespace for the model'],
             ['model-path', null, InputOption::VALUE_REQUIRED, 'Where should the model file be created?'],
-            ['view-path', null, InputOption::VALUE_REQUIRED, 'Where should the view files be created?'],
+            ['view-namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for controller\'s views'],
         ];
     }
 
