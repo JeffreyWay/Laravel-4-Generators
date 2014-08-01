@@ -50,7 +50,10 @@ class ControllerGeneratorCommand extends GeneratorCommand {
         // Lesson
         $model = ucwords($resource);
 
-        return compact('name', 'collection', 'resource', 'model');
+        $namespace = ucwords($this->option('namespace'));
+        $namespace .= $namespace?';':'';
+
+        return compact('name', 'collection', 'resource', 'model', 'namespace');
     }
 
     /**
@@ -73,6 +76,18 @@ class ControllerGeneratorCommand extends GeneratorCommand {
         return [
             ['controllerName', InputArgument::REQUIRED, 'The name of the desired controller.']
         ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array_merge(parent::getOptions(), [
+            ['namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for this class'],
+        ]);
     }
 
 }

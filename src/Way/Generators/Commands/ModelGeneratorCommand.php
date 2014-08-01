@@ -38,8 +38,10 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
+        $ns = $this->option('namespace');
         return [
-            'NAME' => ucwords($this->argument('modelName'))
+            'NAME' => ucwords($this->argument('modelName')),
+            'NAMESPACE' => ucwords($ns).($ns?';':''),
         ];
     }
 
@@ -63,6 +65,18 @@ class ModelGeneratorCommand extends GeneratorCommand {
         return [
             ['modelName', InputArgument::REQUIRED, 'The name of the desired Eloquent model']
         ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array_merge(parent::getOptions(), [
+            ['namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for this class'],
+        ]);
     }
 
 }
