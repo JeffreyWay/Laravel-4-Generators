@@ -38,10 +38,11 @@ class ModelGeneratorCommand extends GeneratorCommand {
      */
     protected function getTemplateData()
     {
-        $ns = $this->option('namespace');
+        $namespace = ucwords($this->option('namespace'));
+        $namespace = $namespace?"namespace $namespace;":'';
         return [
             'NAME' => ucwords($this->argument('modelName')),
-            'NAMESPACE' => ucwords($ns).($ns?';':''),
+            'NAMESPACE' => $namespace,
         ];
     }
 

@@ -52,7 +52,7 @@ class ControllerGeneratorCommand extends GeneratorCommand {
 
         // namespace
         $namespace = ucwords($this->option('namespace'));
-        $namespace .= $namespace?';':'';
+        $namespace = $namespace?"namespace $namespace;":'';
 
         return compact('name', 'collection', 'resource', 'model', 'namespace');
     }
