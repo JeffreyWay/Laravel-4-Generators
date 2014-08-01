@@ -34,7 +34,9 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:model', [
                 'modelName' => $modelName,
-                '--templatePath' => Config::get("generators::config.scaffold_model_template_path")
+                '--templatePath' => Config::get("generators::config.scaffold_model_template_path"),
+                '--path' => $this->option('model-path'),
+                '--namespace' => $this->option('model-namespace')
             ]);
         }
     }
@@ -52,7 +54,9 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:controller', [
                 'controllerName' => $controllerName,
-                '--templatePath' => Config::get("generators::config.scaffold_controller_template_path")
+                '--templatePath' => Config::get("generators::config.scaffold_controller_template_path"),
+                '--path' => $this->option('controller-path'),
+                '--namespace' => $this->option('controller-namespace')
             ]);
         }
     }
