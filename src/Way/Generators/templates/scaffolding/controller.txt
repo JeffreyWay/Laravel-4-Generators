@@ -1,5 +1,9 @@
 <?php $NAMESPACE$
 
+use View;
+use Input;
+use Validator;
+use Redirect;
 $MODELNAMESPACE$
 class $NAME$ extends \BaseController {
 
