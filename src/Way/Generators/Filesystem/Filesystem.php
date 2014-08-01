@@ -12,9 +12,16 @@ class Filesystem {
      */
     public function make($file, $content)
     {
+
         if ( $this->exists($file))
         {
             throw new FileAlreadyExists;
+        }
+
+        $dir = dirname(base_path($file));
+        if ( ! $this->exists($dir))
+        {
+            mkdir($dir, 0777, true);
         }
 
         return file_put_contents($file, $content);
@@ -48,4 +55,4 @@ class Filesystem {
         return file_get_contents($file);
     }
 
-} 
+}
