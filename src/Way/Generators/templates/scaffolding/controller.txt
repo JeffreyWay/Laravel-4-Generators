@@ -1,5 +1,6 @@
 <?php $NAMESPACE$
 
+$MODELNAMESPACE$
 class $NAME$ extends \BaseController {
 
 	/**

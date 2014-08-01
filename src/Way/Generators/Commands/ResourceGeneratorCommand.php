@@ -139,9 +139,12 @@ class ResourceGeneratorCommand extends Command {
 
         if ($this->confirm("Do you want me to create a $controllerName controller? [yes|no]"))
         {
-            $ns = $this->option('controller-namespace');
-            $path = $this->option('controller-path');
-            $this->call('generate:controller', ['controllerName' => $controllerName, '--namespace' => $ns, '--path' => $path]);
+            $this->call('generate:controller', [
+                'controllerName' => $controllerName,
+                '--namespace' => $this->option('controller-namespace'),
+                '--model-namespace' => $this->option('model-namespace'),
+                '--path' => $this->option('controller-path')
+            ]);
         }
     }
 

@@ -56,7 +56,8 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
                 'controllerName' => $controllerName,
                 '--templatePath' => Config::get("generators::config.scaffold_controller_template_path"),
                 '--path' => $this->option('controller-path'),
-                '--namespace' => $this->option('controller-namespace')
+                '--namespace' => $this->option('controller-namespace'),
+                '--model-namespace' => $this->option('model-namespace')
             ]);
         }
     }
