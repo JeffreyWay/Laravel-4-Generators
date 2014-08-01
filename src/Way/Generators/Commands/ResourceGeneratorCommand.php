@@ -122,7 +122,8 @@ class ResourceGeneratorCommand extends Command {
             {
                 $viewName = "{$collection}.{$viewName}";
 
-                $this->call('generate:view', compact('viewName'));
+                $path = $this->option('view-path');
+                $this->call('generate:view', ['viewName' => $viewName, '--path' => $path]);
             }
         }
     }
@@ -213,6 +214,7 @@ class ResourceGeneratorCommand extends Command {
             ['controller-path', null, InputOption::VALUE_REQUIRED, 'Where should the controller file be created?'],
             ['model-namespace', null, InputOption::VALUE_REQUIRED, 'Namespace for the model'],
             ['model-path', null, InputOption::VALUE_REQUIRED, 'Where should the model file be created?'],
+            ['view-path', null, InputOption::VALUE_REQUIRED, 'Where should the view files be created?'],
         ];
     }
 
