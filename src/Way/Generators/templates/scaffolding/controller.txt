@@ -16,7 +16,7 @@ class $NAME$ extends \BaseController {
 	{
 		$$COLLECTION$ = $MODEL$::all();
 
-		return View::make('$VIEWNAMESPACE$$COLLECTION$.index', compact('$VIEWNAMESPACE$$COLLECTION$'));
+		return View::make('$VIEWNAMESPACE$$COLLECTION$.index', compact('$COLLECTION$'));
 	}
 
 	/**
