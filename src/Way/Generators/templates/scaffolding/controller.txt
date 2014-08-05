@@ -1,5 +1,10 @@
-<?php
+<?php $NAMESPACE$
 
+use View;
+use Input;
+use Validator;
+use Redirect;
+$MODELNAMESPACE$
 class $NAME$ extends \BaseController {
 
 	/**
@@ -11,7 +16,7 @@ class $NAME$ extends \BaseController {
 	{
 		$$COLLECTION$ = $MODEL$::all();
 
-		return View::make('$COLLECTION$.index', compact('$COLLECTION$'));
+		return View::make('$VIEWNAMESPACE$$COLLECTION$.index', compact('$COLLECTION$'));
 	}
 
 	/**
@@ -21,7 +26,7 @@ class $NAME$ extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('$COLLECTION$.create');
+		return View::make('$VIEWNAMESPACE$$COLLECTION$.create');
 	}
 
 	/**
@@ -40,7 +45,7 @@ class $NAME$ extends \BaseController {
 
 		$MODEL$::create($data);
 
-		return Redirect::route('$COLLECTION$.index');
+		return Redirect::route('$VIEWNAMESPACE$$COLLECTION$.index');
 	}
 
 	/**
@@ -53,7 +58,7 @@ class $NAME$ extends \BaseController {
 	{
 		$$RESOURCE$ = $MODEL$::findOrFail($id);
 
-		return View::make('$COLLECTION$.show', compact('$RESOURCE$'));
+		return View::make('$VIEWNAMESPACE$$COLLECTION$.show', compact('$RESOURCE$'));
 	}
 
 	/**
@@ -66,7 +71,7 @@ class $NAME$ extends \BaseController {
 	{
 		$$RESOURCE$ = $MODEL$::find($id);
 
-		return View::make('$COLLECTION$.edit', compact('$RESOURCE$'));
+		return View::make('$VIEWNAMESPACE$$COLLECTION$.edit', compact('$RESOURCE$'));
 	}
 
 	/**
@@ -88,7 +93,7 @@ class $NAME$ extends \BaseController {
 
 		$$RESOURCE$->update($data);
 
-		return Redirect::route('$COLLECTION$.index');
+		return Redirect::route('$VIEWNAMESPACE$$COLLECTION$.index');
 	}
 
 	/**
@@ -101,7 +106,7 @@ class $NAME$ extends \BaseController {
 	{
 		$MODEL$::destroy($id);
 
-		return Redirect::route('$COLLECTION$.index');
+		return Redirect::route('$VIEWNAMESPACE$$COLLECTION$.index');
 	}
 
 }

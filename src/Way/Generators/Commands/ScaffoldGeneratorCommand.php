@@ -34,7 +34,9 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:model', [
                 'modelName' => $modelName,
-                '--templatePath' => Config::get("generators::config.scaffold_model_template_path")
+                '--templatePath' => Config::get("generators::config.scaffold_model_template_path"),
+                '--path' => $this->option('model-path'),
+                '--namespace' => $this->option('model-namespace')
             ]);
         }
     }
@@ -52,9 +54,29 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
         {
             $this->call('generate:controller', [
                 'controllerName' => $controllerName,
-                '--templatePath' => Config::get("generators::config.scaffold_controller_template_path")
+                '--templatePath' => Config::get("generators::config.scaffold_controller_template_path"),
+                '--path' => $this->option('controller-path'),
+                '--namespace' => $this->option('controller-namespace'),
+                '--model-namespace' => $this->option('model-namespace'),
+                '--view-namespace' => $this->option('view-namespace'),
             ]);
         }
+    }
+
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array_merge(parent::getOptions(), [
+            ['namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for this class'],
+            ['model-namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for the controller\'s model'],
+            ['view-namespace', null, InputOption::VALUE_REQUIRED, 'The namespace for controller\'s views'],
+            ['view-path', null, InputOption::VALUE_REQUIRED, 'Where should the view files be created?'],
+        ]);
     }
 
 }
