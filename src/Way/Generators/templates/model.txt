@@ -1,5 +1,7 @@
 <?php
 
-class $NAME$ extends \Eloquent {
+class $NAME$ extends Eloquent {
 	protected $fillable = [];
+	
+	//public $timestamps = false;
 }
