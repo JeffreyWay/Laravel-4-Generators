@@ -39,7 +39,7 @@ class ResourceGeneratorCommand extends Command {
         // All done!
         $this->info(sprintf(
             "All done! Don't forget to add `%s` to %s." . PHP_EOL,
-            "Route::resource('{$this->getTableName($resource)}', '{$this->getControllerName($resource)}');",
+            "Route::resource('{strtolower($this->getTableName($resource))}', '{$this->getControllerName($resource)}');",
             "app/routes.php"
         ));
 
