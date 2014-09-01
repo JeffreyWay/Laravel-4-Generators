@@ -70,6 +70,31 @@ abstract class GeneratorCommand extends Command {
     }
 
     /**
+     * Get the full namespace name by type and suffix.
+     *
+     * @param  string  $type
+     * @param  string  $name
+     * @return string
+     */
+    protected function getNamespaceWithSuffix($type, $name)
+    {
+        $suffix = $this->getNamespaceSuffix($name);
+
+        return trim($this->laravel['config']['namespaces.'.$type].$suffix, '\\');
+    }
+
+    /**
+     * Get the namespace suffix to be added to the root namespace.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function getNamespaceSuffix($name)
+    {
+        return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
+    }
+
+    /**
      * Get a directory path either through a
      * command option, or from the configuration
      *

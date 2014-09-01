@@ -1,6 +1,8 @@
-<?php
+<?php namespace App;
 
-class OrdersController extends \BaseController {
+use Illuminate\Routing\Controller;
+
+class OrdersController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
