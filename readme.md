@@ -20,10 +20,11 @@ This Laravel 4 package provides a variety of generators to speed up your develop
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
 
 	"require-dev": {
-		"way/generators": "2.*"
+		"way/generators": "~3.0"
 	}
 
-> Please note that version 2 of this package removed support for a couple of generators, such as `generate:form`. If you'd like to continue using them, stick with version `1.1`.
+> Version 3 of these generators works with Laravel 4.3. Because the folder structure is different, if you are still on 4.2 or below, instead, pull in `~2.0`.
+
 
 Next, update Composer from the Terminal:
 
