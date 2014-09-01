@@ -1,8 +1,7 @@
 <?php namespace $NAMESPACE$;
 
 use Illuminate\Routing\Controller;
-use Redirect;
-use App\$MODEL$;
+use Redirect, Request;
 
 class $NAME$ extends Controller {
 
@@ -35,7 +34,7 @@ class $NAME$ extends Controller {
 	 */
 	public function store()
 	{
-		$MODEL$::create($data);
+		$MODEL$::create(Request::get());
 
 		return Redirect::route('$COLLECTION$.index');
 	}
@@ -76,7 +75,7 @@ class $NAME$ extends Controller {
 	{
 		$$RESOURCE$ = $MODEL$::findOrFail($id);
 
-		$$RESOURCE$->update($data);
+		$$RESOURCE$->update(Request::get());
 
 		return Redirect::route('$COLLECTION$.index');
 	}
