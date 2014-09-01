@@ -39,7 +39,8 @@ class ModelGeneratorCommand extends GeneratorCommand {
     protected function getTemplateData()
     {
         return [
-            'NAME' => ucwords($this->argument('modelName'))
+            'NAME' => ucwords($this->argument('modelName')),
+            'NAMESPACE' => $this->getNamespace('root')
         ];
     }
 
