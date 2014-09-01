@@ -1,6 +1,8 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class $NAME$ extends \BaseController {
+use Illuminate\Routing\Controller;
+
+class $NAME$ extends Controller {
 
 	/**
 	 * Display a listing of the resource.

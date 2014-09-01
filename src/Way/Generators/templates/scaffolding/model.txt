@@ -1,13 +1,9 @@
-<?php
+<?php namespace App;
 
-class $NAME$ extends \Eloquent {
+use Eloquent;
 
-	// Add your validation rules here
-	public static $rules = [
-		// 'title' => 'required'
-	];
+class $NAME$ extends Eloquent {
 
-	// Don't forget to fill this array
 	protected $fillable = [];
 
 }
