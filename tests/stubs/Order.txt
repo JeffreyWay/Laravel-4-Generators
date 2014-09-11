@@ -1,7 +1,7 @@
 <?php namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class Order extends Eloquent {
+class Order extends Model {
 	protected $fillable = [];
 }
