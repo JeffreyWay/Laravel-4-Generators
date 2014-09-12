@@ -25,5 +25,6 @@
         "psr-0": {
             "Way\\Generators": "src/"
         }
-    }
+    },
+	"minimum-stability": "dev"
 }
