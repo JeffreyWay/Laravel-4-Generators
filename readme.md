@@ -52,7 +52,7 @@ Next, update Composer from the Terminal:
 
     composer update --dev
 
-Once this operation completes, the final step is to add the service provider. Open `app/config/app.php`, and add a new item to the providers array.
+Once this operation completes, the final step is to add the service provider. Open `config/app.php`, and add a new item to the providers array.
 
     'Way\Generators\GeneratorsServiceProvider'
 
