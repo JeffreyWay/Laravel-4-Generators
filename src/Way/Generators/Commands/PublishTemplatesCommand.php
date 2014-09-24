@@ -20,6 +20,13 @@ class PublishTemplatesCommand extends Command {
      * @var string
      */
     protected $description = 'Copy generator templates for user modification';
+    
+    /**
+     * Stashed laravel 5 check
+     * 
+     * @var bool
+     */
+    protected $is5 = null;
 
     /**
      * Execute the command
@@ -29,7 +36,14 @@ class PublishTemplatesCommand extends Command {
         $this->copyTemplatesDirectoryForEditing();
 
         // We also will publish the configuration
-        $this->call('config:publish', ['package' => 'way/generators']);
+        if ($this->is5())
+        {
+            $this->call('publish:config', ['package' => 'way/generators']);
+        }
+        else
+        {
+            $this->call('config:publish', ['package' => 'way/generators']);
+        }
 
         $this->pointConfigFileTemplatesToNewLocation();
 
@@ -60,7 +74,7 @@ class PublishTemplatesCommand extends Command {
      */
     protected function pointConfigFileTemplatesToNewLocation()
     {
-        $configPath = app_path('config/packages/way/generators/config.php');
+        $configPath = $this->is5() ? base_path('config/packages/way/generators/config.php') : app_path('config/packages/way/generators/config.php');
         $updated = str_replace('vendor/way/generators/src/Way/Generators/templates', $this->option('path'), File::get($configPath));
 
         File::put($configPath, $updated);
@@ -76,6 +90,21 @@ class PublishTemplatesCommand extends Command {
         return [
             ['path', null, InputOption::VALUE_OPTIONAL, 'Which directory should the templates be copied to?', 'app/templates']
         ];
+    }
+    
+    /**
+     * Check laravel version
+     * 
+     * @return bool
+     */
+    protected function is5()
+    {
+        if ( ! isset($this->is5))
+        {
+            $laravel = get_class($this->laravel);
+            $this->is5 = strpos($laravel::VERSION, '5') === 0;
+        }
+
     }
 
 }
