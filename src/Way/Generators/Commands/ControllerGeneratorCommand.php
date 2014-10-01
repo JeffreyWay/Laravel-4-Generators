@@ -51,7 +51,7 @@ class ControllerGeneratorCommand extends GeneratorCommand {
         $model = ucwords($resource);
 
         // App
-        $namespace = $this->getNamespace('controllers');
+        $namespace = 'App\Http\Controllers';
 
         return compact('name', 'collection', 'resource', 'model', 'namespace');
     }

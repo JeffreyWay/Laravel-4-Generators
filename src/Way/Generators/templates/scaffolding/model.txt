@@ -1,8 +1,8 @@
 <?php namespace $NAMESPACE$;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class $NAME$ extends Eloquent {
+class $NAME$ extends Model {
 
 	protected $fillable = [];
 
