@@ -2,11 +2,8 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Way\Generators\Parsers\MigrationNameParser;
-use Way\Generators\Parsers\MigrationFieldsParser;
+use Way\Generators\Templates\Data\Migration as MigrationData;
 use Way\Generators\Generator;
-use Way\Generators\SchemaCreator;
-use Config;
 
 class MigrationGeneratorCommand extends GeneratorCommand {
 
@@ -25,50 +22,13 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     protected $description = 'Generate a new migration';
 
     /**
-     * @var \Way\Generators\ModelGenerator
-     */
-    protected $generator;
-
-    /**
-     * @var MigrationNameParser
-     */
-    private $migrationNameParser;
-
-    /**
-     * @var SchemaWriter
-     */
-    private $schemaCreator;
-
-    /**
-     * @param Generator $generator
-     * @param MigrationNameParser $migrationNameParser
-     * @param MigrationFieldsParser $migrationFieldsParser
-     * @param SchemaCreator $schemaCreator
-     */
-    public function __construct(
-        Generator $generator,
-        MigrationNameParser $migrationNameParser,
-        MigrationFieldsParser $migrationFieldsParser,
-        SchemaCreator $schemaCreator
-    )
-    {
-        $this->generator = $generator;
-        $this->migrationNameParser = $migrationNameParser;
-        $this->migrationFieldsParser = $migrationFieldsParser;
-        $this->schemaCreator = $schemaCreator;
-
-        parent::__construct($generator);
-    }
-
-    /**
-     * Execute the console command
+     * Execute the console command.
      */
     public function fire()
     {
         parent::fire();
 
-        // Now that the file has been generated,
-        // let's run dump-autoload to refresh everything
+        // We'll run dump-autoload to refresh everything.
         if ( ! $this->option('testing'))
         {
             $this->call('dump-autoload');
@@ -76,7 +36,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     }
 
     /**
-     * The path where the file will be created
+     * The path to where the file will be created.
      *
      * @return mixed
      */
@@ -89,7 +49,7 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     }
 
     /**
-     * Get the date prefix for the migration.
+     * Get a date prefix for the migration.
      *
      * @return string
      */
@@ -99,29 +59,17 @@ class MigrationGeneratorCommand extends GeneratorCommand {
     }
 
     /**
-     * Fetch the template data
+     * Fetch the template data for the migration generator.
      *
      * @return array
      */
     protected function getTemplateData()
     {
-        $migrationName = $this->argument('migrationName');
-
-        // This will tell us the table name and action that we'll be performing
-        $migrationData = $this->migrationNameParser->parse($migrationName);
-
-        // We also need to parse the migration fields, if provided
-        $fields = $this->migrationFieldsParser->parse($this->option('fields'));
-
-        return [
-            'CLASS' => ucwords(camel_case($migrationName)),
-            'UP'    => $this->schemaCreator->up($migrationData, $fields),
-            'DOWN'  => $this->schemaCreator->down($migrationData, $fields)
-        ];
+        return (new MigrationData($this->argument('migrationName'), $this->option('fields')))->fetch();
     }
 
     /**
-     * Get path to template for generator
+     * Get the path to the generator template.
      *
      * @return mixed
      */
