@@ -66,9 +66,9 @@ class SeederGeneratorCommand extends GeneratorCommand {
      */
     protected function getArguments()
     {
-        return array(
-            array('tableName', InputArgument::REQUIRED, 'The name of the table to seed')
-        );
+        return [
+            ['tableName', InputArgument::REQUIRED, 'The name of the table to seed']
+        ];
     }
 
     /**

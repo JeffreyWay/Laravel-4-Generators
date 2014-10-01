@@ -10,11 +10,15 @@ use Config;
 abstract class GeneratorCommand extends Command {
 
     /**
-     * @var \Way\Generators\Generator
+     * The Generator instance.
+     *
+     * @var Generator
      */
     protected $generator;
 
     /**
+     * Create a new GeneratorCommand instance.
+     *
      * @param Generator $generator
      */
     public function __construct(Generator $generator)
@@ -25,28 +29,28 @@ abstract class GeneratorCommand extends Command {
     }
 
     /**
-     * Fetch the template data
+     * Fetch the template data.
      *
      * @return array
      */
     protected abstract function getTemplateData();
 
     /**
-     * The path where the file will be created
+     * The path to where the file will be created.
      *
      * @return mixed
      */
     protected abstract function getFileGenerationPath();
 
     /**
-     * Get the path to the generator template
+     * Get the path to the generator template.
      *
      * @return mixed
      */
     protected abstract function getTemplatePath();
 
     /**
-     * Compile and generate the file
+     * Compile and generate the file.
      */
     public function fire()
     {
@@ -70,19 +74,7 @@ abstract class GeneratorCommand extends Command {
     }
 
     /**
-     * Get the full namespace.
-     *
-     * @param  string  $type
-     * @return string
-     */
-    protected function getNamespace($type)
-    {
-        return trim($this->laravel['config']['namespaces.'.$type], '\\');
-    }
-
-    /**
-     * Get a directory path either through a
-     * command option, or from the configuration
+     * Get a directory path through a command option, or from the configuration.
      *
      * @param $option
      * @param $configName
@@ -90,10 +82,7 @@ abstract class GeneratorCommand extends Command {
      */
     protected function getPathByOptionOrConfig($option, $configName)
     {
-        if ($path = $this->option($option))
-        {
-            return $path;
-        }
+        if ($path = $this->option($option)) return $path;
 
         return Config::get("generators::config.{$configName}");
     }

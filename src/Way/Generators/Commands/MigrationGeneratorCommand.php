@@ -85,9 +85,9 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getArguments()
     {
-        return array(
-            array('migrationName', InputArgument::REQUIRED, 'The migration name')
-        );
+        return [
+            ['migrationName', InputArgument::REQUIRED, 'The migration name']
+        ];
     }
 
     /**
@@ -97,12 +97,12 @@ class MigrationGeneratorCommand extends GeneratorCommand {
      */
     protected function getOptions()
     {
-        return array(
+        return [
             ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'],
             ['path', null, InputOption::VALUE_OPTIONAL, 'Where should the file be created?'],
             ['templatePath', null, InputOption::VALUE_OPTIONAL, 'The location of the template for this generator'],
             ['testing', null, InputOption::VALUE_OPTIONAL, 'For internal use only.']
-        );
+        ];
     }
 
 }

@@ -48,7 +48,7 @@ class PivotGeneratorCommand extends Command {
     }
 
     /**
-     * Get the fields for the pivot migration
+     * Get the fields for the pivot migration.
      *
      * @param $tableOne
      * @param $tableTwo
