@@ -1,9 +1,7 @@
-# Fast Workflow in Laravel With Custom Generators
 # 使用自定义代码生成工具快速进行Laravel开发
 
 [![Build Status](https://travis-ci.org/JeffreyWay/Laravel-4-Generators.png?branch=master)](https://travis-ci.org/JeffreyWay/Laravel-4-Generators)
 
-This Laravel package provides a variety of generators to speed up your development process. These generators include:
 这个Laravle包提供了一种代码生成器，使得你可以加速你的开发进程，这些生成器包括：
 
 - `generate:model`   - 模型生成器
@@ -16,14 +14,10 @@ This Laravel package provides a variety of generators to speed up your developme
 - `generate:scaffold`
 
 
-## Installation
 ## 安装
 
-> [Want a 5-minute video overview?](https://dl.dropboxusercontent.com/u/774859/Work/Laravel-4-Generators/Get-Started-With-Laravel-Custom-Generators.mp4)
 > [需要一个五分钟教程视频吗?](https://dl.dropboxusercontent.com/u/774859/Work/Laravel-4-Generators/Get-Started-With-Laravel-Custom-Generators.mp4)
 
-
-## Laravel 4.2 and Below
 ## Laravel 4.2 或者更低的版本
 
 使用Composer安装这个包，编辑你项目的`composer.json`文件，在require中添加`way/generators`
@@ -41,11 +35,6 @@ This Laravel package provides a variety of generators to speed up your developme
     'Way\Generators\GeneratorsServiceProvider'
 
 这样就可以了，你已经安装完成并可以运行这个包了。运行artisan命令行则可以在终端上看到generate相关命令。
-
-    php artisan
-
-
-That's it! You're all set to go. Run the `artisan` command from the Terminal to see the new `generate` commands.
 
     php artisan
 
