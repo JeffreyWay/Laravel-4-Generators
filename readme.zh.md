@@ -162,22 +162,22 @@ class AddUserIdToPostsTable extends Migration {
 
 注意：这一次我们没有做`Schema::create`
 
-#### Keywords
+#### 关键字
 
-When writing migration names, use the following keywords to provide hints for the generator.
+当你在写迁移的名字的时候，使用下面的关键字给生成器提供提示。
 
 - `create` or `make` (`create_users_table`)
 - `add` or `insert` (`add_user_id_to_posts_table`)
 - `remove` (`remove_user_id_from_posts_table`)
 - `delete` or `drop` (`delete_users_table`)
 
-#### Generating Schema
+#### 生成数据库模式
 
-This is pretty nice, but let's take things a step further and also generate the schema, using the `fields` option.
+这是非常漂亮的，但是让我们更进一步，生成数据库模式的同时，使用`fields`选项。
 
     php artisan generate:migration create_posts_table --fields="title:string, body:text"
 
-Before we decipher this new option, let's see the output:
+在我们解释这个选项之前，让我们先看一下输出：
 
 ```php
 <?php
@@ -215,13 +215,14 @@ class CreatePostsTable extends Migration {
 }
 ```
 
-Nice! A few things to notice here:
+漂亮！少量的提示在这里：
 
-- The generator will automatically set the `id` as the primary key.
-- It parsed the `fields` options, and added those fields.
-- The drop method is smart enough to realize that, in reverse, the table should be dropped entirely.
+- 生成器将默认使用自增的`id`字段作为主键
+- 它解析`fields`选项，并添加这些字段
+- drop方法能够足够聪明的意识到，在相反的情况下，这个表应该被完全删除
 
-To declare fields, use a comma+space-separated list of key:value:option sets, where `key` is the name of the field, `value` is the [column type](http://laravel.com/docs/schema#adding-columns), and `option` is a way to specify indexes and such, like `unique` or `nullable`. Here are some examples:
+声明字段，使用逗号+空格分隔键值列表[key:value:option sets]，其中`key`表示字段的名称，`value`表示[字段的类型](http://laravel.com/docs/schema#adding-columns)，`option`表示制定索引或者像是`unique`、`nullable`这样的属性。
+这里是一些示例:
 
 - `--fields="first:string, last:string"`
 - `--fields="age:integer, yob:date"`
@@ -229,17 +230,17 @@ To declare fields, use a comma+space-separated list of key:value:option sets, wh
 - `--fields="name:string:default('John Doe'), bio:text:nullable"`
 - `--fields="username:string(30):unique, age:integer:nullable:default(18)"`
 
-Please make note of the last example, where we specify a character limit: `string(30)`. This will produce `$table->string('username', 30)->unique();`
+请注意最后一个示例，这里我们指定了`string(30)`的字符串限制。这将产生`$table->string('username', 30)->unique();`
 
-It is possible to destroy the table by issuing:
+使用生成器删除表是可能的：
 
 	php artisan generate:migration delete_posts_table
 
-As a final demonstration, let's run a migration to remove the `completed` field from a `tasks` table.
+作为最后一个示例i，让我们运行一个迁移，从`tasks`表中，删除`completed`字段。
 
     php artisan generate:migration remove_completed_from_tasks_table --fields="completed:boolean"
 
-This time, as we're using the "remove" keyword, the generator understands that it should drop a column, and add it back in the `down()` method.
+这一次，我们使用了"remove"关键字，生成器知道它要删除一个字段，并且把它添加到`down()`方法中。
 
 ```php
 <?php
@@ -277,11 +278,11 @@ class RemoveCompletedFromTasksTable extends Migration {
 }
 ```
 
-### Models
+### 模型
 
     php artisan generate:model Post
 
-This will create the file, `app/models/Post.php` and insert the following boilerplate:
+这将生成一个文件，`app/models/Post.php`并且写入下面的样板
 
 ```php
 <?php
@@ -291,23 +292,24 @@ class Post extends \Eloquent {
 }
 ```
 
-### Views
+### 视图
 
-The view generator is fairly simple.
+视图生成器相当简单。
 
 ```bash
 php artisan generate:view admin.reports.index
 ```
 
-This command will create an empty view, `/app/views/admin/reports/index.blade.php`. If the provided directory tree does not exist, it will be created for you.
+这个命令将创建一个空的视图，`/app/views/admin/reports/index.blade.php`。如果提供的文件夹不存在，它会自动帮你创建
 
-### Seeds
+### Seeds 生成
 
+Laravel为我们提供了非常灵活的方式来生成表
 Laravel provides us with a flexible way to seed new tables.
 
     php artisan generate:seed users
 
-Set the argument to the name of the table that you'd like a seed file for. This will generate `app/database/seeds/UsersTableSeeder.php` and populate it with:
+设置你想要生成的生成文件参数。这将生成 `app/database/seeds/UsersTableSeeder.php` 并用一下内容作为填充：
 
 ```php
 <?php
@@ -332,7 +334,7 @@ class UsersTableSeeder extends Seeder {
 }
 ```
 
-This will give you a basic bit of boilerplate, using the popular Faker library. This is a nice way to seed your DB tables. Don't forget to pull in Faker through Composer!
+这将使用流行的Faker库为你提供一个基本的样板。这将是一个非常漂亮的方式来生成你的数据库表。不要忘记使用Composer来安装Faker！
 
 ### Pivot
 
