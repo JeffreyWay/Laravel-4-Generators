@@ -63,22 +63,22 @@
 
 想象一下使用一个生成器加速你的工作流。而不是打开models文件夹，创建一个新的文件，保存它，并且在文件中添加一个class，你可以简单的运行一个生成器命令即可完成这一系列动作。
 
-- [Migrations](#migrations)
-- [Models](#models)
-- [Views](#views)
+- [Migrations 迁移](#migrations)
+- [Models 模型](#models)
+- [Views 视图](#views)
 - [Seeds](#seeds)
 - [Pivot](#pivot)
 - [Resources](#resources)
 - [Scaffolding](#scaffolding)
-- [Configuration](#configuration)
+- [Configuration 配置](#configuration)
 
 ### 迁移
 
-Laravel offers a migration generator, but it stops just short of creating the schema (or the fields for the table). Let's review a couple examples, using `generate:migration`.
+Laravel提供了一个迁移生成器，但是它仅仅能够创建数据库结构。让我们再回顾几个例子，使用`generate:migration`。
 
     php artisan generate:migration create_posts_table
 
-If we don't specify the `fields` option, the following file will be created within `app/database/migrations`.
+如果我们不指定字段配置项，则下面这个文件将被创建在`app/database/migrations`目录下。
 
 ```php
 <?php
@@ -115,13 +115,13 @@ class CreatePostsTable extends Migration {
 
 ```
 
-Notice that the generator is smart enough to detect that you're trying to create a table. When naming your migrations, make them as descriptive as possible. The migration generator will detect the first word in your migration name and do its best to determine how to proceed. As such, for `create_posts_table`, the keyword is "create," which means that we should prepare the necessary schema to create a table.
+注意，生成器能够检测到你正在尝试创建一个表。迁移的名称，尽量应该是可描述的。生成器将扫描你的生成器名字的第一个单词，并尽力确定如何继续。例如，对于迁移`create_posts_table`，关键字"create"，意味着我们应该准备必要的架构来创建表。
 
-If you instead use a migration name along the lines of `add_user_id_to_posts_table`, in that case, the keyword is "add," signaling that we intend to add rows to an existing table. Let's see what that generates.
+如果你使用`add_user_id_to_posts_table`代替迁移的名字，在上面的示例中，关键字"add"，意味着我们将添加一行到现有的表中，然我们看看这个生成器命令。
 
     php artisan generate:migration add_user_id_to_posts_table
 
-This will prepare the following boilerplate:
+这个命令将会准备一个下面这样的样板：
 
 
 ```php
@@ -160,7 +160,7 @@ class AddUserIdToPostsTable extends Migration {
 }
 ```
 
-Notice how, this time, we're not doing `Schema::create`.
+注意：这一次我们没有做`Schema::create`
 
 #### Keywords
 
