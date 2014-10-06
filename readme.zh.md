@@ -302,9 +302,9 @@ php artisan generate:view admin.reports.index
 
 这个命令将创建一个空的视图，`/app/views/admin/reports/index.blade.php`。如果提供的文件夹不存在，它会自动帮你创建
 
-### Seeds 生成
+### Seeds 生成数据[译注：应该是用来填充测试数据]
 
-Laravel为我们提供了非常灵活的方式来生成表
+Laravel为我们提供了非常灵活的方式来填充表
 Laravel provides us with a flexible way to seed new tables.
 
     php artisan generate:seed users
@@ -336,17 +336,16 @@ class UsersTableSeeder extends Seeder {
 
 这将使用流行的Faker库为你提供一个基本的样板。这将是一个非常漂亮的方式来生成你的数据库表。不要忘记使用Composer来安装Faker！
 
-### Pivot
+### 关联表[译注：pivot 这个词愿意是中心点、中枢的意思，这里翻译成关联表比较合适，通俗一点就是两个表的mapping关系表，带有外键约束]
+当你需要一个关联表时，`generate:pivot`可以加速建立相应的表。
 
-When you require a new pivot table, the `generate:pivot` table expedites the process of creating the appropriate migration.
-
-Simply pass the name of the two tables that require a joining pivot table. For `orders` and `users`, you might do:
+简单的传递两个需要关联的表的名字。对于`orders`和`users`表，你可以：
 
 ```bash
 php artisan generate:pivot orders users
 ```
 
-This will create the following migration:
+这个命令将创建下面的迁移：
 
 ```php
 <?php
@@ -387,41 +386,41 @@ class CreateOrderUserTable extends Migration {
 }
 ```
 
-Notice that it correctly sets the table name according to your two provided tables, in alphabetical order. Now, run `php artisan migrate` to create your pivot table!
+注意，它会正确设置你提供的两个表名，排名不分先后。现在，运行`php artisan migrate`来创建你的关联表！
 
-### Resources
+### 资源
 
-The `generate:resource` command will do a number of things for you:
+`generate:resource`命令将会为你坐一系列的事情：
 
-- Generate a model
-- Generate index, show, create, and edit views
-- Generate a controller
-- Generate a migration with schema
-- Generate a table seeder
-- Migrate the database
+- 生成一个模型
+- 生成index, show, create, edit视图
+- 生成一个控制器
+- 生成一个数据库结构迁移
+- 生成一个数据库填充
+- 迁移这个数据库
 
-When triggering this command, you'll be asked to confirm each of these actions. That way, you can tailor the generation to what you specifically require.
+当你触发这个命令，它将对每个动作进行问询。通过这个方式，你可以告诉生成器，哪些是你确实需要的。
 
-#### Example
+#### 例子
 
-Imagine that you need to build a way to display posts. While you could manually create a controller, create a model, create a migration and populate it with the schema, and then create a table seeder...why not let the generator do that?
+想象如果你需要创建一个方法来显示文章。你需要手动创建一个控制器，一个模型，一个数据库迁移并且填充它，并且创建一个数据库填充...为什么不用生成器来做呢？
 
 ```bash
 php artisan generate:resource post --fields="title:string, body:text"
 ```
 
-If you say yes to each confirmation, this single command will give you boilerplate for:
+如果你对每个询问说yes，这个命令会给你如下样板：
 
 - app/models/Post.php
 - app/controllers/PostsController.php
 - app/database/migrations/timestamp-create_posts_table.php (including the schema)
 - app/database/seeds/PostsTableSeeder.php
 
-### Scaffolding
+### Scaffolding 脚手架
 
-The scaffolding generator is similar to `generate:resource`, except it will add some beginning boilerplate to these files, as a convenience.
+脚手架生成器类似于`generate:resource`，除了创建一些初始化样板外，同时也是为了方便。
 
-For instance, when running `generate:scaffold post`, your controller boilerplate will be:
+例如，在运行`generate:scaffold post`时，你的控制器模板将会将会是：
 
 ```php
 <?php
@@ -533,25 +532,23 @@ class PostsController extends \BaseController {
 }
 ```
 
-Please note that you're encouraged to modify this generated controller. It simply provides a starting point.
+请注意我们鼓励您去修改这些自动生成的控制器。它只是一个简单的开始。
 
-### Configuration
+### Configuration 配置
 
-You may want to modify your templates - how the generated files are formatted. To allow for this, you
-need to publish the templates that, behind the scenes, the generators will reference.
+你或许想修改你的模板--自动生成的文件是怎样格式化的。考虑到这一点，你需要发布你的模板，生成器将会使用它们。
 
 ```bash
 php artisan generate:publish-templates
 ```
 
-This will copy all templates to your `app/templates` directory. You can modify these however you wish to fit your desired formatting. If you'd prefer a different directory:
+你要复制所有`app/templates`目录下的模板。你可以修改这些只要你满意它的格式。如果你喜欢不同的目录：
 
 ```bash
 php artisan generate:publish-templates --path=app/foo/bar/templates
 ```
 
-When you run the `generate:publish-templates` command, it will also publish
-the configuration to `app/config/packages/way/generators/config/config.php`. This file will look somewhat like:
+当你运行`generate:publish-templates` ,它也会将配置发布到`app/config/packages/way/generators/config/config.php`文件。这个文件看起来有点像：
 
 ```php
 <?php
@@ -598,11 +595,11 @@ return [
 ];
 ```
 
-Also, while you're in this file, note that you can also update the default target directory for each generator.
+同时，当你修改这个文件的时候，注意你也可以更新每个默认的生成器目标目录。
 
-### Shortcuts
+### Shortcuts 快捷命令
 
-Because you'll likely type these commands over and over, it makes sense to create aliases.
+因为你可能会一次又一次的键入如下命令，命令别名显然是有意义的。
 
 ```bash
 # Generator Stuff
@@ -613,8 +610,7 @@ alias g:s="php artisan generate:seed"
 alias g:mig="php artisan generate:migration"
 alias g:r="php artisan generate:resource"
 ```
-
-These can be stored in, for example, your `~/.bash_profile` or `~/.bashrc` files.
+这些将被保存，例如，你的`~/.bash_profile` 或者 `~/.bashrc` 文件中。
 
 
 
