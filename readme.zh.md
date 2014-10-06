@@ -7,11 +7,11 @@
 - `generate:model`   - 模型生成器
 - `generate:view`    - 视图生成器
 - `generate:controller`  - 控制器生成器
-- `generate:seed`    -
-- `generate:migration`   -
-- `generate:pivot`
-- `generate:resource`
-- `generate:scaffold`
+- `generate:seed`    - 数据库填充器
+- `generate:migration`   - 迁移
+- `generate:pivot`   - 关联表
+- `generate:resource` -资源
+- `generate:scaffold` - 脚手架
 
 
 ## 安装
@@ -66,10 +66,10 @@
 - [Migrations 迁移](#migrations)
 - [Models 模型](#models)
 - [Views 视图](#views)
-- [Seeds](#seeds)
-- [Pivot](#pivot)
-- [Resources](#resources)
-- [Scaffolding](#scaffolding)
+- [Seeds 填充](#seeds)
+- [Pivot 关联表](#pivot)
+- [Resources 资源](#resources)
+- [Scaffolding 脚手架](#scaffolding)
 - [Configuration 配置](#configuration)
 
 ### 迁移
