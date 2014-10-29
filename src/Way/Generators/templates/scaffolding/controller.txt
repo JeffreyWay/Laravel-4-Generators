@@ -74,8 +74,8 @@ class $NAME$ extends Controller {
 	public function update($id)
 	{
 		$$RESOURCE$ = $MODEL$::findOrFail($id);
-
-		$$RESOURCE$->update(Request::get());
+		$$RESOURCE$->fill(Request::get());
+		$$RESOURCE$->save();
 
 		return Redirect::route('$COLLECTION$.index');
 	}
