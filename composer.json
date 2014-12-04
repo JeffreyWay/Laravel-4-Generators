@@ -1,6 +1,7 @@
 {
     "name": "way/generators",
-    "description": "Rapidly generate resources, migrations, models, and much more.",
+    "description": "Rapidly speed up your Laravel workflow with generators for resources, migrations, models, and much more.",
+    "keywords": ["laravel", "generator"],
     "license": "MIT",
     "authors": [
         {
