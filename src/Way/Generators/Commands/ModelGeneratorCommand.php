@@ -40,7 +40,7 @@ class ModelGeneratorCommand extends GeneratorCommand {
     {
         return [
             'NAME' => ucwords($this->argument('modelName')),
-            'NAMESPACE' => 'App'
+            'NAMESPACE' => substr($this->getAppNamespace(), 0, -1),
         ];
     }
 
