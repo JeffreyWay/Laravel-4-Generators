@@ -20,7 +20,13 @@ return [
 
     'seed_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/seed.txt'),
 
-    'view_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/view.txt'),
+    'create_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/create.txt'),
+
+    'index_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/index.txt'),
+
+    'edit_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/edit.txt'),
+
+    'show_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/show.txt'),
 
 
     /*
