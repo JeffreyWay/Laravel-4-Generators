@@ -26,6 +26,8 @@ Begin by installing this package through Composer. Edit your project's `composer
 		"way/generators": "~2.0"
 	}
 
+> There is no support for Laravel 5, as the framework now includes a number of generators out of the box.
+
 Next, update Composer from the Terminal:
 
     composer update --dev
@@ -38,16 +40,6 @@ That's it! You're all set to go. Run the `artisan` command from the Terminal to 
 
     php artisan
     
-## Laravel 5.0 and Above
-
-Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
-
-	"require-dev": {
-		"way/generators": "~3.0"
-	}
-
-> Version 3 of these generators works with Laravel 5.0 and higher, due to the new default folder structure in Laravel.
-
 Next, update Composer from the Terminal:
 
     composer update --dev
