@@ -25,7 +25,10 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('way/generators');
+        // If you need to override the default config, copy config/config.php to /config/generators.config.php and update
+        $this->publishes([
+            __DIR__.'/../config/config.php' => config_path('generators.config.php'),
+        ]);
     }
 
 	/**
@@ -48,6 +51,8 @@ class GeneratorsServiceProvider extends ServiceProvider {
         {
             $this->{"register$command"}();
         }
+
+        $this->registerConfig();
 	}
 
     /**
@@ -63,6 +68,23 @@ class GeneratorsServiceProvider extends ServiceProvider {
         });
 
         $this->commands('generate.model');
+    }
+
+    /**
+     * Register the config paths
+     */
+    public function registerConfig()
+    {
+        $userConfigFile    = $this->app->configPath().'/generators.config.php';
+        $packageConfigFile = __DIR__.'/../../config/config.php';
+        $config            = $this->app['files']->getRequire($packageConfigFile);
+
+        if (file_exists($userConfigFile)) {
+            $userConfig = $this->app['files']->getRequire($userConfigFile);
+            $config     = array_replace_recursive($config, $userConfig);
+        }
+
+        $this->app['config']->set('generators.config', $config);
     }
 
     /**
