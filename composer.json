@@ -1,5 +1,5 @@
 {
-    "name": "way/generators",
+    "name": "tightenco/Laravel-4-Generators",
     "description": "Rapidly generate resources, migrations, models, and much more.",
     "license": "MIT",
     "authors": [
