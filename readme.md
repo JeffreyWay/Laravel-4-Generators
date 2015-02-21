@@ -30,7 +30,7 @@ Begin by installing this package through Composer. Edit your project's `composer
 
 Next, update Composer from the Terminal:
 
-    composer update --dev
+    composer update
 
 Once this operation completes, the final step is to add the service provider. Open `app/config/app.php`, and add a new item to the providers array.
 
@@ -42,7 +42,7 @@ That's it! You're all set to go. Run the `artisan` command from the Terminal to 
     
 Next, update Composer from the Terminal:
 
-    composer update --dev
+    composer update
 
 Once this operation completes, the final step is to add the service provider. Open `config/app.php`, and add a new item to the providers array.
 
