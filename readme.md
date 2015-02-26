@@ -18,6 +18,10 @@ This Laravel package provides a variety of generators to speed up your developme
 > [Want a 5-minute video overview?](https://dl.dropboxusercontent.com/u/774859/Work/Laravel-4-Generators/Get-Started-With-Laravel-Custom-Generators.mp4)
 
 
+## Laravel 5
+
+If you're using Laravel 5, then [use this package instead](https://github.com/laracasts/Laravel-5-Generators-Extended).
+
 ## Laravel 4.2 and Below
 
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require `way/generators`.
@@ -26,7 +30,6 @@ Begin by installing this package through Composer. Edit your project's `composer
 		"way/generators": "~2.0"
 	}
 
-> There is no support for Laravel 5, as the framework now includes a number of generators out of the box.
 
 Next, update Composer from the Terminal:
 
