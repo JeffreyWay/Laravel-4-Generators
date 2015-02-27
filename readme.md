@@ -42,18 +42,6 @@ Once this operation completes, the final step is to add the service provider. Op
 That's it! You're all set to go. Run the `artisan` command from the Terminal to see the new `generate` commands.
 
     php artisan
-    
-Next, update Composer from the Terminal:
-
-    composer update --dev
-
-Once this operation completes, the final step is to add the service provider. Open `config/app.php`, and add a new item to the providers array.
-
-    'Way\Generators\GeneratorsServiceProvider'
-
-That's it! You're all set to go. Run the `artisan` command from the Terminal to see the new `generate` commands.
-
-    php artisan
 
 ## Usage
 
