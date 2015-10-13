@@ -53,7 +53,14 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getModelName($resource)
     {
-        return ucwords(str_singular(camel_case($resource)));
+        if($this->option('plural')) 
+        {
+            return ucwords(camel_case($resource));
+        } 
+        else 
+        {
+            return ucwords(str_singular(camel_case($resource)));
+        }
     }
 
     /**
@@ -64,7 +71,14 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getControllerName($resource)
     {
-        return ucwords(str_plural(camel_case($resource))) . 'Controller';
+        if($this->option('plural')) 
+        {
+            return ucwords(camel_case($this->option('plural'))) . 'Controller';
+        } 
+        else 
+        {
+            return ucwords(str_plural(camel_case($resource))) . 'Controller';
+        }
     }
 
     /**
@@ -75,7 +89,14 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getTableName($resource)
     {
-        return str_plural($resource);
+        if($this->option('plural')) 
+        {
+            return $this->option('plural');
+        } 
+        else 
+        {
+            return str_plural($resource);
+        }
     }
 
     /**
@@ -86,7 +107,14 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getMigrationName($resource)
     {
-        return "create_" . str_plural($resource) . "_table";
+        if($this->option('plural')) 
+        {
+            return "create_" . $this->option('plural') . "_table";
+        } 
+        else 
+        {
+            return "create_" . str_plural($resource) . "_table";
+        }
     }
 
     /**
@@ -165,9 +193,9 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function callSeeder($resource)
     {
-        $tableName = str_plural($this->getModelName($resource));
+        $tableName = $this->option('plural') ? strtolower($this->option('plural')) : str_plural($this->getModelName($resource));
 
-        if ($this->confirm("Would you like a '$tableName' table seeder? [yes|no]"))
+        if ($this->confirm("Would you like a '$tableName' table seeder?"))
         {
             $this->call('generate:seed', compact('tableName'));
         }
@@ -178,7 +206,8 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function callMigrate()
     {
-        if ($this->confirm('Do you want to go ahead and migrate the database? [yes|no]')) {
+        if ($this->confirm('Do you want to go ahead and migrate the database? [yes|no]')) 
+        {
             $this->call('migrate');
             $this->info('Done!');
         }
@@ -204,7 +233,8 @@ class ResourceGeneratorCommand extends Command {
     protected function getOptions()
     {
         return [
-            ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration']
+            ['fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the migration'],
+            ['plural', null, InputOption::VALUE_OPTIONAL, 'Plural of the resource name']
         ];
     }
 
