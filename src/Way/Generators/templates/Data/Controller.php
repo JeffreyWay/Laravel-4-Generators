@@ -1,5 +1,7 @@
 <?php namespace Way\Generators\Templates\Data;
 
+use Illuminate\Console\AppNamespaceDetectorTrait;
+
 class Controller {
 
     /**
@@ -82,7 +84,7 @@ class Controller {
      */
     public function getNamespace()
     {
-        return 'App\Http\Controllers';
+        return $this->getAppNamespace().'Http\Controllers';
     }
 
 } 

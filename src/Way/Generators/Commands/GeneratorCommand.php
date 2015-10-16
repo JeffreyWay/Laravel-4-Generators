@@ -1,5 +1,6 @@
 <?php namespace Way\Generators\Commands;
 
+use Illuminate\Console\AppNamespaceDetectorTrait;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Console\Command;
@@ -8,6 +9,8 @@ use Way\Generators\Generator;
 use Config;
 
 abstract class GeneratorCommand extends Command {
+    
+    use AppNamespaceDetectorTrait;
 
     /**
      * The Generator instance.
