@@ -38,7 +38,7 @@ class ResourceGeneratorCommand extends Command {
 
         // All done!
         $this->info(sprintf(
-            "All done! Don't forget to add `%s` to %s." . PHP_EOL,
+            "All done! Don't forget to add '%s` to %s." . PHP_EOL,
             "Route::resource('{$this->getTableName($resource)}', '{$this->getControllerName($resource)}');",
             "app/routes.php"
         ));
@@ -100,7 +100,10 @@ class ResourceGeneratorCommand extends Command {
 
         if ($this->confirm("Do you want me to create a $modelName model? [yes|no]"))
         {
-            $this->call('generate:model', compact('modelName'));
+            $this->call('generate:model', [
+                'modelName' => $modelName,
+                '--fillable' => $this->option('fields')
+            ]);
         }
     }
 

@@ -57,9 +57,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
     {
         $this->app['generate.model'] = $this->app->share(function($app)
         {
-            $generator = $this->app->make('Way\Generators\Generator');
-
-            return new ModelGeneratorCommand($generator);
+            return $this->app->make('Way\Generators\Commands\ModelGeneratorCommand');
         });
 
         $this->commands('generate.model');

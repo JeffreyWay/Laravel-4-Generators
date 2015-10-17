@@ -4,6 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class $NAME$ extends Model {
 
-	protected $fillable = [];
-
+    /**
+    * The properties of this model that can be filled automatically
+    */
+	protected $fillable = [$FILLABLE$];
+    
 }
