@@ -41,10 +41,15 @@ class MigrationFieldsParser {
                 $type = $matches[1];
                 $args = $matches[2];
             }
+            if (strpos($type, "enum") !== true && count($chunks) > 0 && preg_match("/array(.*)/", $chunks[0], $matches))
+            {
+                $args = $matches[0];
+            }
 
             // Finally, anything that remains will
             // be our decorators
-            $decorators = $chunks;
+            if (isset($args)) $decorators = array_diff($chunks, array($args));
+            else $decorators = $chunks;
 
             $parsed[$index] = ['field' => $property, 'type' => $type];
 
