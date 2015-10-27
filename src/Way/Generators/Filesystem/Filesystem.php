@@ -1,5 +1,7 @@
 <?php namespace Way\Generators\Filesystem;
 
+use Illuminate\Support\Facades\File;
+
 class Filesystem {
 
     /**
@@ -12,6 +14,20 @@ class Filesystem {
      */
     public function make($file, $content)
     {
+
+        $dirNames = explode('/', dirname($file));
+        $dirPath = '';
+
+        foreach($dirNames as $dirName)
+        {
+            $dirPath=$dirPath.$dirName.'/';
+
+            if ( ! $this->exists($dirPath))
+            {
+                File::makeDirectory($dirPath);
+            }
+        }
+
         if ( $this->exists($file))
         {
             throw new FileAlreadyExists;
