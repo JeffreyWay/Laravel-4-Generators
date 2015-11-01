@@ -18,6 +18,8 @@ return [
 
     'migration_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/migration.txt'),
 
+    'schema_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/schema.txt'),
+
     'seed_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/seed.txt'),
 
     'view_template_path' => base_path('vendor/way/generators/src/Way/Generators/templates/view.txt'),

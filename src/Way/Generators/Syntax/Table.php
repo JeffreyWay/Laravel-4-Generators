@@ -2,6 +2,7 @@
 
 use Way\Generators\Compilers\TemplateCompiler;
 use Way\Generators\Filesystem\Filesystem;
+use Config;
 
 abstract class Table {
 
@@ -32,7 +33,8 @@ abstract class Table {
      */
     protected function getTemplate()
     {
-        return $this->file->get(__DIR__.'/../templates/schema.txt');
+        $templatePath = Config::get("generators::config.schema_template_path");
+        return $this->file->get($templatePath);
     }
 
 
