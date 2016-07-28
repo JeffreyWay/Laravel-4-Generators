@@ -1,8 +1,6 @@
-<?php namespace $NAMESPACE$;
+<?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class $NAME$ extends Model {
+class $NAME$ extends BaseModel {
 
     /**
     * The properties of this model that can be filled automatically

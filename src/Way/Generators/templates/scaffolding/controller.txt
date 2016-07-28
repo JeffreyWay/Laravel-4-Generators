@@ -3,7 +3,7 @@
 use Illuminate\Routing\Controller;
 use Redirect, Request;
 
-class $NAME$ extends Controller {
+class $NAME$ extends BaseController {
 
 	/**
 	 * Display a listing of $COLLECTION$

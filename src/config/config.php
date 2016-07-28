@@ -33,10 +33,10 @@ return [
 
     'controller_target_path'   => app_path('controllers'),
 
-    'migration_target_path'   => base_path('database/migrations'),
+    'migration_target_path'   => app_path('database/migrations'),
 
-    'seed_target_path'   => base_path('database/seeds'),
+    'seed_target_path'   => app_path('database/seeds'),
 
-    'view_target_path'   => base_path('resources/views')
+    'view_target_path'   => app_path('views')
 
 ];

@@ -4,13 +4,13 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Jeffrey Way",
-            "email": "jeffrey@jeffrey-way.com"
+            "name": "Opata Chibueze",
+            "email": "c.opata@sci.ng"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "~5.0"
+        "illuminate/support": "~4.0"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0",

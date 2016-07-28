@@ -50,6 +50,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
         }
 	}
 
+
     /**
      * Register the model generator
      */
