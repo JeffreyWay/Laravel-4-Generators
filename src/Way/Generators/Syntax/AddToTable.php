@@ -48,12 +48,21 @@ class AddToTable extends Table {
     private function addColumn($field)
     {
         $property = $field['field'];
+
+        // If the field is an array,
+        // make it an array in the Migration
+        if (is_array($property)) {
+            $property = "['". implode("','", $property) ."']";
+        } else {
+            $property = $property ? "'$property'" : null;
+        }
+
         $type = $field['type'];
 
         $output = sprintf(
             "\$table->%s(%s)",
             $type,
-            $property ? "'$property'" : null
+            $property
         );
 
         // If we have args, then it needs
@@ -61,7 +70,7 @@ class AddToTable extends Table {
         if (isset($field['args']))
         {
             $output = sprintf(
-                "\$table->%s('%s', %s)",
+                "\$table->%s(%s, %s)",
                 $type,
                 $property,
                 $field['args']
