@@ -6,16 +6,16 @@ use Illuminate\Database\Seeder;
 
 class RecentOrdersTableSeeder extends Seeder {
 
-	public function run()
-	{
-		$faker = Faker::create();
+    public function run()
+    {
+        $faker = Faker::create();
 
-		foreach(range(1, 10) as $index)
-		{
-			RecentOrder::create([
+        foreach(range(1, 10) as $index)
+        {
+            RecentOrder::create([
 
-			]);
-		}
-	}
+            ]);
+        }
+    }
 
 }

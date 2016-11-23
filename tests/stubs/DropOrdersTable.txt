@@ -5,30 +5,30 @@ use Illuminate\Database\Schema\Blueprint;
 
 class DropOrdersTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::drop('orders');
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::drop('orders');
+    }
 
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::create('orders', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('title');
-			$table->timestamps();
-		});
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::create('orders', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->string('title');
+            $table->timestamps();
+        });
+    }
 
 }
