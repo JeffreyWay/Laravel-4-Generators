@@ -1,1 +1,7 @@
-$PATH$
+@extends('layouts.master')
+
+@section('title', 'Page title')
+
+@section('content')
+  {{-- Page content --}}
+@stop
