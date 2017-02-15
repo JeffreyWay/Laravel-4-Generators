@@ -60,7 +60,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerModel()
     {
-        $this->app['generate.model'] = $this->app->share(function($app)
+        $this->app->singleton('generate.model', function($app)
         {
             $generator = $this->app->make('Way\Generators\Generator');
 
@@ -92,7 +92,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerView()
     {
-        $this->app['generate.view'] = $this->app->share(function($app)
+        $this->app->singleton('generate.view', function($app)
         {
             $generator = $this->app->make('Way\Generators\Generator');
 
@@ -107,7 +107,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerController()
     {
-        $this->app['generate.controller'] = $this->app->share(function($app)
+        $this->app->singleton('generate.controller', function($app)
         {
             $generator = $this->app->make('Way\Generators\Generator');
 
@@ -122,7 +122,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerMigration()
     {
-        $this->app['generate.migration'] = $this->app->share(function($app)
+        $this->app->singleton('generate.migration', function($app)
         {
             return $this->app->make('Way\Generators\Commands\MigrationGeneratorCommand');
         });
@@ -135,7 +135,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerSeeder()
     {
-        $this->app['generate.seeder'] = $this->app->share(function($app)
+        $this->app->singleton('generate.seeder', function($app)
         {
             $generator = $this->app->make('Way\Generators\Generator');
 
@@ -150,7 +150,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerPivot()
     {
-        $this->app['generate.pivot'] = $this->app->share(function($app)
+        $this->app->singleton('generate.pivot', function($app)
         {
             return new PivotGeneratorCommand;
         });
@@ -163,7 +163,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     protected function registerResource()
     {
-        $this->app['generate.resource'] = $this->app->share(function($app)
+        $this->app->singleton('generate.resource', function($app)
         {
             $generator = $this->app->make('Way\Generators\Generator');
 
@@ -178,7 +178,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     public function registerpublisher()
     {
-        $this->app['generate.publish-templates'] = $this->app->share(function($app)
+        $this->app->singleton('generate.publish-templates', function($app)
         {
             return new publishtemplatescommand;
         });
@@ -191,7 +191,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
      */
     public function registerScaffold()
     {
-        $this->app['generate.scaffold'] = $this->app->share(function($app)
+        $this->app->singleton('generate.scaffold', function($app)
         {
             return new ScaffoldGeneratorCommand;
         });
