@@ -27,7 +27,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
     {
         // If you need to override the default config, copy config/config.php to /config/generators.config.php and update
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('generators.config.php'),
+            __DIR__.'../../config/config.php' => config_path('generators.config.php'),
         ]);
     }
 
