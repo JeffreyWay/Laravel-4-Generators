@@ -1,6 +1,7 @@
 <?php namespace Way\Generators\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -53,7 +54,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getModelName($resource)
     {
-        return ucwords(str_singular(camel_case($resource)));
+        return ucwords(str_singular(Str::camel($resource)));
     }
 
     /**
@@ -64,7 +65,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getControllerName($resource)
     {
-        return ucwords(str_plural(camel_case($resource))) . 'Controller';
+        return ucwords(str_plural(Str::camel($resource))) . 'Controller';
     }
 
     /**
