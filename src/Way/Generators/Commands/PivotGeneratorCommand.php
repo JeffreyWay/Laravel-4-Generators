@@ -1,6 +1,7 @@
 <?php namespace Way\Generators\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -40,7 +41,7 @@ class PivotGeneratorCommand extends Command {
      */
     public function sortDesiredTables()
     {
-        $tables = array_except(array_map('str_singular', $this->argument()), 'command');
+        $tables = Arr::except(array_map('str_singular', $this->argument()), 'command');
 
         sort($tables);
 
