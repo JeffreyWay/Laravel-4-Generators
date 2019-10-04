@@ -42,7 +42,7 @@ class PivotGeneratorCommand extends Command {
      */
     public function sortDesiredTables()
     {
-        $tables = Arr::except(array_map('str_singular', $this->argument()), 'command');
+        $tables = Arr::except(array_map('Illuminate\Support\Str::singular', $this->argument()), 'command');
 
         sort($tables);
 

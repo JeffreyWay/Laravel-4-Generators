@@ -54,7 +54,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getModelName($resource)
     {
-        return ucwords(str_singular(Str::camel($resource)));
+        return ucwords(Str::singular(Str::camel($resource)));
     }
 
     /**
